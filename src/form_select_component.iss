@@ -15,12 +15,73 @@ type
   end;
 var
   arraySettings: array of TSettings;
-  FNameSettings: string;
+  FNameSettings, SelectPreset: string;
   Image: TBitmapImage;
   SettingsCheckListBox: TNewCheckListBox;
   sizeBuf: Integer;
 
 procedure GetNamesAndValues(Path: String; ALevel: Byte; TypeItem : TItems);  forward;
+
+procedure Init;
+var
+  ResultCode, i: Integer;
+begin
+  ExtractTemporaryFile('merg_f.exe');
+  ExtractTemporaryFile(SelectPreset + '.mrg');
+  if not Exec(ExpandConstant('{tmp}\merg_f.exe'), ' -d ' + SelectPreset + '.mrg', ExpandConstant('{tmp}'), SW_HIDE, ewWaitUntilTerminated, ResultCode) then
+    MsgBox(SysErrorMessage(ResultCode) , mbInformation, MB_OK);
+end;
+
+procedure CopyingAdditionalFiles(AdditionalFiles : String);
+var
+  FileNames : TStringList;
+  i: Integer;
+  tmp, app, FileName, Buffer : String;
+begin
+  SetLength(Buffer, sizeBuf);
+  JSON_GetArrayValueW_S(AdditionalFiles, Buffer, sizeBuf);
+  FileNames := TStringList.Create;
+  try
+    FileNames.Text := Copy(Buffer,0,Pos(#0, Buffer));
+    for i := 0 to FileNames.Count - 1 do
+      if FileNames[i] <> '' then
+        begin
+          FileName := FileNames[i];
+          StringChangeEx(FileName, '/', '\', True);
+          if FileName[1] = #92 then
+          begin
+            tmp := ExpandConstant('{tmp}\files') + FileName;
+            app := ExpandConstant('{app}') + FileName;
+          end
+          else
+          begin
+            tmp := ExpandConstant('{tmp}\files\') + FileName;
+            app := ExpandConstant('{app}\') + FileName;
+          end;
+          if not FileCopy(tmp, app, False) then
+            SaveStringToFile(ExpandConstant('{src}\log.txt'), FileName + ' - file not copied' + #13, True);
+        end;
+  finally
+    FileNames.Free;
+  end;
+end;
+
+procedure ApplySettings;
+var
+  Count, i: Integer;
+begin
+  Count:= Length(arraySettings);
+  for i := 0 to Count - 1 do
+  begin
+    if (arraySettings[i].NameFile <> '') and (arraySettings[i].Value <> '') then
+    begin
+      JSON_SetValueObjW(ExpandConstant('{app}\res_mods\configs\xvm\') + SelectPreset + '\' + arraySettings[i].NameFile, arraySettings[i].Value, arraySettings[i].IsAdd);
+      //SaveStringToFile(ExpandConstant('{src}\log.txt'), inttostr(i) + ' = ' + arraySettings[i].Value + #13, True);
+    end;
+    if arraySettings[i].AdditionalFiles <> '' then
+      CopyingAdditionalFiles(arraySettings[i].AdditionalFiles);
+  end;
+end;
 
 procedure AddItem(Path : String; NamesList, ValuesList: TStringList; ALevel : Byte; TypeItem : TItems);
 var
@@ -219,6 +280,7 @@ var
   OKButton, CancelButton: TNewButton;
   Bevel: TBevel;
 begin
+  init;
   SelectComponentForm := CreateCustomForm();
   try
     SelectComponentForm.ClientWidth := ScaleX(730);

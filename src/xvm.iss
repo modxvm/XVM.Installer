@@ -50,10 +50,8 @@ Filename: http://modxvm.com/; Description: "{cm:websiteXVM}"; Flags: postinstall
 [Files]
 Source: "{app}\res_mods\configs\*"; DestDir: "{app}\xvm_backup\configs"; Tasks: xvmbackup; Flags: external skipifsourcedoesntexist createallsubdirs recursesubdirs uninsneveruninstall
 ;Source: "..\..\..\~output\*"; DestDir: "{app}"; Flags: createallsubdirs recursesubdirs
-;Source: "SettingsInstall\default\config\*"; DestDir: "{app}"; Flags: createallsubdirs recursesubdirs
 Source: "dll\innoextensions.dll"; Flags: dontcopy
 Source: "utils\merg_f.exe"; Flags: dontcopy
-;Source: "SettingsInstall\default\default.mrg"; Flags: dontcopy
 
 
 [InstallDelete]
@@ -210,7 +208,7 @@ begin
   end;
 
   Index := WOT_AddClientW(ClientPath);
-  if Index>=0 then begin
+  if Index >= 0 then begin
      WotList_Update();
      WotList.ItemIndex:=Index;
   end else begin
@@ -234,7 +232,8 @@ end;
 function InitializeSetup(): Boolean;
 begin
   FNameSettings := 'default.xc';
-  Result := Init();
+  SelectPreset:= 'default';
+  Result := True;
 end;
 
 procedure InitializeWizard();
