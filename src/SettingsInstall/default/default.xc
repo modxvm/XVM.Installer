@@ -180,7 +180,7 @@
       "hitlog": {
         "name": "Лог нанесенного урона",
         "checked": true,
-        "imagesIfSelected": "",
+        "imagesIfSelected": "hitlog_true.bmp",
         "imagesIfNotSelected": "",
         "valueIfSelected": "",
         "valueIfNotSelected": {
@@ -199,7 +199,7 @@
           "hitlog_header": {
             "name": "Общий заголовок (шапка)",
             "checked": false,
-            "imagesIfSelected": "",
+            "imagesIfSelected": "hitlog_header_true.bmp",
             "imagesIfNotSelected": "",
             "valueIfSelected": {
               "header_disabled": {
@@ -220,7 +220,7 @@
       "damageLog": {
         "name": "Лог полученного урона",
         "checked": true,
-        "imagesIfSelected": "",
+        "imagesIfSelected": "damageLog_true.bmp",
         "imagesIfNotSelected": "",
         "valueIfSelected": "",
         "valueIfNotSelected": {
@@ -284,7 +284,7 @@
           "damageLog_bg": {
             "name": "Подложка лога полученного урона",
             "checked": false,
-            "imagesIfSelected": "",
+            "imagesIfSelected": "damageLog_bg_true.bmp",
             "imagesIfNotSelected": "",
             "valueIfSelected": {
               "bg_enabled": {
@@ -305,7 +305,7 @@
       "totalEfficiency": {
         "name": "Панель эффективности",
         "checked": true,
-        "imagesIfSelected": "",
+        "imagesIfSelected": "totalEfficiency_true.bmp",
         "imagesIfNotSelected": "",
         "valueIfSelected": "",
         "valueIfNotSelected": {
@@ -324,7 +324,7 @@
       "repairTime": {
         "name": "Таймер ремонта модулей",
         "checked": true,
-        "imagesIfSelected": "",
+        "imagesIfSelected": "repairTime_true.bmp",
         "imagesIfNotSelected": "",
         "valueIfSelected": "",
         "valueIfNotSelected": {
@@ -358,7 +358,7 @@
       "hp_panel": {
         "name": "Индикатор общего ХП команд",
         "checked": true,
-        "imagesIfSelected": "",
+        "imagesIfSelected": "hp_panel_true.bmp",
         "imagesIfNotSelected": "",
         "valueIfSelected": "",
         "valueIfNotSelected": {
@@ -377,7 +377,7 @@
           "avgDamage": {
             "name": "Средний урон на текущей технике",
             "checked": true,
-            "imagesIfSelected": "",
+            "imagesIfSelected": "avgDamage_true.bmp",
             "imagesIfNotSelected": "",
             "valueIfSelected": "",
             "valueIfNotSelected": {
@@ -396,7 +396,7 @@
           "mainGun": {
             "name": "Урон для основного калибра",
             "checked": true,
-            "imagesIfSelected": "",
+            "imagesIfSelected": "mainGun_true.bmp",
             "imagesIfNotSelected": "",
             "valueIfSelected": "",
             "valueIfNotSelected": {
@@ -435,7 +435,7 @@
           "clock_widgets": {
             "name": "Виждет часов",
             "checked": true,
-            "imagesIfSelected": "",
+            "imagesIfSelected": "clock_true.bmp",
             "imagesIfNotSelected": "",
             "valueIfSelected": {
               "clock_enabled": {
@@ -461,7 +461,7 @@
           "statistics_widgets": {
             "name": "Виждет статистики",
             "checked": true,
-            "imagesIfSelected": "",
+            "imagesIfSelected": "statistics_true.bmp",
             "imagesIfNotSelected": "",
             "valueIfSelected": {
               "statistics_enabled": {

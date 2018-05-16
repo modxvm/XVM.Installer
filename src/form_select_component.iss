@@ -15,7 +15,7 @@ type
   end;
 var
   arraySettings: array of TSettings;
-  FNameSettings, SelectPreset: string;
+  FNameSettings, SelectPreset, DirTemp: string;
   Image: TBitmapImage;
   SettingsCheckListBox: TNewCheckListBox;
   sizeBuf: Integer;
@@ -26,9 +26,9 @@ procedure Init;
 var
   ResultCode, i: Integer;
 begin
-  ExtractTemporaryFile('merg_f.exe');
+  DirTemp := ExpandConstant('{tmp}\') + SelectPreset;
   ExtractTemporaryFile(SelectPreset + '.mrg');
-  if not Exec(ExpandConstant('{tmp}\merg_f.exe'), ' -d ' + SelectPreset + '.mrg', ExpandConstant('{tmp}'), SW_HIDE, ewWaitUntilTerminated, ResultCode) then
+  if not Exec(ExpandConstant('{tmp}\merg_f.exe'), ' -d ' + SelectPreset + '.mrg ' + DirTemp, ExpandConstant('{tmp}'), SW_HIDE, ewWaitUntilTerminated, ResultCode) then
     MsgBox(SysErrorMessage(ResultCode) , mbInformation, MB_OK);
 end;
 
@@ -50,12 +50,12 @@ begin
           StringChangeEx(FileName, '/', '\', True);
           if FileName[1] = #92 then
           begin
-            tmp := ExpandConstant('{tmp}\files') + FileName;
+            tmp := DirTemp + '\files' + FileName;
             app := ExpandConstant('{app}') + FileName;
           end
           else
           begin
-            tmp := ExpandConstant('{tmp}\files\') + FileName;
+            tmp := DirTemp + '\files\' + FileName;
             app := ExpandConstant('{app}\') + FileName;
           end;
           if not FileCopy(tmp, app, False) then
@@ -142,7 +142,7 @@ var
   i: integer;
 begin
   try    
-    FileName := ExpandConstant('{tmp}\' + FNameSettings);
+    FileName := DirTemp + '\' + FNameSettings;
     //MsgBox('FileName = ' + FileName, mbInformation, MB_OK);
     SetLength(BufNames, sizeBuf);
     SetLength(BufValues, sizeBuf);
@@ -255,7 +255,7 @@ end;
 
 procedure SettingsCheckListBoxOnClickCheck(Sender: TObject);
 var
-  ImageName: string;
+  ImageName, ImageNameBMP: string;
 begin
   with TNewCheckListBox(Sender) do
   begin
@@ -266,7 +266,10 @@ begin
       ImageName := TStringList(ItemObject[ItemIndex]).Strings[0];
     end;
     try
-      Image.Bitmap.LoadFromFile(ExpandConstant('{tmp}\' + ImageName));
+      ImageNameBMP := DirTemp + '\images\' + ChangeFileExt(ImageName, '.bmp');
+      if (AnsiLowercase(ExtractFileExt(ImageName)) = '.png') and not FileExists(ImageNameBMP)then
+        IMAGEDRAW_PngToBmp(DirTemp + '\images\' + ImageName);
+      Image.Bitmap.LoadFromFile(ImageNameBMP);
     except
       //ShowExceptionMessage;
     end;
@@ -284,7 +287,7 @@ begin
   SelectComponentForm := CreateCustomForm();
   try
     SelectComponentForm.ClientWidth := ScaleX(730);
-    SelectComponentForm.ClientHeight := ScaleY(450);
+    SelectComponentForm.ClientHeight := ScaleY(500);
     SelectComponentForm.Caption := ExpandConstant('{cm:SettingConfigurationForm}');
     SelectComponentForm.CenterInsideControl(WizardForm, False);
 
@@ -318,12 +321,12 @@ begin
     SettingsCheckListBox := TNewCheckListBox.Create(SelectComponentForm);
     SettingsCheckListBox.Top := ScaleY(BORDER_WIDTH);
     SettingsCheckListBox.Left := ScaleX(BORDER_WIDTH);
-    SettingsCheckListBox.Width := ScaleX(250);
+    SettingsCheckListBox.Width := ScaleX(300);
     SettingsCheckListBox.Height := Bevel.Top - ScaleY(BORDER_WIDTH + BORDER_WIDTH);
     SettingsCheckListBox.Parent := SelectComponentForm;
     SettingsCheckListBox.OnClickCheck := @SettingsCheckListBoxOnClickCheck;
 
-    FileSize(ExpandConstant('{tmp}\' + FNameSettings), sizeBuf);
+    FileSize(DirTemp + '\' + FNameSettings, sizeBuf);
     GetNamesAndValues(' ', 0, iCheckBox);
 
     Image := TBitmapImage.Create(SelectComponentForm);

@@ -11,7 +11,6 @@ external 'JSON_GetValueW@files:innoextensions.dll cdecl';
 procedure JSON_SetValueBoolW(FileFullName: String; ValuePath: String; Value: Boolean);
 external 'JSON_SetValueBoolW@files:innoextensions.dll cdecl';
 
-
 //value isAdd - True add value to the array, False replace the whole array
 procedure JSON_SetValueObjW(FileFullName: String; Value: String; isAdd: Boolean);
 external 'JSON_SetValueObjW@files:innoextensions.dll cdecl';
@@ -24,6 +23,13 @@ external 'JSON_GetNamesAndValuesW_S@files:innoextensions.dll cdecl';
 
 procedure JSON_GetArrayValueW_S(StrJSON: String; BufValues: String; BufferSize: Integer);
 external 'JSON_GetArrayValueW_S@files:innoextensions.dll cdecl';
+
+//IMAGEDRAW
+//procedure IMAGEDRAW_PngDraw(FileName: String; hDC: Integer; hBitmap: HBITMAP);
+//external 'IMAGEDRAW_PngDraw@files:innoextensions.dll cdecl';
+
+procedure IMAGEDRAW_PngToBmp(FileName: String);
+external 'IMAGEDRAW_PngToBmp@files:innoextensions.dll cdecl';
 
 //PROCESS
 function PROCESS_GetRunningInDirectoryW(DirectoryPth: String; Buffer: String; BufferSize: Integer): Boolean;

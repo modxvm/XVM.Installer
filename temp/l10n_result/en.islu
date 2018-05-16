@@ -1,0 +1,12 @@
+﻿[Messages]
+WizardInfoBefore=Changelog
+InfoBeforeLabel=Please read the following changelog before continuing.
+SetupWindowTitle=XVM 7.6.1-dev for WoT 1.0.1.0
+WelcomeLabel2=This will install XVM 7.6.1-dev for World of Tanks 1.0.1.0 on your computer.%n%nIt is recommended that you close all World of Tanks instances before continuing.
+FinishedLabelNoIcons=Setup has finished installing XVM on your computer.
+
+[CustomMessages]
+browse=Browse
+wotNotFound=World of Tanks not found in directory.
+backupXVM=Backup /res_mods/configs folder.
+websiteXVM=Activate online services on XVM website

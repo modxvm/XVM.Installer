@@ -233,6 +233,8 @@ function InitializeSetup(): Boolean;
 begin
   FNameSettings := 'default.xc';
   SelectPreset:= 'default';
+  DirTemp := ExpandConstant('{tmp}\') + SelectPreset;
+  ExtractTemporaryFile('merg_f.exe');
   Result := True;
 end;
 
