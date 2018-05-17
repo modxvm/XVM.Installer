@@ -19,6 +19,7 @@ var
   Image: TBitmapImage;
   SettingsCheckListBox: TNewCheckListBox;
   sizeBuf: Integer;
+  ItemsType: array [0..4096] of TItems;
 
 procedure GetNamesAndValues(Path: String; ALevel: Byte; TypeItem : TItems);  forward;
 
@@ -124,12 +125,13 @@ begin
   //MsgBox(Name + #13 + Setting.Text, mbInformation, MB_OK);
   case TypeItem of
     iCheckBox:
-      SettingsCheckListBox.AddCheckBox(Name, '', ALevel, Checked, True, True, False, Setting);
+      Index := SettingsCheckListBox.AddCheckBox(Name, '', ALevel, Checked, True, True, False, Setting);
     iRadioBtn:
-      SettingsCheckListBox.AddRadioButton(Name, '', ALevel, Checked, True, Setting);
+      Index := SettingsCheckListBox.AddRadioButton(Name, '', ALevel, Checked, True, Setting);
     iGroup:
-      SettingsCheckListBox.AddGroup(Name, '', ALevel, nil);
+      Index := SettingsCheckListBox.AddGroup(Name, '', ALevel, nil);
   end;
+  ItemsType[Index] := TypeItem;
   if NamesList.Find('children', Index) then
     GetNamesAndValues(Path + '/children', ALevel + 1, TypeItem);
   
@@ -186,7 +188,7 @@ begin
   RootList := TStringList.Create;
   try
     RootList.Text := Copy(BufValues,0,Pos(#0, BufValues));
-    
+    //MsgBox(IntToStr(RootList.Count) + RootList.Text, mbInformation, MB_OK);
     for i := 0 to RootList.Count - 1 do
     begin
       NamesList := TStringList.Create;
@@ -214,7 +216,7 @@ begin
           arraySettings[j].IsAdd := False
         else
           arraySettings[j].IsAdd := True;
-
+        
         //MsgBox('AdditionalFiles = ' + AdditionalFiles, mbInformation, MB_OK);
         j:= j + 1;
         if j >= Length(arraySettings) then
@@ -239,16 +241,27 @@ begin
     SetLength(arraySettings, Items.Count);
     j:= 0;
     for i := 0 to Items.Count - 1 do
-    begin
-      case State[i] of
-      cbUnchecked:
-        Value := TStringList(ItemObject[i]).Strings[3];
-      cbChecked, cbGrayed:
-        Value := TStringList(ItemObject[i]).Strings[2];
+      case ItemsType[i] of
+      //iCheckBox, iRadioBtn:
+      //  begin
+      //    case State[i] of
+      //    cbUnchecked:
+      //      Value := TStringList(ItemObject[i]).Strings[3];
+      //    cbChecked, cbGrayed:
+      //      Value := TStringList(ItemObject[i]).Strings[2];
+      //    end;
+
+      //  end;
+      iCheckBox, iRadioBtn:
+        begin
+          if Checked[i] then
+            Value := TStringList(ItemObject[i]).Strings[2]
+          else
+            Value := TStringList(ItemObject[i]).Strings[3];
+          if Trim(Value) <> '' then
+            AddToArrayS(Value, j);
+        end
       end;
-      if Trim(Value) <> '' then
-        AddToArrayS(Value, j);
-    end;
     SetLength(arraySettings, j);
   end;
 end;

@@ -154,8 +154,6 @@ Type: dirifempty; Name: "{app}\res_mods\configs\"
 Type: filesandordirs; Name: "{app}\xvm_uninst"
 Type: files; Name: "{app}\readme-*.txt"
 
-
-
 [Code]
 
 var

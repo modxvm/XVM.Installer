@@ -7,9 +7,9 @@
     "itemType": "checkBox",
     // true - пункт выбран. Значение по умолчанию true
     "checked": true,
-    // Файл изображения, если выбран пункт. Значение по умолчанию "empty.bmp"
+    // Файл изображения, если выбран пункт. Значение по умолчанию "empty.png"
     "imagesIfSelected": "",
-    // Файл изображения, если не выбран пункт. Значение по умолчанию "empty.bmp"
+    // Файл изображения, если не выбран пункт. Значение по умолчанию "empty.png"
     "imagesIfNotSelected": "",
     // Значение, если выбран пункт. Если параметр равен "", то изменения в конфиг не вносятся. Значение по умолчанию "".
     "valueIfSelected": "",
@@ -22,8 +22,8 @@
         "name": "Миникарта",
         "itemType": "checkBox",
         "checked": true,
-        "imagesIfSelected": "minimap_true.bmp",
-        "imagesIfNotSelected": "minimap_false.bmp",
+        "imagesIfSelected": "minimap_true.png",
+        "imagesIfNotSelected": "minimap_false.png",
         "valueIfSelected": "",
         "valueIfNotSelected": {
           // Название секции может быть любым
@@ -41,30 +41,50 @@
         "children": {
           "zoom_minimap": {
             "name": "Увеличение миникарты",
-            "checked": false,
-            "imagesIfSelected": "minimap_true.bmp",
-            "imagesIfNotSelected": "minimap_true.bmp",
-            "valueIfSelected": {
+            "checked": true,
+            "imagesIfSelected": "minimap_true.png",
+            "imagesIfNotSelected": "minimap_true.png",
+            "valueIfSelected": "",
+            "valueIfNotSelected": {
               "centerMinimap": {
-                "configFileName": "minimap.xc",
+                "configFileName": "hotkeys.xc",
                 "value": {
-                  "minimap": {
-                    "zoom":{
-                      "centered": true
+                  "hotkeys": {
+                    "minimapZoom":{
+                      "enabled": false
                     }
                   }
                 }
               }
             },
-            "valueIfNotSelected": ""
+            "children": {
+              "zoom_minimap": {
+                "name": "Увеличение по центру",
+                "checked": false,
+                "imagesIfSelected": "minimap_true.png",
+                "imagesIfNotSelected": "minimap_true.png",
+                "valueIfSelected": {
+                  "centerMinimap": {
+                    "configFileName": "minimap.xc",
+                    "value": {
+                      "minimap": {
+                        "zoom":{
+                          "centered": true
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       },
       "durationSixthSense": {
         "name": "Таймер шестого чувства 10 сек",
         "checked": false,
-        "imagesIfSelected": "durationSixthSense_true.bmp",
-        "imagesIfNotSelected": "durationSixthSense_false.bmp",
+        "imagesIfSelected": "durationSixthSense_true.png",
+        "imagesIfNotSelected": "durationSixthSense_false.png",
         "valueIfSelected": {
           "refTimer": {
             //Параметр задает способ изменения конфига. По умолчанию true.
@@ -115,8 +135,8 @@
       "playersPanel": {
         "name": "Панель игроков",
         "checked": true,
-        "imagesIfSelected": "playersPanel_true.bmp",
-        "imagesIfNotSelected": "playersPanel_false.bmp",
+        "imagesIfSelected": "playersPanel_true.png",
+        "imagesIfNotSelected": "playersPanel_false.png",
         "valueIfSelected": "",
         "valueIfNotSelected": {
           "disabledPlayersPanel": {
@@ -133,8 +153,8 @@
             "isCheckBox": true,
             "name": "Отображение статистики",
             "checked": true,
-            "imagesIfSelected": "pp_stat_true.bmp",
-            "imagesIfNotSelected": "pp_stat_false.bmp",        
+            "imagesIfSelected": "pp_stat_true.png",
+            "imagesIfNotSelected": "pp_stat_false.png",        
             "valueIfSelected": "",
             "valueIfNotSelected": {
               "notDisplayStatistic": {
@@ -163,8 +183,8 @@
       "fragCorrelation": {
         "name": "Отображать живых на панели счета",
         "checked": false,
-        "imagesIfSelected": "fragCorrelation_true.bmp",
-        "imagesIfNotSelected": "fragCorrelation_false.bmp",
+        "imagesIfSelected": "showAliveNotFrags_true.png",
+        "imagesIfNotSelected": "showAliveNotFrags_false.png",
         "valueIfSelected": {
           "showAlive": {
             "configFileName": "battle.xc",
@@ -180,8 +200,8 @@
       "hitlog": {
         "name": "Лог нанесенного урона",
         "checked": true,
-        "imagesIfSelected": "hitlog_true.bmp",
-        "imagesIfNotSelected": "",
+        "imagesIfSelected": "hitlog_true.png",
+        "imagesIfNotSelected": "hitlog_false.png",
         "valueIfSelected": "",
         "valueIfNotSelected": {
           "hitlog_disabled": {
@@ -199,8 +219,8 @@
           "hitlog_header": {
             "name": "Общий заголовок (шапка)",
             "checked": false,
-            "imagesIfSelected": "hitlog_header_true.bmp",
-            "imagesIfNotSelected": "",
+            "imagesIfSelected": "hitlog_header_true.png",
+            "imagesIfNotSelected": "hitlog_true.png",
             "valueIfSelected": {
               "header_disabled": {
                 "configFileName": "battleLabelsTemplates.xc",
@@ -208,6 +228,12 @@
                   "def": {
                     "hitlogHeader": {
                       "enabled": true
+                    },
+                    "totalEfficiency": {
+                      "updateEvent": "PY(ON_TOTAL_EFFICIENCY)",
+                      "screenVAlign": "bottom",
+                      "x": 244,
+                      "y": 0
                     }
                   }
                 }
@@ -220,8 +246,8 @@
       "damageLog": {
         "name": "Лог полученного урона",
         "checked": true,
-        "imagesIfSelected": "damageLog_true.bmp",
-        "imagesIfNotSelected": "",
+        "imagesIfSelected": "damageLog_true.png",
+        "imagesIfNotSelected": "damageLog_false.png",
         "valueIfSelected": "",
         "valueIfNotSelected": {
           "damageLog_disabled": {
@@ -231,61 +257,14 @@
                 "enabled": false
               }
             }
-          },
-          "damageLog_bl_disabled": {
-            "configFileName": "battleLabelsTemplates.xc",
-            "value": {
-              "def": {
-                "damageLog": {
-                  "enabled": false
-                },
-                "lastHit": {
-                  "enabled": false
-                }
-              }
-            }
           }
         },
         "children": {
-          "wg_DetailStats": {
-            "name": "Отключить стандартный детальный урон",
-            "checked": true,
-            "imagesIfSelected": "",
-            "imagesIfNotSelected": "",
-            "valueIfSelected": "",
-            "valueIfNotSelected": {
-              "wgds_enabled": {
-                "configFileName": "damageLog.xc",
-                "value": {
-                  "damageLog": {
-                    "disabledDetailStats": false
-                  }
-                }
-              }
-            }
-          },
-          "wg_SummaryStats": {
-            "name": "Отключить стандартный суммарный урон",
-            "checked": true,
-            "imagesIfSelected": "",
-            "imagesIfNotSelected": "",
-            "valueIfSelected": "",
-            "valueIfNotSelected": {
-              "wgss_enabled": {
-                "configFileName": "damageLog.xc",
-                "value": {
-                  "damageLog": {
-                    "disabledSummaryStats": false
-                  }
-                }
-              }
-            }
-          },
           "damageLog_bg": {
             "name": "Подложка лога полученного урона",
             "checked": false,
-            "imagesIfSelected": "damageLog_bg_true.bmp",
-            "imagesIfNotSelected": "",
+            "imagesIfSelected": "damageLog_bg_true.png",
+            "imagesIfNotSelected": "damageLog_true.png",
             "valueIfSelected": {
               "bg_enabled": {
                 "configFileName": "battleLabelsTemplates.xc",
@@ -305,8 +284,8 @@
       "totalEfficiency": {
         "name": "Панель эффективности",
         "checked": true,
-        "imagesIfSelected": "totalEfficiency_true.bmp",
-        "imagesIfNotSelected": "",
+        "imagesIfSelected": "totalEfficiency_true.png",
+        "imagesIfNotSelected": "totalEfficiency_false.png",
         "valueIfSelected": "",
         "valueIfNotSelected": {
           "te_disabled": {
@@ -324,8 +303,8 @@
       "repairTime": {
         "name": "Таймер ремонта модулей",
         "checked": true,
-        "imagesIfSelected": "repairTime_true.bmp",
-        "imagesIfNotSelected": "",
+        "imagesIfSelected": "repairTime_true.png",
+        "imagesIfNotSelected": "repairTime_false.png",
         "valueIfSelected": "",
         "valueIfNotSelected": {
           "rt_disabled": {
@@ -358,8 +337,8 @@
       "hp_panel": {
         "name": "Индикатор общего ХП команд",
         "checked": true,
-        "imagesIfSelected": "hp_panel_true.bmp",
-        "imagesIfNotSelected": "",
+        "imagesIfSelected": "hp_panel_true.png",
+        "imagesIfNotSelected": "hp_panel_false.png",
         "valueIfSelected": "",
         "valueIfNotSelected": {
           "hppl_disabled": {
@@ -377,8 +356,8 @@
           "avgDamage": {
             "name": "Средний урон на текущей технике",
             "checked": true,
-            "imagesIfSelected": "avgDamage_true.bmp",
-            "imagesIfNotSelected": "",
+            "imagesIfSelected": "avgDamage_true.png",
+            "imagesIfNotSelected": "avgDamage_false.png",
             "valueIfSelected": "",
             "valueIfNotSelected": {
               "avgDamage_disabled": {
@@ -396,8 +375,8 @@
           "mainGun": {
             "name": "Урон для основного калибра",
             "checked": true,
-            "imagesIfSelected": "mainGun_true.bmp",
-            "imagesIfNotSelected": "",
+            "imagesIfSelected": "mainGun_true.png",
+            "imagesIfNotSelected": "mainGun_false.png",
             "valueIfSelected": "",
             "valueIfNotSelected": {
               "mainGun_disabled": {
@@ -419,24 +398,16 @@
   "hangar": {
     "name": "Ангар",
     "checked": true,
-    "imagesIfSelected": "",
-    "imagesIfNotSelected": "",
-    "valueIfSelected": "",
-    "valueIfNotSelected": "",
     "children": {
       "widgets": {
         "name": "Виждеты",
         "checked": true,
-        "imagesIfSelected": "",
-        "imagesIfNotSelected": "",
-        "valueIfSelected": "",
-        "valueIfNotSelected": "",
         "children": {
           "clock_widgets": {
             "name": "Виждет часов",
             "checked": true,
-            "imagesIfSelected": "clock_true.bmp",
-            "imagesIfNotSelected": "",
+            "imagesIfSelected": "clock_true.png",
+            "imagesIfNotSelected": "clock_false.png",
             "valueIfSelected": {
               "clock_enabled": {
                 "configFileName": "widgetsTemplates.xc",
@@ -461,8 +432,8 @@
           "statistics_widgets": {
             "name": "Виждет статистики",
             "checked": true,
-            "imagesIfSelected": "statistics_true.bmp",
-            "imagesIfNotSelected": "",
+            "imagesIfSelected": "statistics_true.png",
+            "imagesIfNotSelected": "statistics_false.png",
             "valueIfSelected": {
               "statistics_enabled": {
                 "configFileName": "widgetsTemplates.xc",
@@ -490,6 +461,7 @@
   },
   "sounds": {
     "name": "Звуки",
+    "itemType": "checkBox",
     "checked": true,
     "imagesIfSelected": "",
     "imagesIfNotSelected": "",
