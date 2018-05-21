@@ -31,6 +31,10 @@ external 'JSON_GetArrayValueW_S@files:innoextensions.dll cdecl';
 procedure IMAGEDRAW_PngToBmp(FileName: String);
 external 'IMAGEDRAW_PngToBmp@files:innoextensions.dll cdecl';
 
+//UNPACK
+function UNPACK_divide(Path: String; FileName: String): Byte;
+external 'UNPACK_divide@files:innoextensions.dll cdecl';
+
 //PROCESS
 function PROCESS_GetRunningInDirectoryW(DirectoryPth: String; Buffer: String; BufferSize: Integer): Boolean;
 external 'PROCESS_GetRunningInDirectoryW@files:innoextensions.dll cdecl';

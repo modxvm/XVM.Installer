@@ -1,5 +1,2 @@
 syntax: glob
-temp\l10n_result\lang.iss
-temp\changelogs\ChangeLog-ru.txt
-temp\defines\xvm_defines.iss
-temp\l10n_download\en.islu.tpl
+temp\*

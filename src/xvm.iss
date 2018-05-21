@@ -51,7 +51,6 @@ Filename: http://modxvm.com/; Description: "{cm:websiteXVM}"; Flags: postinstall
 Source: "{app}\res_mods\configs\*"; DestDir: "{app}\xvm_backup\configs"; Tasks: xvmbackup; Flags: external skipifsourcedoesntexist createallsubdirs recursesubdirs uninsneveruninstall
 ;Source: "..\..\..\~output\*"; DestDir: "{app}"; Flags: createallsubdirs recursesubdirs
 Source: "dll\innoextensions.dll"; Flags: dontcopy
-Source: "utils\merg_f.exe"; Flags: dontcopy
 
 
 [InstallDelete]
@@ -231,8 +230,6 @@ function InitializeSetup(): Boolean;
 begin
   FNameSettings := 'default.xc';
   SelectPreset:= 'default';
-  DirTemp := ExpandConstant('{tmp}\') + SelectPreset;
-  ExtractTemporaryFile('merg_f.exe');
   Result := True;
 end;
 

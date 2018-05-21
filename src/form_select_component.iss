@@ -29,8 +29,8 @@ var
 begin
   DirTemp := ExpandConstant('{tmp}\') + SelectPreset;
   ExtractTemporaryFile(SelectPreset + '.mrg');
-  if not Exec(ExpandConstant('{tmp}\merg_f.exe'), ' -d ' + SelectPreset + '.mrg ' + DirTemp, ExpandConstant('{tmp}'), SW_HIDE, ewWaitUntilTerminated, ResultCode) then
-    MsgBox(SysErrorMessage(ResultCode) , mbInformation, MB_OK);
+  ResultCode := UNPACK_divide(DirTemp + '\', DirTemp + '.mrg');
+  MsgBox(intToStr(ResultCode) , mbInformation, MB_OK);
 end;
 
 procedure CopyingAdditionalFiles(AdditionalFiles : String);
@@ -282,7 +282,8 @@ begin
       ImageNameBMP := DirTemp + '\images\' + ChangeFileExt(ImageName, '.bmp');
       if (AnsiLowercase(ExtractFileExt(ImageName)) = '.png') and not FileExists(ImageNameBMP)then
         IMAGEDRAW_PngToBmp(DirTemp + '\images\' + ImageName);
-      Image.Bitmap.LoadFromFile(ImageNameBMP);
+      if FileExists(ImageNameBMP) then
+        Image.Bitmap.LoadFromFile(ImageNameBMP);
     except
       //ShowExceptionMessage;
     end;
