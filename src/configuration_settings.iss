@@ -4,8 +4,8 @@
 [Files]
 Source: "SettingsInstall\{#DEFAULT}\config\*"; DestDir: "{app}"; Flags: createallsubdirs recursesubdirs
 Source: "SettingsInstall\{#DEFAULT}\{#DEFAULT}.mrg"; Flags: dontcopy
-Source: "SettingsInstall\{#DEFAULT_CB}\config\*"; DestDir: "{app}"; Flags: createallsubdirs recursesubdirs
-Source: "SettingsInstall\{#DEFAULT_CB}\{#DEFAULT_CB}.mrg"; Flags: dontcopy
+;Source: "SettingsInstall\{#DEFAULT_CB}\config\*"; DestDir: "{app}"; Flags: createallsubdirs recursesubdirs
+;Source: "SettingsInstall\{#DEFAULT_CB}\{#DEFAULT_CB}.mrg"; Flags: dontcopy
 
 [Components]
 Name: "default"; Description: "Config default XVM"; Types: default
@@ -13,7 +13,7 @@ Name: "default"; Description: "Config default XVM"; Types: default
 
 [Types]
 Name: {#DEFAULT}; Description: "Default config"
-Name: {#DEFAULT_CB}; Description: "Default config (color_blindness)"
+;Name: {#DEFAULT_CB}; Description: "Default config (color_blindness)"
 
 [Code]
 
