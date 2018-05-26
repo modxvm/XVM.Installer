@@ -51,6 +51,7 @@ Filename: http://modxvm.com/; Description: "{cm:websiteXVM}"; Flags: postinstall
 Source: "{app}\res_mods\configs\*"; DestDir: "{app}\xvm_backup\configs"; Tasks: xvmbackup; Flags: external skipifsourcedoesntexist createallsubdirs recursesubdirs uninsneveruninstall
 ;Source: "..\..\..\~output\*"; DestDir: "{app}"; Flags: createallsubdirs recursesubdirs
 Source: "dll\innoextensions.dll"; Flags: dontcopy
+Source: "dll\bass.dll"; Flags: dontcopy
 
 
 [InstallDelete]
@@ -96,9 +97,9 @@ Type: filesandordirs; Name: "{app}\res_mods\mods\xfw"
 ;configs\xvm\py_macro
 Type: filesandordirs; Name: "{app}\res_mods\configs\xvm\py_macro\xvm\*.pyc"
 Type: filesandordirs; Name: "{app}\res_mods\configs\xvm\py_macro\*.pyc"
-Type: dirifempty; Name: "{app}\res_mods\сonfigs\xvm\py_macro\"
-Type: dirifempty; Name: "{app}\res_mods\сonfigs\xvm\"
-Type: dirifempty; Name: "{app}\res_mods\сonfigs\"
+Type: dirifempty; Name: "{app}\res_mods\Configs\xvm\py_macro\"
+Type: dirifempty; Name: "{app}\res_mods\Configs\xvm\"
+Type: dirifempty; Name: "{app}\res_mods\Configs\"
 
 Type: filesandordirs; Name: "{app}\xvm_uninst"
 Type: files; Name: "{app}\readme-*.txt"
@@ -154,10 +155,10 @@ Type: filesandordirs; Name: "{app}\xvm_uninst"
 Type: files; Name: "{app}\readme-*.txt"
 
 [Code]
-
-var
+var
   WotList: TNewComboBox;
   Buffer: String;
+
 
 procedure WotList_Update();
 var
@@ -257,8 +258,6 @@ begin  WizardForm.TypesCombo.OnChange := @TypesComboOnChange;
           
   WotList_Update();
 end;
-
-
 
 procedure CurPageChanged(CurPage: Integer);
 begin

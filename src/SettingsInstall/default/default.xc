@@ -168,12 +168,12 @@
         "imagesIfNotSelected": "durationSixthSense_false.png",
         "valueIfSelected": {
           "refTimer": {
-            //Параметр задает способ изменения конфига. По умолчанию true.
-            //true -  значения массива добавляются.
-            //false - массив полностью заменяется.
+            // Параметр задает способ изменения конфига. По умолчанию true.
+            // true -  значения массива добавляются.
+            // false - массив полностью заменяется.
             "isAdd": true,
-            //В данном параметре задаются через запятую файлы, которые необходимо скопировать в дирокторию игры.
-            //В данном примере исходный файл расположен "SettingsInstall/default/files/res_mods/configs/xvm/py_macro/sixthSense.py".
+            // В данном параметре задаются через запятую файлы, которые необходимо скопировать в директорию игры.
+            // В данном примере исходный файл расположен "SettingsInstall/default/files/res_mods/configs/xvm/py_macro/sixthSense.py".
             // Если пользователь выбрал данный пункт, то файл будет скопирован в "Каталог_игры/res_mods/configs/xvm/py_macro/sixthSense.py".
             "@files": ["res_mods/configs/xvm/py_macro/sixthSense.py"],
             "configFileName": "battleLabels.xc",
@@ -473,6 +473,156 @@
             }
           }
         }
+      },
+      "postmortemTips": {
+        "name": "Отключить всплывающую внизу панель после смерти",
+        "checked": true,
+        "imagesIfSelected": "",
+        "imagesIfNotSelected": "",
+        "valueIfSelected": "",
+        "valueIfNotSelected": {
+          "pt_disabled": {
+            "configFileName": "battle.xc",
+            "value": {
+              "battle": {
+                "showPostmortemTips": false
+              }
+            }
+          }
+        }
+      },
+      "camera": {
+        "name": "Параметры камеры",
+        "checked": false,
+        "imagesIfSelected": "",
+        "imagesIfNotSelected": "",
+        "valueIfSelected": "",
+        "valueIfNotSelected": "",
+        "children": {
+          "zoomIndicator": {
+            "name": "Индикатор масштаба",
+            "checked": true,
+            "imagesIfSelected": "zoomIndicator_true.png",
+            "imagesIfNotSelected": "zoomIndicator_false.png",
+            "valueIfSelected": "",
+            "valueIfNotSelected": {
+              "szi_disabled": {
+                "configFileName": "camera.xc",
+                "value": {
+                  "camera": {
+                    "sniper": {
+                      "zoomIndicator": {
+                        "enabled": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "noFlashBang": {
+            "name": "Отключить красную вспышку (враг попадает по вам)",
+            "checked": false,
+            "imagesIfSelected": "",
+            "imagesIfNotSelected": "",
+            "valueIfSelected": {
+              "nfb_enabled": {
+                "configFileName": "camera.xc",
+                "value": {
+                  "camera": {
+                    "noFlashBang": true
+                  }
+                }
+              }
+            },
+            "valueIfNotSelected": ""
+          },
+          "hideHint": {
+            "name": "Cкрыть подсказки (переход в осадный режим, альт.режим АРТ-САУ)",
+            "checked": false,
+            "imagesIfSelected": "hideHint_true.png",
+            "imagesIfNotSelected": "hideHint_false.png",
+            "valueIfSelected": {
+              "hh_enabled": {
+                "configFileName": "camera.xc",
+                "value": {
+                  "camera": {
+                    "hideHint": true
+                  }
+                }
+              }
+            },
+            "valueIfNotSelected": ""
+          },
+          "noBinoculars": {
+            "name": "Отключить затемнение и озеленение в снайперском прицеле",
+            "checked": false,
+            "imagesIfSelected": "noBinoculars_true.png",
+            "imagesIfNotSelected": "noBinoculars_false.png",
+            "valueIfSelected": {
+              "snb_enabled": {
+                "configFileName": "camera.xc",
+                "value": {
+                  "camera": {
+                    "sniper": {
+                      "noBinoculars": true
+                    }
+                  }
+                }
+              }
+            },
+            "valueIfNotSelected": ""
+          },
+          "shotRecoilEffect": {
+            "name": "Отключить эффект отдачи от выстрела",
+            "checked": false,
+            "imagesIfSelected": "",
+            "imagesIfNotSelected": "",
+            "valueIfSelected": {
+              "sre_disabled": {
+                "configFileName": "camera.xc",
+                "value": {
+                  "camera": {
+                    "arcade": {
+                      "shotRecoilEffect": false
+                    },
+                    "postmortem": {
+                      "shotRecoilEffect": false
+                    },
+                    "strategic": {
+                      "shotRecoilEffect": false
+                    },
+                    "sniper": {
+                      "shotRecoilEffect": false
+                    }
+                  }
+                }
+              }
+            },
+            "valueIfNotSelected": ""
+          },
+          "noCameraLimit": {
+            "name": "Отключение предела вращения камеры (для техники с ограниченными УГН)",
+            "checked": false,
+            "imagesIfSelected": "",
+            "imagesIfNotSelected": "",
+            "valueIfSelected": {
+              "ncl_enabled": {
+                "configFileName": "camera.xc",
+                "value": {
+                  "camera": {
+                    "sniper": {
+                      "noCameraLimit": {
+                        "enabled": true
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "valueIfNotSelected": ""
+          }
+        }
       }
     }
   },
@@ -537,6 +687,288 @@
             }
           }
         }
+      },
+      "pingServers": {
+        "name": "Пинг серверов",
+        "checked": false,
+        "imagesIfSelected": "",
+        "imagesIfNotSelected": "",
+        "valueIfSelected": "",
+        "valueIfNotSelected": "",
+        "children": {
+          "ping_login": {
+            "name": "На экране логина",
+            "checked": false,
+            "imagesIfSelected": "",
+            "imagesIfNotSelected": "",
+            "valueIfSelected": {
+              "ping_enabled": {
+                "configFileName": "login.xc",
+                "value": {
+                  "login": {
+                    "pingServers": {
+                      "enabled": true
+                    }
+                  }
+                }
+              }
+            },
+            "valueIfNotSelected": ""
+          },
+          "ping_hangar": {
+            "name": "В ангаре",
+            "checked": false,
+            "imagesIfSelected": "",
+            "imagesIfNotSelected": "",
+            "valueIfSelected": {
+              "ping_enabled": {
+                "configFileName": "hangar.xc",
+                "value": {
+                  "hangar": {
+                    "pingServers": {
+                      "enabled": true
+                    }
+                  }
+                }
+              }
+            },
+            "valueIfNotSelected": ""
+          }
+        }
+      },
+      "onlineServers": {
+        "name": "Онлайн серверов",
+        "checked": false,
+        "imagesIfSelected": "",
+        "imagesIfNotSelected": "",
+        "valueIfSelected": "",
+        "valueIfNotSelected": "",
+        "children": {
+          "online_login": {
+            "name": "На экране логина",
+            "checked": false,
+            "imagesIfSelected": "",
+            "imagesIfNotSelected": "",
+            "valueIfSelected": {
+              "online_enabled": {
+                "configFileName": "login.xc",
+                "value": {
+                  "login": {
+                    "onlineServers": {
+                      "enabled": true
+                    }
+                  }
+                }
+              }
+            },
+            "valueIfNotSelected": ""
+          },
+          "online_hangar": {
+            "name": "В ангаре",
+            "checked": false,
+            "imagesIfSelected": "",
+            "imagesIfNotSelected": "",
+            "valueIfSelected": {
+              "online_enabled": {
+                "configFileName": "hangar.xc",
+                "value": {
+                  "hangar": {
+                    "onlineServers": {
+                      "enabled": true
+                    }
+                  }
+                }
+              }
+            },
+            "valueIfNotSelected": ""
+          }
+        }
+      },
+      "saveLastServer": {
+        "name": "Сохранять последний сервер",
+        "checked": false,
+        "imagesIfSelected": "",
+        "imagesIfNotSelected": "",
+        "valueIfSelected": {
+          "sls_enabled": {
+            "configFileName": "login.xc",
+            "value": {
+              "login": {
+                "saveLastServer": true
+              }
+            }
+          }
+        },
+        "valueIfNotSelected": "",
+        "children": {
+          "autologin": {
+            "name": "Автоматический вход в игру",
+            "checked": false,
+            "imagesIfSelected": "",
+            "imagesIfNotSelected": "",
+            "valueIfSelected": {
+              "autologin_enabled": {
+                "configFileName": "login.xc",
+                "value": {
+                  "login": {
+                    "autologin": true
+                  }
+                }
+              }
+            },
+            "valueIfNotSelected": ""
+          }
+        }
+      }
+    }
+  },
+  "color_theme": {
+    "name": "Цветовая схема",
+    "itemType": "group",
+    "checked": false,
+    "imagesIfSelected": "",
+    "imagesIfNotSelected": "",
+    "valueIfSelected": "",
+    "valueIfNotSelected": "",
+    "children": {
+      "color_blindness": {
+        "name": "Цветовая слепота",
+        "checked": false,
+        "imagesIfSelected": "color_blindness_true.png",
+        "imagesIfNotSelected": "color_blindness_false.png",
+        "valueIfSelected": {
+          "cb_login": {
+            "@files": [
+              "res_mods/mods/shared_resources/xvm/res/icons/carousel/damage.png"
+            ],
+            "configFileName": "login.xc",
+            "value": {
+              "login": {
+                "pingServers": {
+                  "fontStyle": {
+                    "color": {
+                      "bad": "0x3399CC"
+                    }
+                  }
+                },
+                "onlineServers": {
+                  "fontStyle": {
+                    "color": {
+                      "bad": "0x3399CC"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "cb_hangar": {
+            "configFileName": "hangar.xc",
+            "value": {
+              "hangar": {
+                "pingServers": {
+                  "fontStyle": {
+                    "color": {
+                      "bad": "0x3399CC"
+                    }
+                  }
+                },
+                "onlineServers": {
+                  "fontStyle": {
+                    "color": {
+                      "bad": "0x3399CC"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "cb_mm_circles": {
+            "configFileName": "minimapCircles.xc",
+            "isAdd": false,
+            "value": {
+              "circles": {
+                "view": [
+                  { "enabled":  true, "distance": "blindarea", "scale": 1, "thickness": 0.75, "alpha": 80, "color": "0x3EB5F1" },
+                  { "enabled":  true, "distance": 445,         "scale": 1, "thickness":  1.1, "alpha": 45, "color": "0xFFCC66" },
+                  { "enabled": "{{my-vtype-key=SPG?false|true}}", "distance": 564, "scale": 1, "thickness": 0.7, "alpha": 40, "color": "0xFFFFFF" },
+                  { "enabled": true, "distance": 50,           "scale": 1, "thickness": 0.75, "alpha": 60, "color": "0xFFFFFF" },
+                  { "enabled": false, "distance": "standing",  "scale": 1, "thickness":  1.0, "alpha": 60, "color": "0x887EFF" },
+                  { "enabled": false, "distance": "motion",    "scale": 1, "thickness":  1.0, "alpha": 60, "color": "0x0000FF" },
+                  { "enabled": false, "distance": "dynamic",   "scale": 1, "thickness":  1.0, "alpha": 60, "color": "0x3EB5F1" }
+                ],
+                "artillery": { "enabled": true, "alpha": 55, "color": "0x3C3C6D", "thickness": 0.5 },
+                "shell": { "enabled": true, "alpha": 55, "color": "0x3C3C6D", "thickness": 0.5 }
+              }
+            }
+          },
+          "cb_mm_labels": {
+            "configFileName": "minimapLabelsData.xc",
+            "value": {
+              "labelsData": {
+                "colors": {
+                  "txt": {
+                    "enemy_alive": "#A8A4D7",
+                    "enemy_dead": "#7F90A8",
+                    "enemy_blowedup": "#7F90A8"
+                  },
+                  "dot": {
+                    "enemy_alive": "#F50800",
+                    "enemy_dead": "#47407A",
+                    "enemy_blowedup": "#47407A"
+                  },
+                  "lostDot": {
+                    "enemy_alive": "#A4ACD6",
+                    "enemy_dead": "#47407A",
+                    "enemy_blowedup": "#47407A"
+                  }
+                }
+              }
+            }
+          },
+          "damageLog_bg": {
+            "configFileName": "damageLog.xc",
+            "@files": ["res_mods/mods/shared_resources/xvm/res/icons/damageLog/cb_dmg.png"],
+            "value": {
+              "damageLog": {
+                "logBackground": {
+                  "formatHistory": "<img height='20' width='310' src='xvm://res/icons/damageLog/{{dmg=0?no_dmg|cb_dmg}}.png'>"
+                },
+                "logAltBackground": {
+                  "formatHistory": "<img height='20' width='310' src='xvm://res/icons/damageLog/{{dmg=0?no_dmg|cb_dmg}}.png'>"
+                }            
+              }
+            }
+          },
+          "cb_colors": {
+            "configFileName": "colors.xc",
+            "@files": ["res_mods/configs/xvm/py_macro/systemColor.py"],
+            "value": {
+              "def": {
+                "en": "0x8379FE",
+                "colorRating": {
+                  "very_bad": "0x9C3E00"
+                },
+                "colorHP": {
+                  "very_low": "0x3355CC",
+                  "low": "0x3399CC"
+                }
+              },
+              "colors": {
+                "system": {
+                  "enemy_dead": "0x47407A",
+                  "enemy_blowedup": "0x3B365F"
+                },
+                "dmg_kind": {
+                  "fire": "0x756CE0"
+                },
+                "vtype": {
+                  "HT": "0x3399CC"
+                }
+              }
+            }
+          }
+        },
+        "valueIfNotSelected": ""
       }
     }
   },
@@ -563,6 +995,10 @@
         "checked": true,
         "imagesIfSelected": "",
         "imagesIfNotSelected": "",
+        // Имя звукового файла (mp3, ogg), который будет проигран, если пункт выбран. Значение по умолчанию ""
+        "soundIfSelected": "sixthSenseXVM.mp3",
+        // Имя звукового файла (mp3, ogg), который будет проигран, если пункт не выбран. Значение по умолчанию ""
+        "soundIfNotSelected": "sixthSenseWoT_1.mp3",
         "valueIfSelected": "",
         "valueIfNotSelected": {
           "sixthSense_disabled": {

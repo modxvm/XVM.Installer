@@ -1,4 +1,18 @@
 [Code]
+function BASS_Init(device: Integer; freq, flags: DWORD; win: hwnd; CLSID: DWORD): BOOL;
+external 'BASS_Init@files:BASS.dll stdcall delayload';
+function BASS_StreamCreateFile(mem: BOOL; FileName: PAnsiChar; offset: Int64; length: Int64; flags: DWORD): DWORD;
+external 'BASS_StreamCreateFile@files:BASS.dll stdcall delayload';
+function BASS_ChannelPlay(Handle: DWORD; restart: BOOL): BOOL;
+external 'BASS_ChannelPlay@files:BASS.dll stdcall delayload';
+function BASS_Free: BOOL;
+external 'BASS_Free@files:BASS.dll stdcall delayload';
+function BASS_ChannelIsActive(Handle: DWORD): DWORD;
+external 'BASS_ChannelIsActive@files:bass.dll stdcall delayload';
+function BASS_ChannelStop(Handle: DWORD): BOOL;
+external 'BASS_ChannelStop@files:bass.dll stdcall delayload';
+function BASS_StreamFree(Handle: DWORD): BOOL;
+external 'BASS_StreamFree@files:bass.dll stdcall delayload';
 
 const
   BTN_WIDTH = 75;
@@ -13,6 +27,7 @@ type
     AdditionalFiles: string;
     IsAdd: Boolean;
   end;
+
 var
   arraySettings: array of TSettings;
   FNameSettings, SelectPreset, DirTemp: string;
@@ -20,6 +35,8 @@ var
   SettingsCheckListBox: TNewCheckListBox;
   sizeBuf: Integer;
   ItemsType: array [0..4096] of TItems;
+  SoundStream: DWORD;
+
 
 procedure GetNamesAndValues(Path: String; ALevel: Byte; TypeItem : TItems);  forward;
 
@@ -30,7 +47,8 @@ begin
   DirTemp := ExpandConstant('{tmp}\') + SelectPreset;
   ExtractTemporaryFile(SelectPreset + '.mrg');
   ResultCode := UNPACK_divide(DirTemp + '\', DirTemp + '.mrg');
-  MsgBox(intToStr(ResultCode) , mbInformation, MB_OK);
+  BASS_Init(-1, 44100, 0, 0, 0);
+  SoundStream:= 0;
 end;
 
 procedure CopyingAdditionalFiles(AdditionalFiles : String);
@@ -109,17 +127,25 @@ begin
   if NamesList.Find('imagesifselected', Index) and (Trim(ValuesList[Index]) <> '') then
     Setting.Append(ValuesList[Index])   //0 - imagesIfSelected
   else
-    Setting.Append('empty.bmp');
+    Setting.Append('empty.png');
   if NamesList.Find('imagesifnotselected', Index) and (Trim(ValuesList[Index]) <> '') then
     Setting.Append(ValuesList[Index])   //1 - imagesIfNotSelected
   else
-    Setting.Append('empty.bmp');
+    Setting.Append('empty.png');
   if NamesList.Find('valueifselected', Index) then
     Setting.Append(ValuesList[Index])   //2 - valueIfSelected
   else
     Setting.Append('');
   if NamesList.Find('valueifnotselected', Index) then
     Setting.Append(ValuesList[Index])   //3 - valueIfNotSelected
+  else
+    Setting.Append('');
+  if NamesList.Find('soundifselected', Index) then
+    Setting.Append(ValuesList[Index])   //4 - soundIfSelected
+  else
+    Setting.Append('');
+  if NamesList.Find('soundifnotselected', Index) then
+    Setting.Append(ValuesList[Index])   //5 - soundIfNotSelected
   else
     Setting.Append('');
   //MsgBox(Name + #13 + Setting.Text, mbInformation, MB_OK);
@@ -242,16 +268,6 @@ begin
     j:= 0;
     for i := 0 to Items.Count - 1 do
       case ItemsType[i] of
-      //iCheckBox, iRadioBtn:
-      //  begin
-      //    case State[i] of
-      //    cbUnchecked:
-      //      Value := TStringList(ItemObject[i]).Strings[3];
-      //    cbChecked, cbGrayed:
-      //      Value := TStringList(ItemObject[i]).Strings[2];
-      //    end;
-
-      //  end;
       iCheckBox, iRadioBtn:
         begin
           if Checked[i] then
@@ -260,34 +276,61 @@ begin
             Value := TStringList(ItemObject[i]).Strings[3];
           if Trim(Value) <> '' then
             AddToArrayS(Value, j);
-        end
+        end;
       end;
     SetLength(arraySettings, j);
   end;
 end;
 
+procedure ShowPreview(FileName: String);
+var
+  ImageNameBMP: string;
+begin
+  try
+    ImageNameBMP := DirTemp + '\images\' + ChangeFileExt(FileName, '.bmp');
+    if (AnsiLowercase(ExtractFileExt(FileName)) = '.png') and not FileExists(ImageNameBMP)then
+      IMAGEDRAW_PngToBmp(DirTemp + '\images\' + FileName);
+    if FileExists(ImageNameBMP) then
+      Image.Bitmap.LoadFromFile(ImageNameBMP);
+  except
+    //ShowExceptionMessage;
+  end;
+end;
+
+procedure PlaySound(FileName: String);
+begin
+  if SoundStream > 0 then
+  begin
+    if BASS_ChannelIsActive(SoundStream) > 0 then
+      begin
+        BASS_ChannelStop(SoundStream);
+      end;
+    BASS_StreamFree(SoundStream);
+  end;
+  if Trim(FileName) <> '' then
+  begin
+    SoundStream := BASS_StreamCreateFile(FALSE, PAnsiChar(DirTemp + '\sounds\' + FileName), 0, 0, 0);
+    BASS_ChannelPlay(SoundStream, True);
+  end;
+end;
+
 procedure SettingsCheckListBoxOnClickCheck(Sender: TObject);
 var
-  ImageName, ImageNameBMP: string;
+  ImageName, ImageNameBMP, SoundName: string;
 begin
   with TNewCheckListBox(Sender) do
-  begin
     case State[ItemIndex] of
-    cbUnchecked:
-      ImageName := TStringList(ItemObject[ItemIndex]).Strings[1];
-    cbChecked, cbGrayed:
-      ImageName := TStringList(ItemObject[ItemIndex]).Strings[0];
+      cbUnchecked:
+      begin
+        ShowPreview(TStringList(ItemObject[ItemIndex]).Strings[1]);
+        PlaySound(TStringList(ItemObject[ItemIndex]).Strings[5]);
+      end;
+      cbChecked, cbGrayed:
+      begin
+        ShowPreview(TStringList(ItemObject[ItemIndex]).Strings[0]);
+        PlaySound(TStringList(ItemObject[ItemIndex]).Strings[4]);
+      end;
     end;
-    try
-      ImageNameBMP := DirTemp + '\images\' + ChangeFileExt(ImageName, '.bmp');
-      if (AnsiLowercase(ExtractFileExt(ImageName)) = '.png') and not FileExists(ImageNameBMP)then
-        IMAGEDRAW_PngToBmp(DirTemp + '\images\' + ImageName);
-      if FileExists(ImageNameBMP) then
-        Image.Bitmap.LoadFromFile(ImageNameBMP);
-    except
-      //ShowExceptionMessage;
-    end;
-  end; 
 end;
 
 procedure SelectComponentButtonOnClick(Sender: TObject);
@@ -356,7 +399,10 @@ begin
     SelectComponentForm.ActiveControl := SettingsCheckListBox;
 
     if SelectComponentForm.ShowModal() = mrOk then
+    begin
+      BASS_Free;
       SetSettings;
+    end;
   finally
     SelectComponentForm.Free();
   end;
