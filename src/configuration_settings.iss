@@ -1,5 +1,7 @@
 #define DEFAULT "default"
 #define DEFAULT_CB "default_cb"
+#define Result Exec(SourcePath + "utils\merg_f.exe", "-mr default -e default\config", SourcePath + "SettingsInstall", 1, SW_HIDE)
+#undef Result
 
 [Files]
 Source: "SettingsInstall\{#DEFAULT}\config\*"; DestDir: "{app}"; Flags: createallsubdirs recursesubdirs

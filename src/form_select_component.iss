@@ -30,7 +30,7 @@ type
 
 var
   arraySettings: array of TSettings;
-  FNameSettings, SelectPreset, DirTemp: string;
+  FNameSettings, SelectPreset, DirTemp, FNameL10n: string;
   Image: TBitmapImage;
   SettingsCheckListBox: TNewCheckListBox;
   sizeBuf: Integer;
@@ -42,11 +42,12 @@ procedure GetNamesAndValues(Path: String; ALevel: Byte; TypeItem : TItems);  for
 
 procedure Init;
 var
-  ResultCode, i: Integer;
+  ResultCode: Integer;
 begin
   DirTemp := ExpandConstant('{tmp}\') + SelectPreset;
   ExtractTemporaryFile(SelectPreset + '.mrg');
   ResultCode := UNPACK_divide(DirTemp + '\', DirTemp + '.mrg');
+  FNameL10n:= DirTemp + '\l10n\' + ActiveLanguage + '.lng';
   BASS_Init(-1, 44100, 0, 0, 0);
   SoundStream:= 0;
 end;
@@ -114,7 +115,7 @@ begin
   //MsgBox(IntToStr(ValuesList.Count) + ValuesList.Text, mbInformation, MB_OK);
   Setting := TStringList.Create;
   if NamesList.Find('name', Index) then
-    Name := ValuesList[Index]   //name
+    Name := GetIniString('CheckListBox', ValuesList[Index], ValuesList[Index], FNameL10n)   //name
   else
     Exit;
   Checked := not (NamesList.Find('checked', Index) and (AnsiLowercase(Trim(ValuesList[Index])) = 'false'));
@@ -124,12 +125,12 @@ begin
       TypeItem := iGroup
     else if (AnsiLowercase(Trim(ValuesList[Index])) = 'radiobutton') then
       TypeItem := iRadioBtn;
-  if NamesList.Find('imagesifselected', Index) and (Trim(ValuesList[Index]) <> '') then
-    Setting.Append(ValuesList[Index])   //0 - imagesIfSelected
+  if NamesList.Find('imageifselected', Index) and (Trim(ValuesList[Index]) <> '') then
+    Setting.Append(ValuesList[Index])   //0 - imageIfSelected
   else
     Setting.Append('empty.png');
-  if NamesList.Find('imagesifnotselected', Index) and (Trim(ValuesList[Index]) <> '') then
-    Setting.Append(ValuesList[Index])   //1 - imagesIfNotSelected
+  if NamesList.Find('imageifnotselected', Index) and (Trim(ValuesList[Index]) <> '') then
+    Setting.Append(ValuesList[Index])   //1 - imageIfNotSelected
   else
     Setting.Append('empty.png');
   if NamesList.Find('valueifselected', Index) then
@@ -315,8 +316,6 @@ begin
 end;
 
 procedure SettingsCheckListBoxOnClickCheck(Sender: TObject);
-var
-  ImageName, ImageNameBMP, SoundName: string;
 begin
   with TNewCheckListBox(Sender) do
     case State[ItemIndex] of

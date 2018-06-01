@@ -235,7 +235,9 @@ begin
 end;
 
 procedure InitializeWizard();
-begin  WizardForm.TypesCombo.OnChange := @TypesComboOnChange;
+begin
+  //MsgBox('{cm:Path}', mbInformation, MB_OK);
+  WizardForm.TypesCombo.OnChange := @TypesComboOnChange;
   
   SetLength(Buffer, 1024);
 

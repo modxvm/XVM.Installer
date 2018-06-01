@@ -2,15 +2,15 @@
   // Название секции может быть любым
   "battle": {
     // Название для TNewCheckListBox (обязательный параметр)
-    "name": "Боевой интерфейс",
+    "name": "battle_interface",
     // Задает отображение пункта, как radioButton, checkBox или group. Значение по умолчанию CheckBox
     "itemType": "checkBox",
     // true - пункт выбран. Значение по умолчанию true
     "checked": true,
     // Файл изображения, если выбран пункт. Значение по умолчанию "empty.png"
-    "imagesIfSelected": "",
+    "imageIfSelected": "",
     // Файл изображения, если не выбран пункт. Значение по умолчанию "empty.png"
-    "imagesIfNotSelected": "",
+    "imageIfNotSelected": "",
     // Значение, если выбран пункт. Если параметр равен "", то изменения в конфиг не вносятся. Значение по умолчанию "".
     "valueIfSelected": "",
     // Секция, если не выбран пункт. Если параметр равен "", то изменения в конфиг не вносятся. Значение по умолчанию "".
@@ -19,11 +19,11 @@
     "children": {
       // Название секции может быть любым
       "minimap": {
-        "name": "Миникарта",
+        "name": "minimap",
         "itemType": "checkBox",
         "checked": true,
-        "imagesIfSelected": "minimap_true.png",
-        "imagesIfNotSelected": "minimap_false.png",
+        "imageIfSelected": "minimap_true.png",
+        "imageIfNotSelected": "minimap_false.png",
         "valueIfSelected": "",
         "valueIfNotSelected": {
           // Название секции может быть любым
@@ -40,10 +40,10 @@
         },
         "children": {
           "zoomMinimap": {
-            "name": "Увеличение миникарты",
+            "name": "increase_minimap",
             "checked": true,
-            "imagesIfSelected": "minimap_true.png",
-            "imagesIfNotSelected": "minimap_true.png",
+            "imageIfSelected": "minimap_true.png",
+            "imageIfNotSelected": "minimap_true.png",
             "valueIfSelected": "",
             "valueIfNotSelected": {
               "centerMinimap": {
@@ -59,10 +59,10 @@
             },
             "children": {
               "zoomMinimap": {
-                "name": "Увеличение по центру",
+                "name": "increase_center",
                 "checked": false,
-                "imagesIfSelected": "minimap_true.png",
-                "imagesIfNotSelected": "minimap_true.png",
+                "imageIfSelected": "minimap_true.png",
+                "imageIfNotSelected": "minimap_true.png",
                 "valueIfSelected": {
                   "centerMinimap": {
                     "configFileName": "minimap.xc",
@@ -81,15 +81,15 @@
         }
       },
       "sixthSense": {
-        "name": "Изображения для шестого чувства",
+        "name": "images_for_sixth_sense",
         "itemType": "group",
         "children": {
           "sixthSenseEye": {
-            "name": "Глаз Саурона",
+            "name": "eye_Sauron",
             "itemType": "radioButton",
             "checked": false,
-            "imagesIfSelected": "SixthSense_Eye.png",
-            "imagesIfNotSelected": "",
+            "imageIfSelected": "SixthSense_Eye.png",
+            "imageIfNotSelected": "",
             "valueIfSelected": {
               "sixthSenseEye": {
                 "@files": ["res_mods/mods/shared_resources/xvm/res/SixthSense_Eye.png"],
@@ -104,11 +104,11 @@
             "valueIfNotSelected": ""
           },
           "sixthSenseSmile": {
-            "name": "Смайлик",
+            "name": "smiley",
             "itemType": "radioButton",
             "checked": false,
-            "imagesIfSelected": "SixthSense_Smile.png",
-            "imagesIfNotSelected": "",
+            "imageIfSelected": "SixthSense_Smile.png",
+            "imageIfNotSelected": "",
             "valueIfSelected": {
               "sixthSenseEye": {
                 "@files": ["res_mods/mods/shared_resources/xvm/res/SixthSense_Smile.png"],
@@ -123,11 +123,11 @@
             "valueIfNotSelected": ""
           },
           "sixthSenseXVM": {
-            "name": "Лампа XVM",
+            "name": "lamp_XVM",
             "itemType": "radioButton",
             "checked": false,
-            "imagesIfSelected": "SixthSense.png",
-            "imagesIfNotSelected": "",
+            "imageIfSelected": "SixthSense.png",
+            "imageIfNotSelected": "",
             "valueIfSelected": {
               "sixthSenseEye": {
                 "@files": ["res_mods/mods/shared_resources/xvm/res/SixthSense.png"],
@@ -142,11 +142,11 @@
             "valueIfNotSelected": ""
           },          
           "sixthSenseDefault": {
-            "name": "Стандартная лампа",
+            "name": "standard_lamp",
             "itemType": "radioButton",
             "checked": true,
-            "imagesIfSelected": "SixthSenseWG.png",
-            "imagesIfNotSelected": "",
+            "imageIfSelected": "SixthSenseWG.png",
+            "imageIfNotSelected": "",
             "valueIfSelected": {
               "sixthSenseEye": {
                 "configFileName": "battle.xc",
@@ -162,10 +162,10 @@
         }
       },
       "durationSixthSense": {
-        "name": "Таймер шестого чувства 10 сек",
+        "name": "sixth_sense_timer",
         "checked": false,
-        "imagesIfSelected": "durationSixthSense_true.png",
-        "imagesIfNotSelected": "durationSixthSense_false.png",
+        "imageIfSelected": "durationSixthSense_true.png",
+        "imageIfNotSelected": "durationSixthSense_false.png",
         "valueIfSelected": {
           "refTimer": {
             // Параметр задает способ изменения конфига. По умолчанию true.
@@ -214,10 +214,10 @@
         "valueIfNotSelected": ""
       },
       "playersPanel": {
-        "name": "Панель игроков",
+        "name": "players_panel",
         "checked": true,
-        "imagesIfSelected": "playersPanel_true.png",
-        "imagesIfNotSelected": "playersPanel_false.png",
+        "imageIfSelected": "playersPanel_true.png",
+        "imageIfNotSelected": "playersPanel_false.png",
         "valueIfSelected": "",
         "valueIfNotSelected": {
           "disabledPlayersPanel": {
@@ -232,10 +232,10 @@
         "children": {
           "statistics": {
             "isCheckBox": true,
-            "name": "Отображение статистики",
+            "name": "displaying_statistics",
             "checked": true,
-            "imagesIfSelected": "pp_stat_true.png",
-            "imagesIfNotSelected": "pp_stat_false.png",        
+            "imageIfSelected": "pp_stat_true.png",
+            "imageIfNotSelected": "pp_stat_false.png",        
             "valueIfSelected": "",
             "valueIfNotSelected": {
               "notDisplayStatistic": {
@@ -262,10 +262,10 @@
         }
       },
       "fragCorrelation": {
-        "name": "Отображать живых на панели счета",
+        "name": "display_live",
         "checked": false,
-        "imagesIfSelected": "showAliveNotFrags_true.png",
-        "imagesIfNotSelected": "showAliveNotFrags_false.png",
+        "imageIfSelected": "showAliveNotFrags_true.png",
+        "imageIfNotSelected": "showAliveNotFrags_false.png",
         "valueIfSelected": {
           "showAlive": {
             "configFileName": "battle.xc",
@@ -279,10 +279,10 @@
         "valueIfNotSelected": ""
       },
       "hitlog": {
-        "name": "Лог нанесенного урона",
+        "name": "hitlog",
         "checked": true,
-        "imagesIfSelected": "hitlog_true.png",
-        "imagesIfNotSelected": "hitlog_false.png",
+        "imageIfSelected": "hitlog_true.png",
+        "imageIfNotSelected": "hitlog_false.png",
         "valueIfSelected": "",
         "valueIfNotSelected": {
           "hitlog_disabled": {
@@ -298,10 +298,10 @@
         },
         "children": {
           "hitlog_header": {
-            "name": "Общий заголовок (шапка)",
+            "name": "hitlog_header",
             "checked": false,
-            "imagesIfSelected": "hitlog_header_true.png",
-            "imagesIfNotSelected": "hitlog_true.png",
+            "imageIfSelected": "hitlog_header_true.png",
+            "imageIfNotSelected": "hitlog_true.png",
             "valueIfSelected": {
               "header_disabled": {
                 "configFileName": "battleLabelsTemplates.xc",
@@ -325,10 +325,10 @@
         }
       },
       "damageLog": {
-        "name": "Лог полученного урона",
+        "name": "damagelog",
         "checked": true,
-        "imagesIfSelected": "damageLog_true.png",
-        "imagesIfNotSelected": "damageLog_false.png",
+        "imageIfSelected": "damageLog_true.png",
+        "imageIfNotSelected": "damageLog_false.png",
         "valueIfSelected": "",
         "valueIfNotSelected": {
           "damageLog_disabled": {
@@ -342,10 +342,10 @@
         },
         "children": {
           "damageLog_bg": {
-            "name": "Подложка лога полученного урона",
+            "name": "background",
             "checked": false,
-            "imagesIfSelected": "damageLog_bg_true.png",
-            "imagesIfNotSelected": "damageLog_true.png",
+            "imageIfSelected": "damageLog_bg_true.png",
+            "imageIfNotSelected": "damageLog_true.png",
             "valueIfSelected": {
               "bg_enabled": {
                 "configFileName": "battleLabelsTemplates.xc",
@@ -363,10 +363,10 @@
         }
       },
       "totalEfficiency": {
-        "name": "Панель эффективности",
+        "name": "panel_efficiency",
         "checked": true,
-        "imagesIfSelected": "totalEfficiency_true.png",
-        "imagesIfNotSelected": "totalEfficiency_false.png",
+        "imageIfSelected": "totalEfficiency_true.png",
+        "imageIfNotSelected": "totalEfficiency_false.png",
         "valueIfSelected": "",
         "valueIfNotSelected": {
           "te_disabled": {
@@ -382,10 +382,10 @@
         }
       },
       "repairTime": {
-        "name": "Таймер ремонта модулей",
+        "name": "timer_repair_modules",
         "checked": true,
-        "imagesIfSelected": "repairTime_true.png",
-        "imagesIfNotSelected": "repairTime_false.png",
+        "imageIfSelected": "repairTime_true.png",
+        "imageIfNotSelected": "repairTime_false.png",
         "valueIfSelected": "",
         "valueIfNotSelected": {
           "rt_disabled": {
@@ -416,10 +416,10 @@
         }
       },
       "hp_panel": {
-        "name": "Индикатор общего ХП команд",
+        "name": "indicator_amount_HP_commands",
         "checked": true,
-        "imagesIfSelected": "hp_panel_true.png",
-        "imagesIfNotSelected": "hp_panel_false.png",
+        "imageIfSelected": "hp_panel_true.png",
+        "imageIfNotSelected": "hp_panel_false.png",
         "valueIfSelected": "",
         "valueIfNotSelected": {
           "hppl_disabled": {
@@ -435,10 +435,10 @@
         },
         "children": {
           "avgDamage": {
-            "name": "Средний урон на текущей технике",
+            "name": "average_damage_on_current_vehicle",
             "checked": true,
-            "imagesIfSelected": "avgDamage_true.png",
-            "imagesIfNotSelected": "avgDamage_false.png",
+            "imageIfSelected": "avgDamage_true.png",
+            "imageIfNotSelected": "avgDamage_false.png",
             "valueIfSelected": "",
             "valueIfNotSelected": {
               "avgDamage_disabled": {
@@ -454,10 +454,10 @@
             }
           },
           "mainGun": {
-            "name": "Урон для основного калибра",
+            "name": "damage_to_main_caliber",
             "checked": true,
-            "imagesIfSelected": "mainGun_true.png",
-            "imagesIfNotSelected": "mainGun_false.png",
+            "imageIfSelected": "mainGun_true.png",
+            "imageIfNotSelected": "mainGun_false.png",
             "valueIfSelected": "",
             "valueIfNotSelected": {
               "mainGun_disabled": {
@@ -475,10 +475,10 @@
         }
       },
       "postmortemTips": {
-        "name": "Отключить всплывающую внизу панель после смерти",
+        "name": "panel_after_death",
         "checked": true,
-        "imagesIfSelected": "",
-        "imagesIfNotSelected": "",
+        "imageIfSelected": "",
+        "imageIfNotSelected": "",
         "valueIfSelected": "",
         "valueIfNotSelected": {
           "pt_disabled": {
@@ -492,18 +492,18 @@
         }
       },
       "camera": {
-        "name": "Параметры камеры",
+        "name": "camera_settings",
         "checked": false,
-        "imagesIfSelected": "",
-        "imagesIfNotSelected": "",
+        "imageIfSelected": "",
+        "imageIfNotSelected": "",
         "valueIfSelected": "",
         "valueIfNotSelected": "",
         "children": {
           "zoomIndicator": {
-            "name": "Индикатор масштаба",
+            "name": "zoom_indicator",
             "checked": true,
-            "imagesIfSelected": "zoomIndicator_true.png",
-            "imagesIfNotSelected": "zoomIndicator_false.png",
+            "imageIfSelected": "zoomIndicator_true.png",
+            "imageIfNotSelected": "zoomIndicator_false.png",
             "valueIfSelected": "",
             "valueIfNotSelected": {
               "szi_disabled": {
@@ -521,11 +521,12 @@
             }
           },
           "noFlashBang": {
-            "name": "Отключить красную вспышку (враг попадает по вам)",
-            "checked": false,
-            "imagesIfSelected": "",
-            "imagesIfNotSelected": "",
-            "valueIfSelected": {
+            "name": "red_flash_when_taking_damage",
+            "checked": true,
+            "imageIfSelected": "",
+            "imageIfNotSelected": "",
+            "valueIfSelected": "",
+            "valueIfNotSelected": {
               "nfb_enabled": {
                 "configFileName": "camera.xc",
                 "value": {
@@ -534,15 +535,15 @@
                   }
                 }
               }
-            },
-            "valueIfNotSelected": ""
+            }
           },
           "hideHint": {
-            "name": "Cкрыть подсказки (переход в осадный режим, альт.режим АРТ-САУ)",
-            "checked": false,
-            "imagesIfSelected": "hideHint_true.png",
-            "imagesIfNotSelected": "hideHint_false.png",
-            "valueIfSelected": {
+            "name": "tips_siege_mode_SPG_mode",
+            "checked": true,
+            "imageIfSelected": "hideHint_true.png",
+            "imageIfNotSelected": "hideHint_false.png",
+            "valueIfSelected": "",
+            "valueIfNotSelected": {
               "hh_enabled": {
                 "configFileName": "camera.xc",
                 "value": {
@@ -551,15 +552,15 @@
                   }
                 }
               }
-            },
-            "valueIfNotSelected": ""
+            }
           },
           "noBinoculars": {
-            "name": "Отключить затемнение и озеленение в снайперском прицеле",
-            "checked": false,
-            "imagesIfSelected": "noBinoculars_true.png",
-            "imagesIfNotSelected": "noBinoculars_false.png",
-            "valueIfSelected": {
+            "name": "blackout_sniper_mode",
+            "checked": true,
+            "imageIfSelected": "noBinoculars_true.png",
+            "imageIfNotSelected": "noBinoculars_false.png",
+            "valueIfSelected": "",
+            "valueIfNotSelected": {
               "snb_enabled": {
                 "configFileName": "camera.xc",
                 "value": {
@@ -570,15 +571,15 @@
                   }
                 }
               }
-            },
-            "valueIfNotSelected": ""
+            }
           },
           "shotRecoilEffect": {
-            "name": "Отключить эффект отдачи от выстрела",
-            "checked": false,
-            "imagesIfSelected": "",
-            "imagesIfNotSelected": "",
-            "valueIfSelected": {
+            "name": "effect_of_kickback",
+            "checked": true,
+            "imageIfSelected": "",
+            "imageIfNotSelected": "",
+            "valueIfSelected": "",
+            "valueIfNotSelected": {
               "sre_disabled": {
                 "configFileName": "camera.xc",
                 "value": {
@@ -598,15 +599,15 @@
                   }
                 }
               }
-            },
-            "valueIfNotSelected": ""
+            }
           },
           "noCameraLimit": {
-            "name": "Отключение предела вращения камеры (для техники с ограниченными УГН)",
-            "checked": false,
-            "imagesIfSelected": "",
-            "imagesIfNotSelected": "",
-            "valueIfSelected": {
+            "name": "camera_rotation_limit",
+            "checked": true,
+            "imageIfSelected": "",
+            "imageIfNotSelected": "",
+            "valueIfSelected": "",
+            "valueIfNotSelected": {
               "ncl_enabled": {
                 "configFileName": "camera.xc",
                 "value": {
@@ -619,36 +620,26 @@
                   }
                 }
               }
-            },
-            "valueIfNotSelected": ""
+            }
           }
         }
       }
     }
   },
   "hangar": {
-    "name": "Ангар",
+    "name": "hangar",
     "checked": true,
     "children": {
       "widgets": {
-        "name": "Виждеты",
+        "name": "widgets",
         "checked": true,
         "children": {
           "clock_widgets": {
-            "name": "Виждет часов",
+            "name": "clock",
             "checked": true,
-            "imagesIfSelected": "clock_true.png",
-            "imagesIfNotSelected": "clock_false.png",
-            "valueIfSelected": {
-              "clock_enabled": {
-                "configFileName": "widgetsTemplates.xc",
-                "value": {
-                  "clock": {
-                    "enabled": true
-                  }
-                }
-              }
-            },
+            "imageIfSelected": "clock_true.png",
+            "imageIfNotSelected": "clock_false.png",
+            "valueIfSelected": "",
             "valueIfNotSelected": {
               "clock_disabled": {
                 "configFileName": "widgetsTemplates.xc",
@@ -661,20 +652,11 @@
             }
           },
           "statistics_widgets": {
-            "name": "Виждет статистики",
+            "name": "account_stats",
             "checked": true,
-            "imagesIfSelected": "statistics_true.png",
-            "imagesIfNotSelected": "statistics_false.png",
-            "valueIfSelected": {
-              "statistics_enabled": {
-                "configFileName": "widgetsTemplates.xc",
-                "value": {
-                  "statistics": {
-                    "enabled": true
-                  }
-                }
-              }
-            },
+            "imageIfSelected": "statistics_true.png",
+            "imageIfNotSelected": "statistics_false.png",
+            "valueIfSelected": "",
             "valueIfNotSelected": {
               "statistics_disabled": {
                 "configFileName": "widgetsTemplates.xc",
@@ -689,18 +671,18 @@
         }
       },
       "pingServers": {
-        "name": "Пинг серверов",
+        "name": "ping_servers",
         "checked": false,
-        "imagesIfSelected": "",
-        "imagesIfNotSelected": "",
+        "imageIfSelected": "",
+        "imageIfNotSelected": "",
         "valueIfSelected": "",
         "valueIfNotSelected": "",
         "children": {
           "ping_login": {
-            "name": "На экране логина",
+            "name": "on_login_screen",
             "checked": false,
-            "imagesIfSelected": "",
-            "imagesIfNotSelected": "",
+            "imageIfSelected": "",
+            "imageIfNotSelected": "",
             "valueIfSelected": {
               "ping_enabled": {
                 "configFileName": "login.xc",
@@ -716,10 +698,10 @@
             "valueIfNotSelected": ""
           },
           "ping_hangar": {
-            "name": "В ангаре",
+            "name": "in_hangar",
             "checked": false,
-            "imagesIfSelected": "",
-            "imagesIfNotSelected": "",
+            "imageIfSelected": "",
+            "imageIfNotSelected": "",
             "valueIfSelected": {
               "ping_enabled": {
                 "configFileName": "hangar.xc",
@@ -737,18 +719,18 @@
         }
       },
       "onlineServers": {
-        "name": "Онлайн серверов",
+        "name": "online_servers",
         "checked": false,
-        "imagesIfSelected": "",
-        "imagesIfNotSelected": "",
+        "imageIfSelected": "",
+        "imageIfNotSelected": "",
         "valueIfSelected": "",
         "valueIfNotSelected": "",
         "children": {
           "online_login": {
-            "name": "На экране логина",
+            "name": "on_login_screen",
             "checked": false,
-            "imagesIfSelected": "",
-            "imagesIfNotSelected": "",
+            "imageIfSelected": "",
+            "imageIfNotSelected": "",
             "valueIfSelected": {
               "online_enabled": {
                 "configFileName": "login.xc",
@@ -764,10 +746,10 @@
             "valueIfNotSelected": ""
           },
           "online_hangar": {
-            "name": "В ангаре",
+            "name": "in_hangar",
             "checked": false,
-            "imagesIfSelected": "",
-            "imagesIfNotSelected": "",
+            "imageIfSelected": "",
+            "imageIfNotSelected": "",
             "valueIfSelected": {
               "online_enabled": {
                 "configFileName": "hangar.xc",
@@ -785,10 +767,10 @@
         }
       },
       "saveLastServer": {
-        "name": "Сохранять последний сервер",
+        "name": "save_last_server",
         "checked": false,
-        "imagesIfSelected": "",
-        "imagesIfNotSelected": "",
+        "imageIfSelected": "",
+        "imageIfNotSelected": "",
         "valueIfSelected": {
           "sls_enabled": {
             "configFileName": "login.xc",
@@ -799,43 +781,37 @@
             }
           }
         },
-        "valueIfNotSelected": "",
-        "children": {
-          "autologin": {
-            "name": "Автоматический вход в игру",
-            "checked": false,
-            "imagesIfSelected": "",
-            "imagesIfNotSelected": "",
-            "valueIfSelected": {
-              "autologin_enabled": {
-                "configFileName": "login.xc",
-                "value": {
-                  "login": {
-                    "autologin": true
-                  }
-                }
+        "valueIfNotSelected": ""
+      },
+      "autologin": {
+        "name": "automatic_login_to_game",
+        "checked": false,
+        "imageIfSelected": "",
+        "imageIfNotSelected": "",
+        "valueIfSelected": {
+          "autologin_enabled": {
+            "configFileName": "login.xc",
+            "value": {
+              "login": {
+                "autologin": true
               }
-            },
-            "valueIfNotSelected": ""
+            }
           }
-        }
+        },
+        "valueIfNotSelected": ""
       }
     }
   },
   "color_theme": {
-    "name": "Цветовая схема",
+    "name": "color_scheme",
     "itemType": "group",
     "checked": false,
-    "imagesIfSelected": "",
-    "imagesIfNotSelected": "",
-    "valueIfSelected": "",
-    "valueIfNotSelected": "",
     "children": {
       "color_blindness": {
-        "name": "Цветовая слепота",
+        "name": "color_blindness",
         "checked": false,
-        "imagesIfSelected": "color_blindness_true.png",
-        "imagesIfNotSelected": "color_blindness_false.png",
+        "imageIfSelected": "color_blindness_true.png",
+        "imageIfNotSelected": "color_blindness_false.png",
         "valueIfSelected": {
           "cb_login": {
             "@files": [
@@ -973,11 +949,11 @@
     }
   },
   "sounds": {
-    "name": "Звуки",
+    "name": "sounds",
     "itemType": "checkBox",
     "checked": true,
-    "imagesIfSelected": "",
-    "imagesIfNotSelected": "",
+    "imageIfSelected": "",
+    "imageIfNotSelected": "",
     "valueIfSelected": "",
     "valueIfNotSelected": {
       "clock_disabled": {
@@ -991,10 +967,10 @@
     },
     "children": {
       "sixthSense": {
-        "name": "Озвучка перка шестого чувства",
+        "name": "sixth_sense",
         "checked": true,
-        "imagesIfSelected": "",
-        "imagesIfNotSelected": "",
+        "imageIfSelected": "",
+        "imageIfNotSelected": "",
         // Имя звукового файла (mp3, ogg), который будет проигран, если пункт выбран. Значение по умолчанию ""
         "soundIfSelected": "sixthSenseXVM.mp3",
         // Имя звукового файла (mp3, ogg), который будет проигран, если пункт не выбран. Значение по умолчанию ""
