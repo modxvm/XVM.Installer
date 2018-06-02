@@ -1,6 +1,6 @@
 ﻿{
   // Название секции может быть любым
-  "battle": {
+  "1battle": {
     // Название для TNewCheckListBox (обязательный параметр)
     "name": "battle_interface",
     // Задает отображение пункта, как radioButton, checkBox или group. Значение по умолчанию CheckBox
@@ -18,7 +18,7 @@
     // В данной секции настраиваются дочерние пункты TNewCheckListBox
     "children": {
       // Название секции может быть любым
-      "minimap": {
+      "01minimap": {
         "name": "minimap",
         "itemType": "checkBox",
         "checked": true,
@@ -77,10 +77,111 @@
                 }
               }
             }
+          },
+          "minimap_alt_mode": {
+            "name": "alt_mode",
+            "checked": true,
+            "imageIfSelected": "minimap_alt_hp_false.png",
+            "imageIfNotSelected": "minimap_alt_hp_false.png",
+            "valueIfSelected": "",
+            "valueIfNotSelected": {
+              "centerMinimap": {
+                "configFileName": "hotkeys.xc",
+                "value": {
+                  "hotkeys": {
+                    "minimapAltMode":{
+                      "enabled": false
+                    }
+                  }
+                }
+              }
+            },
+            "children": {
+              "hotkey_alt_mode": {
+                "name": "hotkey_alt_mode",
+                "itemType": "group",
+                "children": {
+                  "key_l_CTRL": {
+                    "name": "key_l_control",
+                    "itemType": "radioButton",
+                    "checked": true,
+                    "imageIfSelected": "left_CTRL.png",
+                    "valueIfSelected": {
+                      "sixthSenseEye": {
+                        "configFileName": "hotkeys.xc",
+                        "value": {
+                          "hotkeys": {
+                            "minimapAltMode":{
+                              "keyCode": 29
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "key_l_ALT": {
+                    "name": "key_l_ALT",
+                    "itemType": "radioButton",
+                    "checked": false,
+                    "imageIfSelected": "left_ALT.png",
+                    "valueIfSelected": {
+                      "sixthSenseEye": {
+                        "configFileName": "hotkeys.xc",
+                        "value": {
+                          "hotkeys": {
+                            "minimapAltMode":{
+                              "keyCode": 56
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "minimap_alt_hp": {
+                "name": "hp_in_alternative_mode",
+                "checked": false,
+                "imageIfSelected": "minimap_alt_hp_true.png",
+                "imageIfNotSelected": "minimap_alt_hp_false.png",
+                "valueIfSelected": {
+                  "minimap_alt_hp1": {
+                    "configFileName": "minimapLabelsAlt.xc",
+                    "value": {
+                      "labels":{
+                        "formats": [
+                          ${ "minimapLabelsTemplates.xc":"def.hpLost" },
+                          ${ "minimapLabelsTemplates.xc":"def.hpSpotted" }
+                        ]
+                      }
+                    }
+                  },
+                  "minimap_alt_hp2": {
+                    "configFileName": "minimapLabelsTemplates.xc",
+                    "value": {
+                      "def":{
+                        "hpSpotted": {
+                          "$ref": { "path":"def.vtypeSpotted" },
+                          "enabled": true,
+                          "textFormat": { "font": "Dynamic2", "size": 20, "align": "center", "valign": "center" },
+                          "format": "<font color='{{.minimap.labelsData.colors.dot.{{sys-color-key}}}}'>{{hp-ratio%.335a|&#x1B3;}}</font>"
+                        },
+                        "hpLost": {
+                          "$ref": { "path":"def.vtypeLost" },
+                          "textFormat": { "font": "Dynamic2", "size": 20, "align": "center", "valign": "center" },
+                          "format": "<font color='{{.minimap.labelsData.colors.lostDot.{{sys-color-key}}}}'>{{hp-ratio%.335a|&#x1B3;}}</font>"
+                        }
+                      }
+                    }
+                  }
+                },
+                "valueIfNotSelected": ""
+              }
+            }
           }
         }
       },
-      "sixthSense": {
+      "12sixthSense": {
         "name": "images_for_sixth_sense",
         "itemType": "group",
         "children": {
@@ -161,7 +262,7 @@
           }          
         }
       },
-      "durationSixthSense": {
+      "13durationSixthSense": {
         "name": "sixth_sense_timer",
         "checked": false,
         "imageIfSelected": "durationSixthSense_true.png",
@@ -213,7 +314,99 @@
         },
         "valueIfNotSelected": ""
       },
-      "playersPanel": {
+      "07sight": {
+        "name": "sight",
+        "itemType": "group",
+        "children": {
+          "timer_AIM": {
+            "name": "time_until_full_notice",
+            "checked": false,
+            "imageIfSelected": "timer_AIM_true.png",
+            "imageIfNotSelected": "timer_AIM_false.png",
+            "valueIfSelected": {
+              "timer_AIM1": {
+                "@files": [
+                  "res_mods/configs/xvm/py_macro/aimingSystem.py",
+                  "res_mods/configs/xvm/py_macro/beginBattle.py",
+                  "res_mods/configs/xvm/py_macro/sight.py"
+                ],
+                "configFileName": "battleLabels.xc",
+                "value": {
+                  "labels": {
+                    "formats": [${ "battleLabelsTemplates.xc":"def.timerAIM"}]
+                  }
+                }
+              },
+              "timer_AIM2": {
+                "configFileName": "battleLabelsTemplates.xc",
+                "value": {
+                  "def": {
+                    "timerAIM": { 
+                      "enabled": true, 
+                      "updateEvent": "PY(ON_CAMERA_MODE), PY(ON_MARKER_POSITION), PY(ON_BEGIN_BATTLE)", 
+                      "x": 202,
+                      "y": 61,
+                      "width": 60, 
+                      "height": 25,
+                      "layer": "bottom",
+                      "alpha": "{{py:sight.cameraMode=str?{{py:isBattle?{{alive?100|0}}|0}}|0}}",
+                      "screenHAlign": "center",
+                      "screenVAlign": "center", 
+                      "textFormat": {"size": 20, "color": "0x{{py:sight.timeAIM=0?2DC822|FF0000}}" }, 
+                      "format": "{{py:sight.timeAIM=0?Сведен|{{py:sight.timeAIM%2.1f}}}}" 
+                    }
+                  }
+                }
+              }
+            },
+            "valueIfNotSelected": ""
+          },
+          "time_flight": {
+            "name": "flight_time_of_shells",
+            "checked": false,
+            "imageIfSelected": "time_flight_true.png",
+            "imageIfNotSelected": "time_flight_false.png",
+            "valueIfSelected": {
+              "time_flight1": {
+                "@files": [
+                  "res_mods/configs/xvm/py_macro/aimingSystem.py",
+                  "res_mods/configs/xvm/py_macro/beginBattle.py",
+                  "res_mods/configs/xvm/py_macro/sight.py"
+                ],
+                "configFileName": "battleLabels.xc",
+                "value": {
+                  "labels": {
+                    "formats": [${ "battleLabelsTemplates.xc":"def.timeFlight"}]
+                  }
+                }
+              },
+              "timeFlight2": {
+                "configFileName": "battleLabelsTemplates.xc",
+                "value": {
+                  "def": {
+                    "timeFlight": { 
+                      "enabled": true, 
+                      "updateEvent": "PY(ON_CAMERA_MODE), PY(ON_MARKER_POSITION), PY(ON_BEGIN_BATTLE)", 
+                      "x": 202,
+                      "y": -61,
+                      "width": 60, 
+                      "height": 25,
+                      "layer": "bottom",
+                      "alpha": "{{py:sight.cameraMode=str?{{py:isBattle?{{alive?100|0}}|0}}|0}}",
+                      "screenHAlign": "center",
+                      "screenVAlign": "center", 
+                      "textFormat": {"size": 20, "color": "0x2DC822" }, 
+                      "format": "{{py:sight.timeFlight%2.1f}} {{l10n:sec}}" 
+                    }
+                  }
+                }
+              }
+            },
+            "valueIfNotSelected": ""
+          }          
+        }
+      },      
+      "02playersPanel": {
         "name": "players_panel",
         "checked": true,
         "imageIfSelected": "playersPanel_true.png",
@@ -261,7 +454,7 @@
           }
         }
       },
-      "fragCorrelation": {
+      "11fragCorrelation": {
         "name": "display_live",
         "checked": false,
         "imageIfSelected": "showAliveNotFrags_true.png",
@@ -278,7 +471,7 @@
         },
         "valueIfNotSelected": ""
       },
-      "hitlog": {
+      "06hitlog": {
         "name": "hitlog",
         "checked": true,
         "imageIfSelected": "hitlog_true.png",
@@ -324,7 +517,7 @@
           }
         }
       },
-      "damageLog": {
+      "04damageLog": {
         "name": "damagelog",
         "checked": true,
         "imageIfSelected": "damageLog_true.png",
@@ -362,7 +555,7 @@
           }
         }
       },
-      "totalEfficiency": {
+      "08totalEfficiency": {
         "name": "panel_efficiency",
         "checked": true,
         "imageIfSelected": "totalEfficiency_true.png",
@@ -381,7 +574,7 @@
           }
         }
       },
-      "repairTime": {
+      "05repairTime": {
         "name": "timer_repair_modules",
         "checked": true,
         "imageIfSelected": "repairTime_true.png",
@@ -415,7 +608,7 @@
           }
         }
       },
-      "hp_panel": {
+      "10hp_panel": {
         "name": "indicator_amount_HP_commands",
         "checked": true,
         "imageIfSelected": "hp_panel_true.png",
@@ -474,7 +667,7 @@
           }
         }
       },
-      "postmortemTips": {
+      "13postmortemTips": {
         "name": "panel_after_death",
         "checked": true,
         "imageIfSelected": "",
@@ -491,13 +684,9 @@
           }
         }
       },
-      "camera": {
+      "09camera": {
         "name": "camera_settings",
         "checked": false,
-        "imageIfSelected": "",
-        "imageIfNotSelected": "",
-        "valueIfSelected": "",
-        "valueIfNotSelected": "",
         "children": {
           "zoomIndicator": {
             "name": "zoom_indicator",
@@ -557,8 +746,8 @@
           "noBinoculars": {
             "name": "blackout_sniper_mode",
             "checked": true,
-            "imageIfSelected": "noBinoculars_true.png",
-            "imageIfNotSelected": "noBinoculars_false.png",
+            "imageIfSelected": "noBinoculars_false.png",
+            "imageIfNotSelected": "noBinoculars_true.png",
             "valueIfSelected": "",
             "valueIfNotSelected": {
               "snb_enabled": {
@@ -623,10 +812,27 @@
             }
           }
         }
+      },
+      "03markers": {
+        "name": "markers_over_vechicle",
+        "checked": true,
+        "imageIfSelected": "markers_true.png",
+        "imageIfNotSelected": "markers_false.png",
+        "valueIfSelected": "",
+        "valueIfNotSelected": {
+          "disabledMinimap": {
+            "configFileName": "markers.xc",
+            "value": {
+              "markers": {
+                "enabled": false
+              }
+            }
+          }
+        }
       }
     }
   },
-  "hangar": {
+  "2hangar": {
     "name": "hangar",
     "checked": true,
     "children": {
@@ -689,7 +895,8 @@
                 "value": {
                   "login": {
                     "pingServers": {
-                      "enabled": true
+                      "enabled": true,
+                      "y": 40
                     }
                   }
                 }
@@ -708,7 +915,8 @@
                 "value": {
                   "hangar": {
                     "pingServers": {
-                      "enabled": true
+                      "enabled": true,
+                      "layer": "top"
                     }
                   }
                 }
@@ -737,7 +945,8 @@
                 "value": {
                   "login": {
                     "onlineServers": {
-                      "enabled": true
+                      "enabled": true,
+                      "y": 40
                     }
                   }
                 }
@@ -756,11 +965,41 @@
                 "value": {
                   "hangar": {
                     "onlineServers": {
-                      "enabled": true
+                      "enabled": true,
+                      "layer": "top"
                     }
                   }
                 }
-              }
+              },
+              "move_clock": {
+                "isAdd": false,
+                "configFileName": "widgetsTemplates.xc",
+                "value": {
+                  "clock": {
+                    "formats": [
+                      {
+                        "updateEvent": "ON_EVERY_SECOND",
+                        "x": 315,
+                        "y": 80,
+                        "width": 200,
+                        "height": 50,
+                        "screenHAlign": "right",
+                        "shadow": {
+                          "enabled": true,
+                          "distance": 0,
+                          "angle": 0,
+                          "color": "0x000000",
+                          "alpha": 70,
+                          "blur": 4,
+                          "strength": 2
+                        },
+                        "textFormat": { "align": "right", "valign": "bottom", "color": "0xF3F3EB" },
+                        "format": "<font face='$FieldFont'><textformat leading='-38'><font size='36'>{{py:xvm.formatDate('%H:%M')}}</font><br></textformat><textformat rightMargin='85' leading='-2'>{{py:xvm.formatDate('%A')}}<br><font size='15'>{{py:xvm.formatDate('%d %b %Y')}}</font></textformat></font>"
+                      }
+                    ]
+                  }
+                }
+              }              
             },
             "valueIfNotSelected": ""
           }
@@ -802,7 +1041,7 @@
       }
     }
   },
-  "color_theme": {
+  "3color_theme": {
     "name": "color_scheme",
     "itemType": "group",
     "checked": false,
@@ -948,7 +1187,7 @@
       }
     }
   },
-  "sounds": {
+  "4sounds": {
     "name": "sounds",
     "itemType": "checkBox",
     "checked": true,
