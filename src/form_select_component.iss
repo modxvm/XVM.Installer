@@ -18,6 +18,9 @@ const
   BTN_WIDTH = 75;
   BTN_HEIGHT = 23;
   BORDER_WIDTH = 20;
+  PATH_INSTALL_SETTINGS = '{userappdata}\Wargaming.net\WorldOfTanks\xvm\install';
+  FILE_NAME_SETTINGS = 'settings.ini';
+  SETUP_SETTINGS = 'SetupSettings';
 
 type
   TItems = (iCheckBox, iRadioBtn, iGroup);
@@ -44,6 +47,7 @@ procedure Init;
 var
   ResultCode: Integer;
 begin
+  //MsgBox(ExpandConstant(PATH_INSTALL_SETTINGS), mbInformation, MB_OK);
   DirTemp := ExpandConstant('{tmp}\') + SelectPreset;
   ExtractTemporaryFile(SelectPreset + '.mrg');
   ResultCode := UNPACK_divide(DirTemp + '\', DirTemp + '.mrg');
@@ -107,7 +111,7 @@ procedure AddItem(Path : String; NamesList, ValuesList: TStringList; ALevel : By
 var
   Setting: TStringList;
   Index: Integer;
-  Name: string;
+  Name, InternalName: string;
   Checked: boolean;
 begin
   //MsgBox(Path, mbInformation, MB_OK);
@@ -146,9 +150,15 @@ begin
   else
     Setting.Append('');
   if NamesList.Find('soundifnotselected', Index) then
-    Setting.Append(ValuesList[Index])   //5 - soundIfNotSelected
+    Setting.Append(ValuesList[Index])   //5 - soundIfNotSelected     internal name
   else
     Setting.Append('');
+  if NamesList.Find('name', Index) then
+  begin
+    InternalName := ValuesList[Index];
+    Setting.Append(InternalName);   //6 - internal name 
+    Checked := GetIniBool(SETUP_SETTINGS, InternalName, Checked, ExpandConstant(PATH_INSTALL_SETTINGS) + '\' + FILE_NAME_SETTINGS)
+  end; 
   //MsgBox(Name + #13 + Setting.Text, mbInformation, MB_OK);
   case TypeItem of
     iCheckBox:
@@ -261,10 +271,14 @@ end;
 procedure SetSettings;
 var
   i, j: Integer;
-  Value: string;
+  Value, Path, FilePath: string;
 begin
   with SettingsCheckListBox do
   begin
+    path := ExpandConstant(PATH_INSTALL_SETTINGS);
+    if not DirExists(Path) then ForceDirectories(Path);
+    FilePath := Path + '\' + FILE_NAME_SETTINGS;
+    DeleteFile(FilePath);
     SetLength(arraySettings, Items.Count);
     j:= 0;
     for i := 0 to Items.Count - 1 do
@@ -272,9 +286,15 @@ begin
       iCheckBox, iRadioBtn:
         begin
           if Checked[i] then
-            Value := TStringList(ItemObject[i]).Strings[2]
+          begin
+            Value := TStringList(ItemObject[i]).Strings[2];
+            SetIniBool(SETUP_SETTINGS, TStringList(ItemObject[i]).Strings[6], True, FilePath);
+          end
           else
+          begin
             Value := TStringList(ItemObject[i]).Strings[3];
+            SetIniBool(SETUP_SETTINGS, TStringList(ItemObject[i]).Strings[6], False, FilePath);
+          end;
           if Trim(Value) <> '' then
             AddToArrayS(Value, j);
         end;

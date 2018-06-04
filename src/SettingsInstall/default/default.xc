@@ -343,7 +343,7 @@
                   "def": {
                     "timerAIM": { 
                       "enabled": true, 
-                      "updateEvent": "PY(ON_CAMERA_MODE), PY(ON_MARKER_POSITION), PY(ON_BEGIN_BATTLE)", 
+                      "updateEvent": "PY(ON_CAMERA_MODE), PY(ON_MARKER_POSITION), PY(ON_BEGIN_BATTLE), ON_CURRENT_VEHICLE_DESTROYED", 
                       "x": 202,
                       "y": 61,
                       "width": 60, 
@@ -386,7 +386,7 @@
                   "def": {
                     "timeFlight": { 
                       "enabled": true, 
-                      "updateEvent": "PY(ON_CAMERA_MODE), PY(ON_MARKER_POSITION), PY(ON_BEGIN_BATTLE)", 
+                      "updateEvent": "PY(ON_CAMERA_MODE), PY(ON_MARKER_POSITION), PY(ON_BEGIN_BATTLE), ON_CURRENT_VEHICLE_DESTROYED", 
                       "x": 202,
                       "y": -61,
                       "width": 60, 
