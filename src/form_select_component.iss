@@ -33,15 +33,22 @@ type
 
 var
   arraySettings: array of TSettings;
-  FNameSettings, SelectPreset, DirTemp, FNameL10n: string;
+  FNameSettings, SelectPreset, DirTemp, FNameL10n, LinkSupport: string;
   Image: TBitmapImage;
   SettingsCheckListBox: TNewCheckListBox;
+  DescriptionLabel: TLabel;
   sizeBuf: Integer;
   ItemsType: array [0..4096] of TItems;
   SoundStream: DWORD;
 
 
 procedure GetNamesAndValues(Path: String; ALevel: Byte; TypeItem : TItems);  forward;
+
+function GetIniStringEx(const Section, Key, Default, Filename: String): String;
+begin
+  Result := GetIniString(Section, Key, Default, Filename);
+  StringChangeEx(Result, '\n', #13#10, True);
+end;
 
 procedure Init;
 var
@@ -150,15 +157,19 @@ begin
   else
     Setting.Append('');
   if NamesList.Find('soundifnotselected', Index) then
-    Setting.Append(ValuesList[Index])   //5 - soundIfNotSelected     internal name
+    Setting.Append(ValuesList[Index])   //5 - soundIfNotSelected
   else
     Setting.Append('');
   if NamesList.Find('name', Index) then
   begin
     InternalName := ValuesList[Index];
-    Setting.Append(InternalName);   //6 - internal name 
+    Setting.Append(InternalName);       //6 - internal name 
     Checked := GetIniBool(SETUP_SETTINGS, InternalName, Checked, ExpandConstant(PATH_INSTALL_SETTINGS) + '\' + FILE_NAME_SETTINGS)
-  end; 
+  end;
+  if NamesList.Find('description', Index) then
+    Setting.Append(GetIniStringEx('DescriptionLabel', ValuesList[Index], '', FNameL10n))   //7 - description
+  else
+    Setting.Append('');   
   //MsgBox(Name + #13 + Setting.Text, mbInformation, MB_OK);
   case TypeItem of
     iCheckBox:
@@ -338,6 +349,7 @@ end;
 procedure SettingsCheckListBoxOnClickCheck(Sender: TObject);
 begin
   with TNewCheckListBox(Sender) do
+  begin
     case State[ItemIndex] of
       cbUnchecked:
       begin
@@ -350,14 +362,16 @@ begin
         PlaySound(TStringList(ItemObject[ItemIndex]).Strings[4]);
       end;
     end;
+    DescriptionLabel.Caption := TStringList(ItemObject[ItemIndex]).Strings[7];
+  end;
 end;
 
 procedure SelectComponentButtonOnClick(Sender: TObject);
 var
   SelectComponentForm: TSetupForm;
-  
   OKButton, CancelButton: TNewButton;
   Bevel: TBevel;
+  LinkSupportLabel: TLabel;
 begin
   init;
   SelectComponentForm := CreateCustomForm();
@@ -368,50 +382,73 @@ begin
     SelectComponentForm.CenterInsideControl(WizardForm, False);
 
     Bevel := TBevel.Create(SelectComponentForm);
-    Bevel.Top := SelectComponentForm.ClientHeight - ScaleY(BTN_HEIGHT + 10 + 14);
-    Bevel.Left := ScaleX(0);
-    Bevel.Width := SelectComponentForm.ClientWidth;
-    Bevel.Height := ScaleY(2);
+    Bevel.Top := SelectComponentForm.ClientHeight - ScaleY(BTN_HEIGHT + 10 + 14);                 // 453
+    Bevel.Left := ScaleX(0);                                                                      // 0
+    Bevel.Width := SelectComponentForm.ClientWidth;                                               // 730
+    Bevel.Height := ScaleY(2);                                                                    // 2
     Bevel.Parent := SelectComponentForm; 
 
     OKButton := TNewButton.Create(SelectComponentForm);
     OKButton.Parent := SelectComponentForm;
-    OKButton.Width := ScaleX(BTN_WIDTH);
-    OKButton.Height := ScaleY(BTN_HEIGHT);
-    OKButton.Left := SelectComponentForm.ClientWidth - ScaleX(BTN_WIDTH + 6 + BTN_WIDTH + 10);
-    OKButton.Top := SelectComponentForm.ClientHeight - ScaleY(BTN_HEIGHT + 10);
+    OKButton.Width := ScaleX(BTN_WIDTH);                                                          // 75
+    OKButton.Height := ScaleY(BTN_HEIGHT);                                                        // 23
+    OKButton.Left := SelectComponentForm.ClientWidth - ScaleX(BTN_WIDTH + 6 + BTN_WIDTH + 10);    // 564
+    OKButton.Top := SelectComponentForm.ClientHeight - ScaleY(BTN_HEIGHT + 10);                   // 467
     OKButton.Caption := ExpandConstant('{cm:ButtonOK}');
     OKButton.ModalResult := mrOk;
     OKButton.Default := True;
 
     CancelButton := TNewButton.Create(SelectComponentForm);
     CancelButton.Parent := SelectComponentForm;
-    CancelButton.Width := ScaleX(BTN_WIDTH);
-    CancelButton.Height := ScaleY(BTN_HEIGHT);
-    CancelButton.Left := SelectComponentForm.ClientWidth - ScaleX(BTN_WIDTH + 10);
-    CancelButton.Top := SelectComponentForm.ClientHeight - ScaleY(BTN_HEIGHT + 10);
+    CancelButton.Width := ScaleX(BTN_WIDTH);                                                      // 75
+    CancelButton.Height := ScaleY(BTN_HEIGHT);                                                    // 23
+    CancelButton.Left := SelectComponentForm.ClientWidth - ScaleX(BTN_WIDTH + 10);                // 645
+    CancelButton.Top := SelectComponentForm.ClientHeight - ScaleY(BTN_HEIGHT + 10);               // 467
     CancelButton.Caption := ExpandConstant('{cm:ButtonCancel}');
     CancelButton.ModalResult := mrCancel;
     CancelButton.Cancel := True;
 
     SettingsCheckListBox := TNewCheckListBox.Create(SelectComponentForm);
-    SettingsCheckListBox.Top := ScaleY(BORDER_WIDTH);
-    SettingsCheckListBox.Left := ScaleX(BORDER_WIDTH);
-    SettingsCheckListBox.Width := ScaleX(300);
-    SettingsCheckListBox.Height := Bevel.Top - ScaleY(BORDER_WIDTH + BORDER_WIDTH);
+    SettingsCheckListBox.Top := ScaleY(BORDER_WIDTH);                                             // 20
+    SettingsCheckListBox.Left := ScaleX(BORDER_WIDTH);                                            // 20
+    SettingsCheckListBox.Width := ScaleX(300);                                                    // 300
+    SettingsCheckListBox.Height := Bevel.Top - ScaleY(BORDER_WIDTH + BORDER_WIDTH);               // 413
     SettingsCheckListBox.Parent := SelectComponentForm;
     SettingsCheckListBox.OnClickCheck := @SettingsCheckListBoxOnClickCheck;
+
+    DescriptionLabel := TLabel.Create(SelectComponentForm);
+    DescriptionLabel.Parent := SelectComponentForm;
+    DescriptionLabel.Height := ScaleY(40);                                                                      // 40
+    DescriptionLabel.Top := Bevel.Top - ScaleX(BORDER_WIDTH) - DescriptionLabel.Height;                         // 393
+    DescriptionLabel.Left := SettingsCheckListBox.Left + SettingsCheckListBox.Width + ScaleX(BORDER_WIDTH);     // 340
+    DescriptionLabel.Width := SelectComponentForm.ClientWidth - DescriptionLabel.Left - ScaleX(BORDER_WIDTH);   // 370
+    DescriptionLabel.AutoSize := False;
+    DescriptionLabel.Alignment := taCenter;
+    DescriptionLabel.WordWrap := True;
+
+    LinkSupportLabel := TLabel.Create(SelectComponentForm);
+    LinkSupportLabel.Parent := SelectComponentForm;
+    LinkSupportLabel.Height := ScaleY(BTN_HEIGHT);             // 23
+    LinkSupportLabel.Top := CancelButton.Top;                  // 467
+    LinkSupportLabel.Left := ScaleX(BORDER_WIDTH);             // 20
+    LinkSupportLabel.Width := ScaleX(500);                     // 500
+    LinkSupportLabel.AutoSize := False;
+    LinkSupportLabel.Alignment := taLeftJustify;
+    LinkSupportLabel.Font.Color := $FF6300;
+    LinkSupportLabel.Font.Style := [fsUnderline];
+    //LinkSupportLabel.Caption := 'sdsdfsdfsdfsdfsdfsdfsdf';
 
     FileSize(DirTemp + '\' + FNameSettings, sizeBuf);
     GetNamesAndValues(' ', 0, iCheckBox);
 
     Image := TBitmapImage.Create(SelectComponentForm);
-    Image.Top := ScaleY(BORDER_WIDTH);
-    Image.Left := SettingsCheckListBox.Left + SettingsCheckListBox.Width + ScaleX(BORDER_WIDTH);
-    Image.Width := SelectComponentForm.ClientWidth - Image.Left - ScaleX(BORDER_WIDTH);
-    Image.Height := Bevel.Top - ScaleY(BORDER_WIDTH + BORDER_WIDTH);
+    Image.Top := SettingsCheckListBox.Top;                                     // 20
+    Image.Left := DescriptionLabel.Left;                                       // 340
+    Image.Width := DescriptionLabel.Width;                                     // 370
+    Image.Height := DescriptionLabel.Top - Image.Top - ScaleY(BORDER_WIDTH);   // 353
     Image.Parent := SelectComponentForm;
     Image.Center := True;
+
     //ExtractTemporaryFile('big_image.bmp');
     //Image.Bitmap.LoadFromFile(ExpandConstant('{tmp}\big_image.bmp'));
 

@@ -22,9 +22,12 @@ Name: {#DEFAULT}; Description: "Default config"
 procedure TypesComboOnChange(Sender: TObject);
 begin
   if WizardForm.TypesCombo.Text = 'Default config' then
-    SelectPreset := 'default'
-  else if WizardForm.TypesCombo.Text = 'Default config (color_blindness)' then
-    SelectPreset := 'default_cb';
+  begin
+    SelectPreset := 'default';
+    LinkSupport := 'https://koreanrandom.com/forum/forum/81-';
+  end;
+//  else if WizardForm.TypesCombo.Text = 'Default config (color_blindness)' then
+//    SelectPreset := 'default_cb';
   FNameSettings := SelectPreset + '.xc';
 end;
 

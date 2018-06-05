@@ -1,15 +1,17 @@
 ﻿{
   // Название секции может быть любым
   "1battle": {
-    // Название для TNewCheckListBox (обязательный параметр)
+    // Название пункта, обязательный параметр. Здесь может быть указан ключ из файла перевода. Файлы перевода находятся в \installerXVM\src\SettingsInstall\default\l10n\ секция [CheckListBox].
     "name": "battle_interface",
+    // Подробное описание пункта. Здесь может быть указан ключ из файла перевода. Файлы перевода находятся в \installerXVM\src\SettingsInstall\default\l10n\ секция [DescriptionLabel].
+    "description": "battle_interface",
     // Задает отображение пункта, как radioButton, checkBox или group. Значение по умолчанию CheckBox
     "itemType": "checkBox",
     // true - пункт выбран. Значение по умолчанию true
     "checked": true,
-    // Файл изображения, если выбран пункт. Значение по умолчанию "empty.png"
+    // Файл изображения, если выбран пункт. Значение по умолчанию "empty.png" (максимальный размер 370х353)
     "imageIfSelected": "",
-    // Файл изображения, если не выбран пункт. Значение по умолчанию "empty.png"
+    // Файл изображения, если не выбран пункт. Значение по умолчанию "empty.png" (максимальный размер 370х353)
     "imageIfNotSelected": "",
     // Значение, если выбран пункт. Если параметр равен "", то изменения в конфиг не вносятся. Значение по умолчанию "".
     "valueIfSelected": "",
@@ -20,6 +22,7 @@
       // Название секции может быть любым
       "01minimap": {
         "name": "minimap",
+        "description": "minimap",
         "itemType": "checkBox",
         "checked": true,
         "imageIfSelected": "minimap_true.png",
@@ -41,6 +44,7 @@
         "children": {
           "zoomMinimap": {
             "name": "increase_minimap",
+            "description": "increase_minimap",
             "checked": true,
             "imageIfSelected": "minimap_true.png",
             "imageIfNotSelected": "minimap_true.png",
@@ -60,6 +64,7 @@
             "children": {
               "zoomMinimap": {
                 "name": "increase_center",
+                "description": "increase_minimap",
                 "checked": false,
                 "imageIfSelected": "minimap_true.png",
                 "imageIfNotSelected": "minimap_true.png",
@@ -80,6 +85,7 @@
           },
           "minimap_alt_mode": {
             "name": "alt_mode",
+            "description": "alt_mode",
             "checked": true,
             "imageIfSelected": "minimap_alt_hp_false.png",
             "imageIfNotSelected": "minimap_alt_hp_false.png",
@@ -103,6 +109,7 @@
                 "children": {
                   "key_l_CTRL": {
                     "name": "key_l_control",
+                    "description": "key_l_control",
                     "itemType": "radioButton",
                     "checked": true,
                     "imageIfSelected": "left_CTRL.png",
@@ -121,6 +128,7 @@
                   },
                   "key_l_ALT": {
                     "name": "key_l_ALT",
+                    "description": "key_l_ALT",
                     "itemType": "radioButton",
                     "checked": false,
                     "imageIfSelected": "left_ALT.png",
@@ -141,6 +149,7 @@
               },
               "minimap_alt_hp": {
                 "name": "hp_in_alternative_mode",
+                "description": "hp_in_alternative_mode",
                 "checked": false,
                 "imageIfSelected": "minimap_alt_hp_true.png",
                 "imageIfNotSelected": "minimap_alt_hp_false.png",
@@ -187,6 +196,7 @@
         "children": {
           "sixthSenseEye": {
             "name": "eye_Sauron",
+            "description": "images_for_sixth_sense",
             "itemType": "radioButton",
             "checked": false,
             "imageIfSelected": "SixthSense_Eye.png",
@@ -206,6 +216,7 @@
           },
           "sixthSenseSmile": {
             "name": "smiley",
+            "description": "images_for_sixth_sense",
             "itemType": "radioButton",
             "checked": false,
             "imageIfSelected": "SixthSense_Smile.png",
@@ -225,6 +236,7 @@
           },
           "sixthSenseXVM": {
             "name": "lamp_XVM",
+            "description": "lamp_XVM",
             "itemType": "radioButton",
             "checked": false,
             "imageIfSelected": "SixthSense.png",
@@ -244,6 +256,7 @@
           },          
           "sixthSenseDefault": {
             "name": "standard_lamp",
+            "description": "images_for_sixth_sense",
             "itemType": "radioButton",
             "checked": true,
             "imageIfSelected": "SixthSenseWG.png",
@@ -264,6 +277,7 @@
       },
       "13durationSixthSense": {
         "name": "sixth_sense_timer",
+        "description": "sixth_sense_timer",
         "checked": false,
         "imageIfSelected": "durationSixthSense_true.png",
         "imageIfNotSelected": "durationSixthSense_false.png",
@@ -316,10 +330,12 @@
       },
       "07sight": {
         "name": "sight",
+        "description": "sight",
         "itemType": "group",
         "children": {
           "timer_AIM": {
             "name": "time_until_full_notice",
+            "description": "time_until_full_notice",
             "checked": false,
             "imageIfSelected": "timer_AIM_true.png",
             "imageIfNotSelected": "timer_AIM_false.png",
@@ -344,16 +360,16 @@
                     "timerAIM": { 
                       "enabled": true, 
                       "updateEvent": "PY(ON_CAMERA_MODE), PY(ON_MARKER_POSITION), PY(ON_BEGIN_BATTLE), ON_CURRENT_VEHICLE_DESTROYED", 
-                      "x": 202,
+                      "x": -202,
                       "y": 61,
                       "width": 60, 
-                      "height": 25,
+                      "height": 30,
                       "layer": "bottom",
                       "alpha": "{{py:sight.cameraMode=str?{{py:isBattle?{{alive?100|0}}|0}}|0}}",
                       "screenHAlign": "center",
                       "screenVAlign": "center", 
                       "textFormat": {"size": 20, "color": "0x{{py:sight.timeAIM=0?2DC822|FF0000}}" }, 
-                      "format": "{{py:sight.timeAIM=0?Сведен|{{py:sight.timeAIM%2.1f}}}}" 
+                      "format": "{{py:sight.timeAIM%2.1f}}" 
                     }
                   }
                 }
@@ -363,6 +379,7 @@
           },
           "time_flight": {
             "name": "flight_time_of_shells",
+            "description": "flight_time_of_shells",
             "checked": false,
             "imageIfSelected": "time_flight_true.png",
             "imageIfNotSelected": "time_flight_false.png",
@@ -387,10 +404,10 @@
                     "timeFlight": { 
                       "enabled": true, 
                       "updateEvent": "PY(ON_CAMERA_MODE), PY(ON_MARKER_POSITION), PY(ON_BEGIN_BATTLE), ON_CURRENT_VEHICLE_DESTROYED", 
-                      "x": 202,
+                      "x": -202,
                       "y": -61,
                       "width": 60, 
-                      "height": 25,
+                      "height": 30,
                       "layer": "bottom",
                       "alpha": "{{py:sight.cameraMode=str?{{py:isBattle?{{alive?100|0}}|0}}|0}}",
                       "screenHAlign": "center",
@@ -408,6 +425,7 @@
       },      
       "02playersPanel": {
         "name": "players_panel",
+        "description": "players_panel",
         "checked": true,
         "imageIfSelected": "playersPanel_true.png",
         "imageIfNotSelected": "playersPanel_false.png",
@@ -424,8 +442,8 @@
         },
         "children": {
           "statistics": {
-            "isCheckBox": true,
             "name": "displaying_statistics",
+            "description": "displaying_statistics",
             "checked": true,
             "imageIfSelected": "pp_stat_true.png",
             "imageIfNotSelected": "pp_stat_false.png",        
@@ -456,6 +474,7 @@
       },
       "11fragCorrelation": {
         "name": "display_live",
+        "description": "display_live",
         "checked": false,
         "imageIfSelected": "showAliveNotFrags_true.png",
         "imageIfNotSelected": "showAliveNotFrags_false.png",
@@ -473,6 +492,7 @@
       },
       "06hitlog": {
         "name": "hitlog",
+        "description": "hitlog",
         "checked": true,
         "imageIfSelected": "hitlog_true.png",
         "imageIfNotSelected": "hitlog_false.png",
@@ -492,6 +512,7 @@
         "children": {
           "hitlog_header": {
             "name": "hitlog_header",
+            "description": "hitlog_header",
             "checked": false,
             "imageIfSelected": "hitlog_header_true.png",
             "imageIfNotSelected": "hitlog_true.png",
@@ -519,6 +540,7 @@
       },
       "04damageLog": {
         "name": "damagelog",
+        "description": "damagelog",
         "checked": true,
         "imageIfSelected": "damageLog_true.png",
         "imageIfNotSelected": "damageLog_false.png",
@@ -536,6 +558,7 @@
         "children": {
           "damageLog_bg": {
             "name": "background",
+            "description": "background",
             "checked": false,
             "imageIfSelected": "damageLog_bg_true.png",
             "imageIfNotSelected": "damageLog_true.png",
@@ -557,6 +580,7 @@
       },
       "08totalEfficiency": {
         "name": "panel_efficiency",
+        "description": "panel_efficiency",
         "checked": true,
         "imageIfSelected": "totalEfficiency_true.png",
         "imageIfNotSelected": "totalEfficiency_false.png",
@@ -576,6 +600,7 @@
       },
       "05repairTime": {
         "name": "timer_repair_modules",
+        "description": "timer_repair_modules",
         "checked": true,
         "imageIfSelected": "repairTime_true.png",
         "imageIfNotSelected": "repairTime_false.png",
@@ -610,6 +635,7 @@
       },
       "10hp_panel": {
         "name": "indicator_amount_HP_commands",
+        "description": "indicator_amount_HP_commands",
         "checked": true,
         "imageIfSelected": "hp_panel_true.png",
         "imageIfNotSelected": "hp_panel_false.png",
@@ -629,6 +655,7 @@
         "children": {
           "avgDamage": {
             "name": "average_damage_on_current_vehicle",
+            "description": "average_damage_on_current_vehicle",
             "checked": true,
             "imageIfSelected": "avgDamage_true.png",
             "imageIfNotSelected": "avgDamage_false.png",
@@ -648,6 +675,7 @@
           },
           "mainGun": {
             "name": "damage_to_main_caliber",
+            "description": "damage_to_main_caliber",
             "checked": true,
             "imageIfSelected": "mainGun_true.png",
             "imageIfNotSelected": "mainGun_false.png",
@@ -669,6 +697,7 @@
       },
       "13postmortemTips": {
         "name": "panel_after_death",
+        "description": "panel_after_death",
         "checked": true,
         "imageIfSelected": "",
         "imageIfNotSelected": "",
@@ -686,10 +715,12 @@
       },
       "09camera": {
         "name": "camera_settings",
+        "description": "camera_settings",
         "checked": false,
         "children": {
           "zoomIndicator": {
             "name": "zoom_indicator",
+            "description": "zoom_indicator",
             "checked": true,
             "imageIfSelected": "zoomIndicator_true.png",
             "imageIfNotSelected": "zoomIndicator_false.png",
@@ -711,6 +742,7 @@
           },
           "noFlashBang": {
             "name": "red_flash_when_taking_damage",
+            "description": "red_flash_when_taking_damage",
             "checked": true,
             "imageIfSelected": "",
             "imageIfNotSelected": "",
@@ -728,6 +760,7 @@
           },
           "hideHint": {
             "name": "tips_siege_mode_SPG_mode",
+            "description": "tips_siege_mode_SPG_mode",
             "checked": true,
             "imageIfSelected": "hideHint_true.png",
             "imageIfNotSelected": "hideHint_false.png",
@@ -745,6 +778,7 @@
           },
           "noBinoculars": {
             "name": "blackout_sniper_mode",
+            "description": "blackout_sniper_mode",
             "checked": true,
             "imageIfSelected": "noBinoculars_false.png",
             "imageIfNotSelected": "noBinoculars_true.png",
@@ -764,6 +798,7 @@
           },
           "shotRecoilEffect": {
             "name": "effect_of_kickback",
+            "description": "effect_of_kickback",
             "checked": true,
             "imageIfSelected": "",
             "imageIfNotSelected": "",
@@ -792,6 +827,7 @@
           },
           "noCameraLimit": {
             "name": "camera_rotation_limit",
+            "description": "camera_rotation_limit",
             "checked": true,
             "imageIfSelected": "",
             "imageIfNotSelected": "",
@@ -815,6 +851,7 @@
       },
       "03markers": {
         "name": "markers_over_vechicle",
+        "description": "markers_over_vechicle",
         "checked": true,
         "imageIfSelected": "markers_true.png",
         "imageIfNotSelected": "markers_false.png",
@@ -834,14 +871,28 @@
   },
   "2hangar": {
     "name": "hangar",
+    "description": "hangar",
     "checked": true,
+    "valueIfSelected": "",
+    "valueIfNotSelected": {
+      "carousel_disabled": {
+        "configFileName": "carousel.xc",
+        "value": {
+          "carousel": {
+            "enabled": false
+          }
+        }
+      }
+    },
     "children": {
       "widgets": {
         "name": "widgets",
+        "description": "widgets",
         "checked": true,
         "children": {
           "clock_widgets": {
             "name": "clock",
+            "description": "clock",
             "checked": true,
             "imageIfSelected": "clock_true.png",
             "imageIfNotSelected": "clock_false.png",
@@ -859,6 +910,7 @@
           },
           "statistics_widgets": {
             "name": "account_stats",
+            "description": "account_stats",
             "checked": true,
             "imageIfSelected": "statistics_true.png",
             "imageIfNotSelected": "statistics_false.png",
@@ -876,8 +928,27 @@
           }
         }
       },
+      "carousel": {
+        "name": "carousel",
+        "description": "carousel",
+        "checked": true,
+        "imageIfSelected": "carousel_true.png",
+        "imageIfNotSelected": "carousel_false.png",
+        "valueIfSelected": "",
+        "valueIfNotSelected": {
+          "carousel_disabled": {
+            "configFileName": "carousel.xc",
+            "value": {
+              "carousel": {
+                "enabled": false
+              }
+            }
+          }
+        }       
+      },
       "pingServers": {
         "name": "ping_servers",
+        "description": "ping_servers",
         "checked": false,
         "imageIfSelected": "",
         "imageIfNotSelected": "",
@@ -887,8 +958,8 @@
           "ping_login": {
             "name": "on_login_screen",
             "checked": false,
-            "imageIfSelected": "",
-            "imageIfNotSelected": "",
+            "imageIfSelected": "ping_login_true.png",
+            "imageIfNotSelected": "ping_login_false.png",
             "valueIfSelected": {
               "ping_enabled": {
                 "configFileName": "login.xc",
@@ -906,17 +977,17 @@
           },
           "ping_hangar": {
             "name": "in_hangar",
+            "description": "in_hangar",
             "checked": false,
-            "imageIfSelected": "",
-            "imageIfNotSelected": "",
+            "imageIfSelected": "ping_hangar_true.png",
+            "imageIfNotSelected": "ping_hangar_false.png",
             "valueIfSelected": {
               "ping_enabled": {
                 "configFileName": "hangar.xc",
                 "value": {
                   "hangar": {
                     "pingServers": {
-                      "enabled": true,
-                      "layer": "top"
+                      "enabled": true
                     }
                   }
                 }
@@ -928,6 +999,7 @@
       },
       "onlineServers": {
         "name": "online_servers",
+        "description": "online_servers",
         "checked": false,
         "imageIfSelected": "",
         "imageIfNotSelected": "",
@@ -937,8 +1009,8 @@
           "online_login": {
             "name": "on_login_screen",
             "checked": false,
-            "imageIfSelected": "",
-            "imageIfNotSelected": "",
+            "imageIfSelected": "online_login_true.png",
+            "imageIfNotSelected": "online_login_false.png",
             "valueIfSelected": {
               "online_enabled": {
                 "configFileName": "login.xc",
@@ -956,17 +1028,17 @@
           },
           "online_hangar": {
             "name": "in_hangar",
+            "description": "in_hangar",
             "checked": false,
-            "imageIfSelected": "",
-            "imageIfNotSelected": "",
+            "imageIfSelected": "online_hangar_true.png",
+            "imageIfNotSelected": "online_hangar_false.png",
             "valueIfSelected": {
               "online_enabled": {
                 "configFileName": "hangar.xc",
                 "value": {
                   "hangar": {
                     "onlineServers": {
-                      "enabled": true,
-                      "layer": "top"
+                      "enabled": true
                     }
                   }
                 }
@@ -1007,6 +1079,7 @@
       },
       "saveLastServer": {
         "name": "save_last_server",
+        "description": "save_last_server",
         "checked": false,
         "imageIfSelected": "",
         "imageIfNotSelected": "",
@@ -1024,6 +1097,7 @@
       },
       "autologin": {
         "name": "automatic_login_to_game",
+        "description": "automatic_login_to_game",
         "checked": false,
         "imageIfSelected": "",
         "imageIfNotSelected": "",
@@ -1043,11 +1117,13 @@
   },
   "3color_theme": {
     "name": "color_scheme",
+    "description": "color_scheme",
     "itemType": "group",
     "checked": false,
     "children": {
       "color_blindness": {
         "name": "color_blindness",
+        "description": "color_blindness",
         "checked": false,
         "imageIfSelected": "color_blindness_true.png",
         "imageIfNotSelected": "color_blindness_false.png",
@@ -1189,6 +1265,7 @@
   },
   "4sounds": {
     "name": "sounds",
+    "description": "sounds",
     "itemType": "checkBox",
     "checked": true,
     "imageIfSelected": "",
@@ -1207,6 +1284,7 @@
     "children": {
       "sixthSense": {
         "name": "sixth_sense",
+        "description": "sixth_sense",
         "checked": true,
         "imageIfSelected": "",
         "imageIfNotSelected": "",
