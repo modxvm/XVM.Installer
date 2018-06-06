@@ -24,16 +24,8 @@ external 'JSON_GetNamesAndValuesW_S@files:innoextensions.dll cdecl';
 procedure JSON_GetArrayValueW_S(StrJSON: String; BufValues: String; BufferSize: Integer);
 external 'JSON_GetArrayValueW_S@files:innoextensions.dll cdecl';
 
-//IMAGEDRAW
-//procedure IMAGEDRAW_PngDraw(FileName: String; hDC: Integer; hBitmap: HBITMAP);
-//external 'IMAGEDRAW_PngDraw@files:innoextensions.dll cdecl';
-
 procedure IMAGEDRAW_PngToBmp(FileName: String);
 external 'IMAGEDRAW_PngToBmp@files:innoextensions.dll cdecl';
-
-//UNPACK
-function UNPACK_divide(Path: String; FileName: String): Byte;
-external 'UNPACK_divide@files:innoextensions.dll cdecl';
 
 //PROCESS
 function PROCESS_GetRunningInDirectoryW(DirectoryPth: String; Buffer: String; BufferSize: Integer): Boolean;

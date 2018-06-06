@@ -13,7 +13,7 @@ players_panel=Player Panel
 displaying_statistics=Displaying statistics
 display_live=Display live in the account bar
 hitlog=Hit log
-hitlog_header=Common heading
+hitlog_header=Header log damage
 damagelog=Received damage log
 background=Background
 panel_efficiency=Efficiency panel
@@ -53,6 +53,10 @@ sight=Sight
 time_until_full_notice=Time until full notice (only in a strategic mode)
 flight_time_of_shells=Flight time of shells (only in a strategic mode)
 carousel=Panel vehicle (carousel)
+mirror_vehicle_icons=Mirror the icons of vehicles
+group_hits=Group hits by players name
+insert_order=Add values from the top
+
 
 [DescriptionLabel]
 battle_interface=Battle interface
@@ -108,3 +112,6 @@ key_l_ALT=Left ALT
 sight=Sight
 time_until_full_notice=Time until full notice (only in a strategic mode)
 flight_time_of_shells=Flight time of shells (only in a strategic mode)
+mirror_vehicle_icons=Mirror the icons of vehicles
+group_hits=Group hits by players name
+insert_order=Add values from the top

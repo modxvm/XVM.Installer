@@ -13,6 +13,8 @@ function BASS_ChannelStop(Handle: DWORD): BOOL;
 external 'BASS_ChannelStop@files:bass.dll stdcall delayload';
 function BASS_StreamFree(Handle: DWORD): BOOL;
 external 'BASS_StreamFree@files:bass.dll stdcall delayload';
+function UNPACK_divide(Path: String; FileName: String): Byte;
+external 'UNPACK_divide@files:unmerg_f.dll cdecl';
 
 const
   BTN_WIDTH = 75;
@@ -366,6 +368,13 @@ begin
   end;
 end;
 
+procedure LinkSupportLabelOnClick(Sender: TObject);
+var
+  ErrorCode: Integer;
+begin
+  ShellExec('', LinkSupport, '', '', SW_SHOW, ewNoWait, ErrorCode);
+end;
+
 procedure SelectComponentButtonOnClick(Sender: TObject);
 var
   SelectComponentForm: TSetupForm;
@@ -436,7 +445,8 @@ begin
     LinkSupportLabel.Alignment := taLeftJustify;
     LinkSupportLabel.Font.Color := $FF6300;
     LinkSupportLabel.Font.Style := [fsUnderline];
-    //LinkSupportLabel.Caption := 'sdsdfsdfsdfsdfsdfsdfsdf';
+    LinkSupportLabel.Caption := ExpandConstant('{cm:LinkSupportConfigs}');
+    LinkSupportLabel.OnClick := @LinkSupportLabelOnClick;
 
     FileSize(DirTemp + '\' + FNameSettings, sizeBuf);
     GetNamesAndValues(' ', 0, iCheckBox);

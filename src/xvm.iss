@@ -52,6 +52,7 @@ Source: "{app}\res_mods\configs\*"; DestDir: "{app}\xvm_backup\configs"; Tasks: 
 ;Source: "..\..\..\~output\*"; DestDir: "{app}"; Flags: createallsubdirs recursesubdirs
 Source: "dll\innoextensions.dll"; Flags: dontcopy
 Source: "dll\bass.dll"; Flags: dontcopy
+Source: "dll\unmerg_f.dll"; Flags: dontcopy
 
 
 [InstallDelete]
@@ -97,9 +98,9 @@ Type: filesandordirs; Name: "{app}\res_mods\mods\xfw"
 ;configs\xvm\py_macro
 Type: filesandordirs; Name: "{app}\res_mods\configs\xvm\py_macro\xvm\*.pyc"
 Type: filesandordirs; Name: "{app}\res_mods\configs\xvm\py_macro\*.pyc"
-Type: dirifempty; Name: "{app}\res_mods\Configs\xvm\py_macro\"
-Type: dirifempty; Name: "{app}\res_mods\Configs\xvm\"
-Type: dirifempty; Name: "{app}\res_mods\Configs\"
+Type: dirifempty; Name: "{app}\res_mods\configs\xvm\py_macro\"
+Type: dirifempty; Name: "{app}\res_mods\configs\xvm\"
+Type: dirifempty; Name: "{app}\res_mods\configs\"
 
 Type: filesandordirs; Name: "{app}\xvm_uninst"
 Type: files; Name: "{app}\readme-*.txt"
@@ -231,6 +232,7 @@ function InitializeSetup(): Boolean;
 begin
   FNameSettings := 'default.xc';
   SelectPreset:= 'default';
+  LinkSupport := 'https://koreanrandom.com/forum/forum/81-';
   Result := True;
 end;
 

@@ -190,7 +190,7 @@
           }
         }
       },
-      "12sixthSense": {
+      "13sixthSense": {
         "name": "images_for_sixth_sense",
         "itemType": "group",
         "children": {
@@ -275,7 +275,7 @@
           }          
         }
       },
-      "13durationSixthSense": {
+      "14durationSixthSense": {
         "name": "sixth_sense_timer",
         "description": "sixth_sense_timer",
         "checked": false,
@@ -328,7 +328,7 @@
         },
         "valueIfNotSelected": ""
       },
-      "07sight": {
+      "08sight": {
         "name": "sight",
         "description": "sight",
         "itemType": "group",
@@ -472,7 +472,7 @@
           }
         }
       },
-      "11fragCorrelation": {
+      "12fragCorrelation": {
         "name": "display_live",
         "description": "display_live",
         "checked": false,
@@ -510,34 +510,70 @@
           }
         },
         "children": {
-          "hitlog_header": {
-            "name": "hitlog_header",
-            "description": "hitlog_header",
-            "checked": false,
-            "imageIfSelected": "hitlog_header_true.png",
-            "imageIfNotSelected": "hitlog_true.png",
-            "valueIfSelected": {
-              "header_disabled": {
-                "configFileName": "battleLabelsTemplates.xc",
+          "group_hits": {
+            "name": "group_hits",
+            "description": "group_hits",
+            "checked": true,
+            "imageIfSelected": "hitlog_true.png",
+            "imageIfNotSelected": "hitlog_group_hits_false.png",
+            "valueIfSelected": "",
+            "valueIfNotSelected": {
+              "group_hits_false": {
+                "configFileName": "hitLog.xc",
                 "value": {
-                  "def": {
-                    "hitlogHeader": {
-                      "enabled": true
-                    },
-                    "totalEfficiency": {
-                      "updateEvent": "PY(ON_TOTAL_EFFICIENCY)",
-                      "screenVAlign": "bottom",
-                      "x": 244,
-                      "y": 0
-                    }
+                  "hitLog": {
+                    "groupHitsByPlayer": false
                   }
                 }
               }
-            },
-            "valueIfNotSelected": ""
+            }
+          },
+          "insert_order": {
+            "name": "insert_order",
+            "description": "insert_order",
+            "checked": true,
+            "imageIfSelected": "hitlog_true.png",
+            "imageIfNotSelected": "hitlog_order_false.png",
+            "valueIfSelected": "",
+            "valueIfNotSelected": {
+              "order": {
+                "configFileName": "hitLog.xc",
+                "value": {
+                  "hitLog": {
+                    "insertOrder": "end"
+                  }
+                }
+              }
+            }
           }
         }
       },
+      "07hitlog_header": {
+        "name": "hitlog_header",
+        "description": "hitlog_header",
+        "checked": false,
+        "imageIfSelected": "hitlog_header_true.png",
+        "imageIfNotSelected": "hitlog_true.png",
+        "valueIfSelected": {
+          "header_disabled": {
+            "configFileName": "battleLabelsTemplates.xc",
+            "value": {
+              "def": {
+                "hitlogHeader": {
+                  "enabled": true
+                },
+                "totalEfficiency": {
+                  "updateEvent": "PY(ON_TOTAL_EFFICIENCY)",
+                  "screenVAlign": "bottom",
+                  "x": 244,
+                  "y": 0
+                }
+              }
+            }
+          }
+        },
+        "valueIfNotSelected": ""
+      },      
       "04damageLog": {
         "name": "damagelog",
         "description": "damagelog",
@@ -578,7 +614,7 @@
           }
         }
       },
-      "08totalEfficiency": {
+      "09totalEfficiency": {
         "name": "panel_efficiency",
         "description": "panel_efficiency",
         "checked": true,
@@ -633,7 +669,7 @@
           }
         }
       },
-      "10hp_panel": {
+      "11hp_panel": {
         "name": "indicator_amount_HP_commands",
         "description": "indicator_amount_HP_commands",
         "checked": true,
@@ -695,7 +731,7 @@
           }
         }
       },
-      "13postmortemTips": {
+      "15postmortemTips": {
         "name": "panel_after_death",
         "description": "panel_after_death",
         "checked": true,
@@ -713,7 +749,7 @@
           }
         }
       },
-      "09camera": {
+      "10camera": {
         "name": "camera_settings",
         "description": "camera_settings",
         "checked": false,
@@ -866,7 +902,25 @@
             }
           }
         }
-      }
+      },
+      "16mirroredVehicleIcons": {
+        "name": "mirror_vehicle_icons",
+        "description": "mirror_vehicle_icons",
+        "checked": true,
+        "imageIfSelected": "mirroredVehicleIcons_true.png",
+        "imageIfNotSelected": "mirroredVehicleIcons_false.png",
+        "valueIfSelected": "",
+        "valueIfNotSelected": {
+          "disabledMinimap": {
+            "configFileName": "battle.xc",
+            "value": {
+              "battle": {
+                "mirroredVehicleIcons": false
+              }
+            }
+          }
+        }
+      }      
     }
   },
   "2hangar": {
