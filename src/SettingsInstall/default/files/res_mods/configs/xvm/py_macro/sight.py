@@ -96,6 +96,22 @@ def handleKey(self, isDown, key, mods):
                         isDownHotkey = False
 
 
+@overrideMethod(CrosshairPanelContainerMeta, 'as_setDistanceS')
+def CrosshairPanelContainerMeta_as_setDistanceS(base, self, dist):
+    if not (config.get('sight/enabled', True) and config.get('sight/removeDistance', False)):
+        return base(self, dist)
+
+
+@overrideMethod(CrosshairPanelContainerMeta, 'as_setNetVisibleS')
+def CrosshairPanelContainerMeta_as_setNetVisibleS(base, self, mask):
+    if config.get('sight/enabled', True):
+        if config.get('sight/removeIndicator', False):
+            mask &= 2
+        if config.get('sight/removeQuantityShells', False):
+            mask &= 1
+    base(self, mask)
+
+
 @overrideMethod(plug, '_makeSettingsVO')
 def plugins_makeSettingsVO(base, settingsCore, *keys):
     data = base(settingsCore, *keys)
@@ -103,7 +119,7 @@ def plugins_makeSettingsVO(base, settingsCore, *keys):
         for mode in data:
             if config.get('sight/removeCentralMarker', False) and ('centerAlphaValue' in data[mode]):
                 data[mode]['centerAlphaValue'] = 0
-            if config.get('sight/removeIndicator', False) and ('netAlphaValue' in data[mode]):
+            if config.get('sight/removeIndicator', False) and config.get('sight/removeQuantityShells', False) and ('netAlphaValue' in data[mode]):
                 data[mode]['netAlphaValue'] = 0
             if config.get('sight/removeLoad', False) and ('reloaderAlphaValue' in data[mode]):
                 data[mode]['reloaderAlphaValue'] = 0
@@ -174,6 +190,8 @@ def update_sphere(position):
     global sphere
     if sphere is None:
         sphere = BigWorld.Model('objects/misc/bbox/sphere1.model')
+        # log('sphere = %s' % (filter(lambda x: not x.startswith('__'), dir(sphere))))
+        # sphere = BigWorld.Model('content/Interface/Arrow/normal/lod0/arrow.model')
     elif sphere in BigWorld.models():
         BigWorld.delModel(sphere)
     if (_explosionRadius is not None) and isAlive and isDownHotkey:

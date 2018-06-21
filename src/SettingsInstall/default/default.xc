@@ -272,7 +272,7 @@
               }
             },
             "valueIfNotSelected": ""
-          }          
+          }
         }
       },
       "14durationSixthSense": {
@@ -324,7 +324,7 @@
                 "sixthSenseDuration": 10000
               }
             }
-          }      
+          }
         },
         "valueIfNotSelected": ""
       },
@@ -420,9 +420,9 @@
               }
             },
             "valueIfNotSelected": ""
-          }          
+          }
         }
-      },      
+      },
       "02playersPanel": {
         "name": "players_panel",
         "description": "players_panel",
@@ -446,25 +446,216 @@
             "description": "displaying_statistics",
             "checked": true,
             "imageIfSelected": "pp_stat_true.png",
-            "imageIfNotSelected": "pp_stat_false.png",        
+            "imageIfNotSelected": "pp_stat_false.png",
             "valueIfSelected": "",
             "valueIfNotSelected": {
               "notDisplayStatistic": {
                 "configFileName": "playersPanel.xc",
-                "value":{
+                "value": {
                   "playersPanel": {
                     "medium":{
                       "nickFormatLeft": "<font alpha='{{alive?#FF|#80}}'>{{name%.12s~..}}</font> <font alpha='#A0'>{{clan}}</font>",
                       "nickFormatRight": "<font alpha='#A0'>{{clan}}</font> <font alpha='{{alive?#FF|#80}}'>{{name%.12s~..}}</font>"
                     },
-                    "medium2":{
+                    "medium2": {
                       "vehicleFormatLeft": "<font alpha='{{alive?#FF|#80}}'>{{vehicle}}</font>",
                       "vehicleFormatRight": "<font alpha='{{alive?#FF|#80}}'>{{vehicle}}</font>"
                     },
-                    "large":{
+                    "large": {
                       "nickFormatLeft": "{{name%.15s~..}}<font alpha='#A0'>{{clan}}</font>",
                       "nickFormatRight": "<font alpha='#A0'>{{clan}}</font>{{name%.15}~..}}"
                     }
+                  }
+                }
+              }
+            }
+          },
+          "hpBar": {
+            "name": "hit_points",
+            "description": "hit_points",
+            "itemType": "group",
+            "children": {
+              "hitPointsAlt": {
+                "name": "hit_points_ALT",
+                "description": "hit_points_ALT",
+                "checked": true,
+                "imageIfSelected": "hp_alt_PP_true.png",
+                "imageIfNotSelected": "hp_alt_PP_false.png",
+                "valueIfSelected": "",
+                "valueIfNotSelected": {
+                  "notHitPointsAlt":{
+                    "configFileName": "playersPanel.xc",
+                    "value": {
+                      "def": {
+                        "hpBarBg": { "enabled": false },
+                        "hpBar": { "enabled": false },
+                        "hp": { "enabled": false }
+                      }
+                    }
+                  }
+                }
+              },
+              "hitPointsThin": {
+                "name": "hit_points_thin",
+                "description": "hit_points_thin",
+                "checked": false,
+                "imageIfSelected": "",
+                "imageIfNotSelected": "",
+                "valueIfSelected": {
+                  "hitPointsThin": {
+                    "configFileName": "playersPanel.xc",
+                    "value": {
+                      "def": {
+                        "hp_thin_bg": {
+                          "y": 22,
+                          "height": 4,
+                          "alpha": 50,
+                          "bgColor": "0x555555",
+                          "borderColor": "0x000000"
+                        },    
+                        "hp_thin": {
+                          "y": 23,
+                          "height": 2,
+                          "alpha": 100,
+                          "bgColor": ${ "colors.xc":"def.al" }
+                        }
+                      }
+                    }
+                  }
+                },
+                "valueIfNotSelected": "",
+                "children": {
+                  "medium": {
+                    "name": "middle_panel_players",
+                    "description": "middle_panel_players",
+                    "checked": false,
+                    "imageIfSelected": "hp_medium_PP_true.png",
+                    "imageIfNotSelected": "hp_medium_PP_false.png",
+                    "valueIfSelected": {
+                      "hitPointsThin": {
+                        "configFileName": "playersPanel.xc",
+                        "value": {
+                          "playersPanel": {
+                            "medium": {
+                              "extraFieldsLeft": [
+                                { 
+                                  "$ref": { "path": "def.hp_thin_bg"},
+                                  "x": 72,
+                                  "width": 100
+                                },
+                                { 
+                                  "$ref": { "path": "def.hp_thin"},
+                                  "x": 73,
+                                  "width": "{{hp-ratio:98}}"
+                                }
+                              ],
+                              "extraFieldsRight": [
+                                { 
+                                  "$ref": { "path": "def.hp_thin_bg"},
+                                  "x": 70,
+                                  "width": 100
+                                },        
+                                { 
+                                  "$ref": { "path": "def.hp_thin"},
+                                  "bgColor": ${ "colors.xc":"def.en" },
+                                  "x": 71,
+                                  "width": "{{hp-ratio:98}}"
+                                }
+                              ]
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "valueIfNotSelected": ""
+                  },
+                  "medium2": {
+                    "name": "middle2_panel_players",
+                    "description": "middle2_panel_players",
+                    "checked": false,
+                    "imageIfSelected": "hp_medium2_PP_true.png",
+                    "imageIfNotSelected": "hp_medium2_PP_false.png",
+                    "valueIfSelected": {
+                      "hitPointsThin": {
+                        "configFileName": "playersPanel.xc",
+                        "value": {
+                          "playersPanel": {
+                            "medium2": {
+                              "extraFieldsLeft": [
+                                { 
+                                  "$ref": { "path": "def.hp_thin_bg"},
+                                  "x": 48,
+                                  "width": 72
+                                },
+                                { 
+                                  "$ref": { "path": "def.hp_thin"},
+                                  "x": 49,
+                                  "width": "{{hp-ratio:71}}"
+                                }
+                              ],
+                              "extraFieldsRight": [
+                                { 
+                                  "$ref": { "path": "def.hp_thin_bg"},
+                                  "x": 48,
+                                  "width": 72
+                                },        
+                                { 
+                                  "$ref": { "path": "def.hp_thin"},
+                                  "bgColor": ${ "colors.xc":"def.en" },
+                                  "x": 49,
+                                  "width": "{{hp-ratio:71}}"
+                                }
+                              ]
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "valueIfNotSelected": ""
+                  },
+                  "large": {
+                    "name": "large_panel_players",
+                    "description": "large_panel_players",
+                    "checked": false,
+                    "imageIfSelected": "hp_large_PP_true.png",
+                    "imageIfNotSelected": "hp_large_PP_false.png",
+                    "valueIfSelected": {
+                      "hitPointsThin": {
+                        "configFileName": "playersPanel.xc",
+                        "value": {
+                          "playersPanel": {
+                            "large": {
+                              "extraFieldsLeft": [
+                                { 
+                                  "$ref": { "path": "def.hp_thin_bg"},
+                                  "x": 72,
+                                  "width": 190
+                                },
+                                { 
+                                  "$ref": { "path": "def.hp_thin"},
+                                  "x": 73,
+                                  "width": "{{hp-ratio:188}}"
+                                }
+                              ],
+                              "extraFieldsRight": [
+                                { 
+                                  "$ref": { "path": "def.hp_thin_bg"},
+                                  "x": 70,
+                                  "width": 190
+                                },        
+                                { 
+                                  "$ref": { "path": "def.hp_thin"},
+                                  "bgColor": ${ "colors.xc":"def.en" },
+                                  "x": 71,
+                                  "width": "{{hp-ratio:188}}"
+                                }
+                              ]
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "valueIfNotSelected": ""
                   }
                 }
               }
@@ -573,7 +764,7 @@
           }
         },
         "valueIfNotSelected": ""
-      },      
+      },
       "04damageLog": {
         "name": "damagelog",
         "description": "damagelog",
@@ -920,7 +1111,7 @@
             }
           }
         }
-      }      
+      }
     }
   },
   "2hangar": {
@@ -998,7 +1189,7 @@
               }
             }
           }
-        }       
+        }
       },
       "pingServers": {
         "name": "ping_servers",
@@ -1125,7 +1316,7 @@
                     ]
                   }
                 }
-              }              
+              }
             },
             "valueIfNotSelected": ""
           }
@@ -1280,7 +1471,7 @@
                 },
                 "logAltBackground": {
                   "formatHistory": "<img height='20' width='310' src='xvm://res/icons/damageLog/{{dmg=0?no_dmg|cb_dmg}}.png'>"
-                }            
+                }
               }
             }
           },

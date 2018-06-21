@@ -423,6 +423,7 @@ begin
     SettingsCheckListBox.Width := ScaleX(300);                                                    // 300
     SettingsCheckListBox.Height := Bevel.Top - ScaleY(BORDER_WIDTH + BORDER_WIDTH);               // 413
     SettingsCheckListBox.Parent := SelectComponentForm;
+    SettingsCheckListBox.WantTabs := True;
     SettingsCheckListBox.OnClickCheck := @SettingsCheckListBoxOnClickCheck;
 
     DescriptionLabel := TLabel.Create(SelectComponentForm);
@@ -437,15 +438,14 @@ begin
 
     LinkSupportLabel := TLabel.Create(SelectComponentForm);
     LinkSupportLabel.Parent := SelectComponentForm;
-    LinkSupportLabel.Height := ScaleY(BTN_HEIGHT);             // 23
-    LinkSupportLabel.Top := CancelButton.Top;                  // 467
+    LinkSupportLabel.Top := CancelButton.Top + 3;                  // 470
     LinkSupportLabel.Left := ScaleX(BORDER_WIDTH);             // 20
-    LinkSupportLabel.Width := ScaleX(500);                     // 500
-    LinkSupportLabel.AutoSize := False;
+    LinkSupportLabel.AutoSize := True;
     LinkSupportLabel.Alignment := taLeftJustify;
     LinkSupportLabel.Font.Color := $FF6300;
     LinkSupportLabel.Font.Style := [fsUnderline];
     LinkSupportLabel.Caption := ExpandConstant('{cm:LinkSupportConfigs}');
+    LinkSupportLabel.Cursor := crHand;
     LinkSupportLabel.OnClick := @LinkSupportLabelOnClick;
 
     FileSize(DirTemp + '\' + FNameSettings, sizeBuf);
