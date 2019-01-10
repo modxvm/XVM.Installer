@@ -9,6 +9,7 @@ from account_helpers.settings_core.options import InterfaceScaleSetting
 from xfw import *
 from xvm_main.python.logger import *
 import xvm_main.python.config as config
+from xfw_actionscript.python import *
 
 
 cameraMode = None

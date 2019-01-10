@@ -20,6 +20,8 @@ from xfw import *
 from xvm_main.python.logger import *
 import xvm_main.python.config as config
 from xvm import utils
+from xfw_actionscript.python import *
+
 
 VEHICLE_CLASSES = {'mediumTank': 'MT', 'lightTank': 'LT', 'heavyTank': 'HT', 'AT-SPG': 'TD', 'SPG': 'SPG'}
 

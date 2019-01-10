@@ -35,9 +35,7 @@
             "configFileName": "minimap.xc",
             // Значение        
             "value": {
-              "minimap": {
-                "enabled": false
-              }
+              "minimap": {"enabled": false}
             }
           }
         },
@@ -54,9 +52,7 @@
                 "configFileName": "hotkeys.xc",
                 "value": {
                   "hotkeys": {
-                    "minimapZoom":{
-                      "enabled": false
-                    }
+                    "minimapZoom":{"enabled": false}
                   }
                 }
               }
@@ -73,9 +69,7 @@
                     "configFileName": "minimap.xc",
                     "value": {
                       "minimap": {
-                        "zoom":{
-                          "centered": true
-                        }
+                        "zoom": {"centered": true}
                       }
                     }
                   }
@@ -95,9 +89,7 @@
                 "configFileName": "hotkeys.xc",
                 "value": {
                   "hotkeys": {
-                    "minimapAltMode":{
-                      "enabled": false
-                    }
+                    "minimapAltMode":{"enabled": false}
                   }
                 }
               }
@@ -118,9 +110,7 @@
                         "configFileName": "hotkeys.xc",
                         "value": {
                           "hotkeys": {
-                            "minimapAltMode":{
-                              "keyCode": 29
-                            }
+                            "minimapAltMode":{"keyCode": 29}
                           }
                         }
                       }
@@ -137,9 +127,7 @@
                         "configFileName": "hotkeys.xc",
                         "value": {
                           "hotkeys": {
-                            "minimapAltMode":{
-                              "keyCode": 56
-                            }
+                            "minimapAltMode":{"keyCode": 56}
                           }
                         }
                       }
@@ -172,12 +160,12 @@
                         "hpSpotted": {
                           "$ref": { "path":"def.vtypeSpotted" },
                           "enabled": true,
-                          "textFormat": { "font": "Dynamic2", "size": 20, "align": "center", "valign": "center" },
+                          "textFormat": { "font": "dynamic2", "size": 20, "align": "center", "valign": "center" },
                           "format": "<font color='{{.minimap.labelsData.colors.dot.{{sys-color-key}}}}'>{{hp-ratio%.335a|&#x1B3;}}</font>"
                         },
                         "hpLost": {
                           "$ref": { "path":"def.vtypeLost" },
-                          "textFormat": { "font": "Dynamic2", "size": 20, "align": "center", "valign": "center" },
+                          "textFormat": { "font": "dynamic2", "size": 20, "align": "center", "valign": "center" },
                           "format": "<font color='{{.minimap.labelsData.colors.lostDot.{{sys-color-key}}}}'>{{hp-ratio%.335a|&#x1B3;}}</font>"
                         }
                       }
@@ -206,9 +194,7 @@
                 "@files": ["res_mods/mods/shared_resources/xvm/res/SixthSense_Eye.png"],
                 "configFileName": "battle.xc",
                 "value": {
-                  "battle": {
-                    "sixthSenseIcon": "xvm://res/SixthSense_Eye.png"
-                  }
+                  "battle": {"sixthSenseIcon": "xvm://res/SixthSense_Eye.png"}
                 }
               }
             },
@@ -226,9 +212,7 @@
                 "@files": ["res_mods/mods/shared_resources/xvm/res/SixthSense_Smile.png"],
                 "configFileName": "battle.xc",
                 "value": {
-                  "battle": {
-                    "sixthSenseIcon": "xvm://res/SixthSense_Smile.png"
-                  }
+                  "battle": {"sixthSenseIcon": "xvm://res/SixthSense_Smile.png"}
                 }
               }
             },
@@ -246,9 +230,7 @@
                 "@files": ["res_mods/mods/shared_resources/xvm/res/SixthSense.png"],
                 "configFileName": "battle.xc",
                 "value": {
-                  "battle": {
-                    "sixthSenseIcon": "xvm://res/SixthSense.png"
-                  }
+                  "battle": {"sixthSenseIcon": "xvm://res/SixthSense.png"}
                 }
               }
             },
@@ -265,9 +247,7 @@
               "sixthSenseEye": {
                 "configFileName": "battle.xc",
                 "value": {
-                  "battle": {
-                    "sixthSenseIcon": ""
-                  }
+                  "battle": {"sixthSenseIcon": ""}
                 }
               }
             },
@@ -293,9 +273,7 @@
             "@files": ["res_mods/configs/xvm/py_macro/sixthSense.py"],
             "configFileName": "battleLabels.xc",
             "value": {
-              "labels": {
-                "formats": [${ "battleLabelsTemplates.xc":"def.sixthSenseTimer"}]
-              }
+              "labels": {"formats": [${ "battleLabelsTemplates.xc":"def.sixthSenseTimer"}]}
             }
           },
           "timer": {
@@ -320,9 +298,7 @@
           "duretionImage": {
             "configFileName": "battle.xc",
             "value": {
-              "battle": {
-                "sixthSenseDuration": 10000
-              }
+              "battle": {"sixthSenseDuration": 10000}
             }
           }
         },
@@ -348,9 +324,7 @@
                 ],
                 "configFileName": "battleLabels.xc",
                 "value": {
-                  "labels": {
-                    "formats": [${ "battleLabelsTemplates.xc":"def.timerAIM"}]
-                  }
+                  "labels": {"formats": [${ "battleLabelsTemplates.xc":"def.timerAIM"}]}
                 }
               },
               "timer_AIM2": {
@@ -392,9 +366,7 @@
                 ],
                 "configFileName": "battleLabels.xc",
                 "value": {
-                  "labels": {
-                    "formats": [${ "battleLabelsTemplates.xc":"def.timeFlight"}]
-                  }
+                  "labels": {"formats": [${ "battleLabelsTemplates.xc":"def.timeFlight"}]}
                 }
               },
               "timeFlight2": {
@@ -434,9 +406,7 @@
           "disabledPlayersPanel": {
             "configFileName": "playersPanel.xc",
             "value": {
-              "playersPanel": {
-                "enabled": false
-              }
+              "playersPanel": {"enabled": false}
             }
           }
         },
@@ -506,18 +476,8 @@
                     "configFileName": "playersPanel.xc",
                     "value": {
                       "def": {
-                        "hp_thin_bg": {
-                          "y": 22,
-                          "height": 4,
-                          "alpha": 50,
-                          "bgColor": "0x555555",
-                          "borderColor": "0x000000"
-                        },    
-                        "hp_thin": {
-                          "y": 23,
-                          "height": 2,
-                          "alpha": 100,
-                          "bgColor": ${ "colors.xc":"def.al" }
+                        "hp_thin_bg": {"y": 22, "height": 4, "alpha": 50, "bgColor": "0x555555", "borderColor": "0x000000"},    
+                        "hp_thin": {"y": 23, "height": 2, "alpha": 100, "bgColor": ${ "colors.xc":"def.al" }
                         }
                       }
                     }
@@ -538,29 +498,12 @@
                           "playersPanel": {
                             "medium": {
                               "extraFieldsLeft": [
-                                { 
-                                  "$ref": { "path": "def.hp_thin_bg"},
-                                  "x": 72,
-                                  "width": 100
-                                },
-                                { 
-                                  "$ref": { "path": "def.hp_thin"},
-                                  "x": 73,
-                                  "width": "{{hp-ratio:98}}"
-                                }
+                                {"$ref": { "path": "def.hp_thin_bg"}, "x": 72, "width": 100},
+                                {"$ref": { "path": "def.hp_thin"}, "x": 73, "width": "{{hp-ratio:98}}"}
                               ],
                               "extraFieldsRight": [
-                                { 
-                                  "$ref": { "path": "def.hp_thin_bg"},
-                                  "x": 70,
-                                  "width": 100
-                                },        
-                                { 
-                                  "$ref": { "path": "def.hp_thin"},
-                                  "bgColor": ${ "colors.xc":"def.en" },
-                                  "x": 71,
-                                  "width": "{{hp-ratio:98}}"
-                                }
+                                {"$ref": { "path": "def.hp_thin_bg"}, "x": 70, "width": 100},        
+                                {"$ref": { "path": "def.hp_thin"}, "bgColor": ${ "colors.xc":"def.en" }, "x": 71, "width": "{{hp-ratio:98}}"}
                               ]
                             }
                           }
@@ -582,29 +525,12 @@
                           "playersPanel": {
                             "medium2": {
                               "extraFieldsLeft": [
-                                { 
-                                  "$ref": { "path": "def.hp_thin_bg"},
-                                  "x": 48,
-                                  "width": 72
-                                },
-                                { 
-                                  "$ref": { "path": "def.hp_thin"},
-                                  "x": 49,
-                                  "width": "{{hp-ratio:71}}"
-                                }
+                                {"$ref": { "path": "def.hp_thin_bg"}, "x": 48, "width": 72},
+                                {"$ref": { "path": "def.hp_thin"}, "x": 49, "width": "{{hp-ratio:70}}"}
                               ],
                               "extraFieldsRight": [
-                                { 
-                                  "$ref": { "path": "def.hp_thin_bg"},
-                                  "x": 48,
-                                  "width": 72
-                                },        
-                                { 
-                                  "$ref": { "path": "def.hp_thin"},
-                                  "bgColor": ${ "colors.xc":"def.en" },
-                                  "x": 49,
-                                  "width": "{{hp-ratio:71}}"
-                                }
+                                {"$ref": { "path": "def.hp_thin_bg"}, "x": 48, "width": 72},        
+                                {"$ref": { "path": "def.hp_thin"}, "bgColor": ${ "colors.xc":"def.en" }, "x": 49, "width": "{{hp-ratio:70}}"}
                               ]
                             }
                           }
@@ -626,29 +552,12 @@
                           "playersPanel": {
                             "large": {
                               "extraFieldsLeft": [
-                                { 
-                                  "$ref": { "path": "def.hp_thin_bg"},
-                                  "x": 72,
-                                  "width": 190
-                                },
-                                { 
-                                  "$ref": { "path": "def.hp_thin"},
-                                  "x": 73,
-                                  "width": "{{hp-ratio:188}}"
-                                }
+                                {"$ref": { "path": "def.hp_thin_bg"}, "x": 72, "width": 190},
+                                {"$ref": { "path": "def.hp_thin"}, "x": 73, "width": "{{hp-ratio:188}}"}
                               ],
                               "extraFieldsRight": [
-                                { 
-                                  "$ref": { "path": "def.hp_thin_bg"},
-                                  "x": 70,
-                                  "width": 190
-                                },        
-                                { 
-                                  "$ref": { "path": "def.hp_thin"},
-                                  "bgColor": ${ "colors.xc":"def.en" },
-                                  "x": 71,
-                                  "width": "{{hp-ratio:188}}"
-                                }
+                                {"$ref": { "path": "def.hp_thin_bg"}, "x": 70, "width": 190},        
+                                {"$ref": { "path": "def.hp_thin"}, "bgColor": ${ "colors.xc":"def.en" }, "x": 71, "width": "{{hp-ratio:188}}"}
                               ]
                             }
                           }
@@ -673,9 +582,7 @@
           "showAlive": {
             "configFileName": "battle.xc",
             "value": {
-              "fragCorrelation": {
-                "showAliveNotFrags": true
-              }
+              "fragCorrelation": {"showAliveNotFrags": true}
             }
           }
         },
@@ -693,9 +600,7 @@
             "configFileName": "battleLabelsTemplates.xc",
             "value": {
               "def": {
-                "hitlogBody": {
-                  "enabled": false
-                }
+                "hitlogBody": {"enabled": false}
               }
             }
           }
@@ -712,9 +617,7 @@
               "group_hits_false": {
                 "configFileName": "hitLog.xc",
                 "value": {
-                  "hitLog": {
-                    "groupHitsByPlayer": false
-                  }
+                  "hitLog": {"groupHitsByPlayer": false}
                 }
               }
             }
@@ -730,9 +633,7 @@
               "order": {
                 "configFileName": "hitLog.xc",
                 "value": {
-                  "hitLog": {
-                    "insertOrder": "end"
-                  }
+                  "hitLog": {"insertOrder": "end"}
                 }
               }
             }
@@ -750,15 +651,8 @@
             "configFileName": "battleLabelsTemplates.xc",
             "value": {
               "def": {
-                "hitlogHeader": {
-                  "enabled": true
-                },
-                "totalEfficiency": {
-                  "updateEvent": "PY(ON_TOTAL_EFFICIENCY)",
-                  "screenVAlign": "bottom",
-                  "x": 244,
-                  "y": 0
-                }
+                "hitlogHeader": {"enabled": true},
+                "totalEfficiency": {"updateEvent": "PY(ON_TOTAL_EFFICIENCY)", "screenVAlign": "bottom", "x": 244, "y": 0}
               }
             }
           }
@@ -776,9 +670,7 @@
           "damageLog_disabled": {
             "configFileName": "damageLog.xc",
             "value": {
-              "damageLog": {
-                "enabled": false
-              }
+              "damageLog": {"enabled": false}
             }
           }
         },
@@ -794,9 +686,7 @@
                 "configFileName": "battleLabelsTemplates.xc",
                 "value": {
                   "def": {
-                    "damageLogBackground": {
-                      "enabled": true
-                    }
+                    "damageLogBackground": {"enabled": true}
                   }
                 }
               }
@@ -817,9 +707,7 @@
             "configFileName": "battleLabelsTemplates.xc",
             "value": {
               "def": {
-                "totalEfficiency": {
-                  "enabled": false
-                }
+                "totalEfficiency": {"enabled": false}
               }
             }
           }
@@ -837,24 +725,12 @@
             "configFileName": "battleLabelsTemplates.xc",
             "value": {
               "def": {
-                "repairTimeEngine": {
-                  "enabled": false
-                },
-                "repairTimeGun": {
-                  "enabled": false
-                },
-                "repairTimeTurret": {
-                  "enabled": false
-                },
-                "repairTimeTracks": {
-                  "enabled": false
-                },
-                "repairTimeSurveying": {
-                  "enabled": false
-                },
-                "repairTimeRadio": {
-                  "enabled": false
-                }
+                "repairTimeEngine": {"enabled": false},
+                "repairTimeGun": {"enabled": false },
+                "repairTimeTurret": {"enabled": false},
+                "repairTimeTracks": {"enabled": false},
+                "repairTimeSurveying": {"enabled": false},
+                "repairTimeRadio": {"enabled": false}
               }
             }
           }
@@ -872,9 +748,7 @@
             "configFileName": "battleLabelsTemplates.xc",
             "value": {
               "def": {
-                "totalHP": {
-                  "enabled": false
-                }
+                "totalHP": {"enabled": false}
               }
             }
           }
@@ -892,9 +766,7 @@
                 "configFileName": "battleLabelsTemplates.xc",
                 "value": {
                   "def": {
-                    "avgDamage": {
-                      "enabled": false
-                    }
+                    "avgDamage": {"enabled": false}
                   }
                 }
               }
@@ -912,9 +784,7 @@
                 "configFileName": "battleLabelsTemplates.xc",
                 "value": {
                   "def": {
-                    "mainGun": {
-                      "enabled": false
-                    }
+                    "mainGun": {"enabled": false}
                   }
                 }
               }
@@ -933,9 +803,7 @@
           "pt_disabled": {
             "configFileName": "battle.xc",
             "value": {
-              "battle": {
-                "showPostmortemTips": false
-              }
+              "battle": {"showPostmortemTips": false}
             }
           }
         }
@@ -958,9 +826,7 @@
                 "value": {
                   "camera": {
                     "sniper": {
-                      "zoomIndicator": {
-                        "enabled": false
-                      }
+                      "zoomIndicator": {"enabled": false}
                     }
                   }
                 }
@@ -978,9 +844,7 @@
               "nfb_enabled": {
                 "configFileName": "camera.xc",
                 "value": {
-                  "camera": {
-                    "noFlashBang": true
-                  }
+                  "camera": {"noFlashBang": true}
                 }
               }
             }
@@ -996,9 +860,7 @@
               "hh_enabled": {
                 "configFileName": "camera.xc",
                 "value": {
-                  "camera": {
-                    "hideHint": true
-                  }
+                  "camera": {"hideHint": true}
                 }
               }
             }
@@ -1015,9 +877,7 @@
                 "configFileName": "camera.xc",
                 "value": {
                   "camera": {
-                    "sniper": {
-                      "noBinoculars": true
-                    }
+                    "sniper": {"noBinoculars": true}
                   }
                 }
               }
@@ -1035,18 +895,10 @@
                 "configFileName": "camera.xc",
                 "value": {
                   "camera": {
-                    "arcade": {
-                      "shotRecoilEffect": false
-                    },
-                    "postmortem": {
-                      "shotRecoilEffect": false
-                    },
-                    "strategic": {
-                      "shotRecoilEffect": false
-                    },
-                    "sniper": {
-                      "shotRecoilEffect": false
-                    }
+                    "arcade": {"shotRecoilEffect": false},
+                    "postmortem": {"shotRecoilEffect": false},
+                    "strategic": {"shotRecoilEffect": false},
+                    "sniper": {"shotRecoilEffect": false}
                   }
                 }
               }
@@ -1065,9 +917,7 @@
                 "value": {
                   "camera": {
                     "sniper": {
-                      "noCameraLimit": {
-                        "enabled": true
-                      }
+                      "noCameraLimit": {"enabled": true}
                     }
                   }
                 }
@@ -1087,9 +937,7 @@
           "disabledMinimap": {
             "configFileName": "markers.xc",
             "value": {
-              "markers": {
-                "enabled": false
-              }
+              "markers": {"enabled": false}
             }
           }
         }
@@ -1105,9 +953,7 @@
           "disabledMinimap": {
             "configFileName": "battle.xc",
             "value": {
-              "battle": {
-                "mirroredVehicleIcons": false
-              }
+              "battle": {"mirroredVehicleIcons": false}
             }
           }
         }
@@ -1123,9 +969,7 @@
       "carousel_disabled": {
         "configFileName": "carousel.xc",
         "value": {
-          "carousel": {
-            "enabled": false
-          }
+          "carousel": {"enabled": false}
         }
       }
     },
@@ -1146,9 +990,7 @@
               "clock_disabled": {
                 "configFileName": "widgetsTemplates.xc",
                 "value": {
-                  "clock": {
-                    "enabled": false
-                  }
+                  "clock": {"enabled": false}
                 }
               }
             }
@@ -1164,9 +1006,7 @@
               "statistics_disabled": {
                 "configFileName": "widgetsTemplates.xc",
                 "value": {
-                  "statistics": {
-                    "enabled": false
-                  }
+                  "statistics": {"enabled": false}
                 }
               }
             }
@@ -1184,9 +1024,7 @@
           "carousel_disabled": {
             "configFileName": "carousel.xc",
             "value": {
-              "carousel": {
-                "enabled": false
-              }
+              "carousel": {"enabled": false}
             }
           }
         }
@@ -1210,10 +1048,7 @@
                 "configFileName": "login.xc",
                 "value": {
                   "login": {
-                    "pingServers": {
-                      "enabled": true,
-                      "y": 40
-                    }
+                    "pingServers": {"enabled": true}
                   }
                 }
               }
@@ -1231,9 +1066,7 @@
                 "configFileName": "hangar.xc",
                 "value": {
                   "hangar": {
-                    "pingServers": {
-                      "enabled": true
-                    }
+                    "pingServers": {"enabled": true}
                   }
                 }
               }
@@ -1261,10 +1094,7 @@
                 "configFileName": "login.xc",
                 "value": {
                   "login": {
-                    "onlineServers": {
-                      "enabled": true,
-                      "y": 40
-                    }
+                    "onlineServers": {"enabled": true}
                   }
                 }
               }
@@ -1282,9 +1112,7 @@
                 "configFileName": "hangar.xc",
                 "value": {
                   "hangar": {
-                    "onlineServers": {
-                      "enabled": true
-                    }
+                    "onlineServers": {"enabled": true}
                   }
                 }
               },
@@ -1301,15 +1129,7 @@
                         "width": 200,
                         "height": 50,
                         "screenHAlign": "right",
-                        "shadow": {
-                          "enabled": true,
-                          "distance": 0,
-                          "angle": 0,
-                          "color": "0x000000",
-                          "alpha": 70,
-                          "blur": 4,
-                          "strength": 2
-                        },
+                        "shadow": {"enabled": true, "alpha": 70, "blur": 4, "strength": 2},
                         "textFormat": { "align": "right", "valign": "bottom", "color": "0xF3F3EB" },
                         "format": "<font face='$FieldFont'><textformat leading='-38'><font size='36'>{{py:xvm.formatDate('%H:%M')}}</font><br></textformat><textformat rightMargin='85' leading='-2'>{{py:xvm.formatDate('%A')}}<br><font size='15'>{{py:xvm.formatDate('%d %b %Y')}}</font></textformat></font>"
                       }
@@ -1322,7 +1142,7 @@
           }
         }
       },
-      "saveLastServer": {
+      "1saveLastServer": {
         "name": "save_last_server",
         "description": "save_last_server",
         "checked": false,
@@ -1332,9 +1152,7 @@
           "sls_enabled": {
             "configFileName": "login.xc",
             "value": {
-              "login": {
-                "saveLastServer": true
-              }
+              "login": {"saveLastServer": true}
             }
           }
         },
@@ -1350,14 +1168,92 @@
           "autologin_enabled": {
             "configFileName": "login.xc",
             "value": {
-              "login": {
-                "autologin": true
-              }
+              "login": {"autologin": true}
             }
           }
         },
         "valueIfNotSelected": ""
-      }
+      },
+      "premiumButton": {
+        "name": "buy_premium_button",
+        "description": "buy_premium_button",
+        "checked": true,
+        "imageIfSelected": "premium_button_true.png",
+        "imageIfNotSelected": "buy_premium_false.png",
+        "valueIfSelected": "",
+        "valueIfNotSelected": {
+          "premiumButtonHide": {
+            "configFileName": "hangar.xc",
+            "value": {
+              "hangar": {"showBuyPremiumButton": false}
+            }
+          }
+        }
+      },
+      "premiumShopButton": {
+        "name": "premium_shop_button",
+        "description": "premium_shop_button",
+        "checked": true,
+        "imageIfSelected": "premium_button_true.png",
+        "imageIfNotSelected": "premium_shop_false.png",
+        "valueIfSelected": "",
+        "valueIfNotSelected": {
+          "premiumShopButtonHide": {
+            "configFileName": "hangar.xc",
+            "value": {
+              "hangar": {"showPremiumShopButton": false}
+            }
+          }
+        }
+      },
+      "promoPremVehicle": {
+        "name": "promo_of_premium_vehicle",
+        "description": "promo_of_premium_vehicle",
+        "checked": true,
+        "imageIfSelected": "promo_vehicle_true.png",
+        "imageIfNotSelected": "promo_vehicle_false.png",
+        "valueIfSelected": "",
+        "valueIfNotSelected": {
+          "promoPremVehicleHide": {
+            "configFileName": "hangar.xc",
+            "value": {
+              "hangar": {"showPromoPremVehicle": false}
+            }
+          }
+        }
+      },
+      "equipAutoReturn": {
+        "name": "equipment_auto_return",
+        "description": "equipment_auto_return",
+        "checked": false,
+        "imageIfSelected": "",
+        "imageIfNotSelected": "",
+        "valueIfSelected": {
+          "equipAutoReturnEnabled": {
+            "configFileName": "hangar.xc",
+            "value": {
+              "hangar": {"enableEquipAutoReturn": true}
+            }
+          }
+        },
+        "valueIfNotSelected": ""
+      },
+      "crewAutoReturn": {
+        "name": "crew_auto_return",
+        "description": "crew_auto_return",
+        "checked": true,
+        "imageIfSelected": "",
+        "imageIfNotSelected": "",
+        "valueIfSelected": "",
+        "valueIfNotSelected":  {
+          "crewAutoReturnDisabled": {
+            "configFileName": "hangar.xc",
+            "value": {
+              "hangar": {"enableCrewAutoReturn": false}
+            }
+          }
+        }
+      }      
     }
   },
   "3color_theme": {
@@ -1382,16 +1278,12 @@
               "login": {
                 "pingServers": {
                   "fontStyle": {
-                    "color": {
-                      "bad": "0x3399CC"
-                    }
+                    "color": {"bad": "0x3399CC"}
                   }
                 },
                 "onlineServers": {
                   "fontStyle": {
-                    "color": {
-                      "bad": "0x3399CC"
-                    }
+                    "color": {"bad": "0x3399CC"}
                   }
                 }
               }
@@ -1403,16 +1295,12 @@
               "hangar": {
                 "pingServers": {
                   "fontStyle": {
-                    "color": {
-                      "bad": "0x3399CC"
-                    }
+                    "color": {"bad": "0x3399CC"}
                   }
                 },
                 "onlineServers": {
                   "fontStyle": {
-                    "color": {
-                      "bad": "0x3399CC"
-                    }
+                    "color": {"bad": "0x3399CC"}
                   }
                 }
               }
@@ -1481,25 +1369,16 @@
             "value": {
               "def": {
                 "en": "0x8379FE",
-                "colorRating": {
-                  "very_bad": "0x9C3E00"
-                },
-                "colorHP": {
-                  "very_low": "0x3355CC",
-                  "low": "0x3399CC"
-                }
+                "colorRating": {"very_bad": "0x9C3E00"},
+                "colorHP": {"very_low": "0x3355CC", "low": "0x3399CC"}
               },
               "colors": {
                 "system": {
                   "enemy_dead": "0x47407A",
                   "enemy_blowedup": "0x3B365F"
                 },
-                "dmg_kind": {
-                  "fire": "0x756CE0"
-                },
-                "vtype": {
-                  "HT": "0x3399CC"
-                }
+                "dmg_kind": {"fire": "0x756CE0"},
+                "vtype": {"HT": "0x3399CC"}
               }
             }
           }
@@ -1520,9 +1399,7 @@
       "clock_disabled": {
         "configFileName": "sounds.xc",
         "value": {
-          "sounds": {
-            "enabled": false
-          }
+          "sounds": {"enabled": false}
         }
       }
     },

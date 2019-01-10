@@ -45,6 +45,8 @@ in_hangar=In the hangar
 online_servers=Online servers
 save_last_server=Save last server
 automatic_login_to_game=Automatic login to the game
+buy_premium_button="Buy premium" button
+premium_shop_button="Premium shop" button
 color_scheme=Color scheme
 color_blindness=Color blindness
 sounds=Sounds
@@ -62,7 +64,7 @@ carousel=Panel vehicle (carousel)
 mirror_vehicle_icons=Mirror the icons of vehicles
 group_hits=Group hits by players name
 insert_order=Add values from the top
-
+crew_auto_return=Crew auto return
 
 [DescriptionLabel]
 battle_interface=Battle interface
@@ -111,6 +113,8 @@ in_hangar=In the hangar
 online_servers=Online servers
 save_last_server=Save last server
 automatic_login_to_game=Automatic login to the game
+buy_premium_button=Show "Buy premium" button
+premium_shop_button=Show "Premium shop" button
 color_scheme=Color scheme
 color_blindness=Color blindness
 sounds=Sounds
@@ -127,3 +131,4 @@ flight_time_of_shells=Flight time of shells (only in a strategic mode)
 mirror_vehicle_icons=Mirror the icons of vehicles
 group_hits=Group hits by players name
 insert_order=Add values from the top
+crew_auto_return=
