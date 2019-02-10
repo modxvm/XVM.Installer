@@ -5,7 +5,7 @@ import math
 import ProjectileMover
 import BattleReplay
 from projectile_trajectory import computeProjectileTrajectory
-from constants import SERVER_TICK_LENGTH, SHELL_TRAJECTORY_EPSILON_CLIENT  # , ARENA_GUI_TYPE
+from constants import SERVER_TICK_LENGTH, SHELL_TRAJECTORY_EPSILON_CLIENT, ARENA_GUI_TYPE
 from Vehicle import Vehicle
 from Avatar import PlayerAvatar
 from gui.Scaleform.daapi.view.meta.CrosshairPanelContainerMeta import CrosshairPanelContainerMeta
@@ -15,6 +15,7 @@ from gui.battle_control.controllers.consumables.ammo_ctrl import AmmoReplayPlaye
 import gui.Scaleform.daapi.view.battle.shared.crosshair.plugins as plug
 from gui.Scaleform.daapi.view.battle.shared.crosshair.plugins import AmmoPlugin
 from gui.Scaleform.daapi.view.battle.classic.stats_exchange import FragsCollectableStats
+from gui.battle_control.battle_constants import CROSSHAIR_VIEW_ID
 
 from xfw import *
 from xvm_main.python.logger import *
@@ -24,11 +25,6 @@ from xfw_actionscript.python import *
 
 
 VEHICLE_CLASSES = {'mediumTank': 'MT', 'lightTank': 'LT', 'heavyTank': 'HT', 'AT-SPG': 'TD', 'SPG': 'SPG'}
-
-
-COLOR_PIERCING_CHANCE = {'not_pierced':    '#E82929',
-                         'little_pierced': '#E1C300',
-                         'great_pierced':  '#2ED12F'}
 
 
 currentDistance = None
@@ -82,7 +78,7 @@ def FragsCollectableStats_addVehicleStatusUpdate(self, vInfoVO):
 
 @registerEvent(PlayerAvatar, 'handleKey')
 def handleKey(self, isDown, key, mods):
-    if config.get('sight/enabled', True) and isNotEvent:
+    if config.get('sight/enabled', True):# and isNotEvent:
         global isDownHotkey
         hotkey = config.get('sight/sphereDispersion/hotkey', None)
         if hotkey is not None and hotkey['enabled'] and (key == hotkey['keyCode']):
@@ -111,9 +107,13 @@ def CrosshairPanelContainerMeta_as_setNetVisibleS(base, self, mask):
             mask &= 2
         if config.get('sight/removeQuantityShells', False):
             mask &= 1
-    base(self, mask)
+    return base(self, mask)
 
 
+@overrideMethod(CrosshairPanelContainerMeta, 'as_setViewS')
+# @overrideMethodInBattle
+def CrosshairPanelContainerMeta_as_setViewS(base, self, viewId, settingId):
+    return base(self, viewId, settingId) if viewId != CROSSHAIR_VIEW_ID.POSTMORTEM or not config.get('sight/hideSightAfterDeath', False) else base(self, -1, -1)
 @overrideMethod(plug, '_makeSettingsVO')
 def plugins_makeSettingsVO(base, settingsCore, *keys):
     data = base(settingsCore, *keys)
@@ -153,8 +153,8 @@ def Vehicle_onEnterWorld(self, prereqs):
         timeAIM = None
         cameraHeight = None
         player = BigWorld.player()
-        # isNotEvent = player.arenaGuiType not in [ARENA_GUI_TYPE.EVENT_BATTLES, ARENA_GUI_TYPE.EVENT_BATTLES_2]
-        isNotEvent = True
+        isNotEvent = player.arenaGuiType not in [ARENA_GUI_TYPE.EPIC_BATTLE, ARENA_GUI_TYPE.EVENT_BATTLES]
+        # isNotEvent = True
         if isNotEvent:
             isAlive = self.isAlive and self.isCrewActive
             vehicle = self
