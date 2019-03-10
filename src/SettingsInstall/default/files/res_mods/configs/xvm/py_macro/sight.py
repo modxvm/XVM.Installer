@@ -5,7 +5,7 @@ import math
 import ProjectileMover
 import BattleReplay
 from projectile_trajectory import computeProjectileTrajectory
-from constants import SERVER_TICK_LENGTH, SHELL_TRAJECTORY_EPSILON_CLIENT, ARENA_GUI_TYPE
+from constants import SERVER_TICK_LENGTH, SHELL_TRAJECTORY_EPSILON_CLIENT #, ARENA_GUI_TYPE
 from Vehicle import Vehicle
 from Avatar import PlayerAvatar
 from gui.Scaleform.daapi.view.meta.CrosshairPanelContainerMeta import CrosshairPanelContainerMeta
@@ -19,9 +19,9 @@ from gui.battle_control.battle_constants import CROSSHAIR_VIEW_ID
 
 from xfw import *
 from xvm_main.python.logger import *
-import xvm_main.python.config as config
-from xvm import utils
 from xfw_actionscript.python import *
+import xvm_main.python.config as config
+from xvm_battle.python.battle import isBattleTypeSupported
 
 
 VEHICLE_CLASSES = {'mediumTank': 'MT', 'lightTank': 'LT', 'heavyTank': 'HT', 'AT-SPG': 'TD', 'SPG': 'SPG'}
@@ -36,11 +36,8 @@ sphere = None
 _explosionRadius = None
 isDisplaySphere = False
 isDownHotkey = True
-shellType = None
 cameraHeight = None
 isAlive = False
-
-isNotEvent = False
 
 
 def explosionRadius():
@@ -53,25 +50,25 @@ def explosionRadius():
 
 @registerEvent(AmmoPlugin, '_AmmoPlugin__onGunAutoReloadTimeSet')
 def _AmmoPlugin__onGunAutoReloadTimeSet(self, state, stunned):
-    if config.get('sight/enabled', True) and isNotEvent:
+    if config.get('sight/enabled', True) and isBattleTypeSupported:
         explosionRadius()
 
 
 @registerEvent(AmmoReplayPlayer, 'setGunReloadTime')
 def AmmoReplayPlayer_setGunReloadTime(self, timeLeft, baseTime):
-    if config.get('sight/enabled', True) and isNotEvent:
+    if config.get('sight/enabled', True) and isBattleTypeSupported:
         explosionRadius()
 
 
 @registerEvent(CrosshairPanelContainerMeta, 'as_setReloadingS')
 def CrosshairPanelContainerMeta_as_setReloadingS(self, duration, baseTime, startTime, isReloading):
-    if config.get('sight/enabled', True) and isNotEvent:
+    if config.get('sight/enabled', True) and isBattleTypeSupported:
         explosionRadius()
 
 
 @registerEvent(FragsCollectableStats, 'addVehicleStatusUpdate')
 def FragsCollectableStats_addVehicleStatusUpdate(self, vInfoVO):
-    if config.get('sight/enabled', True) and isNotEvent:
+    if config.get('sight/enabled', True) and isBattleTypeSupported:
         if (not vInfoVO.isAlive()) and (vehicle is not None) and (vehicle.id == vInfoVO.vehicleID):
             setValueDead()
 
@@ -111,13 +108,14 @@ def CrosshairPanelContainerMeta_as_setNetVisibleS(base, self, mask):
 
 
 @overrideMethod(CrosshairPanelContainerMeta, 'as_setViewS')
-# @overrideMethodInBattle
 def CrosshairPanelContainerMeta_as_setViewS(base, self, viewId, settingId):
     return base(self, viewId, settingId) if viewId != CROSSHAIR_VIEW_ID.POSTMORTEM or not config.get('sight/hideSightAfterDeath', False) else base(self, -1, -1)
+
+
 @overrideMethod(plug, '_makeSettingsVO')
 def plugins_makeSettingsVO(base, settingsCore, *keys):
     data = base(settingsCore, *keys)
-    if config.get('sight/enabled', True) and isNotEvent:
+    if config.get('sight/enabled', True) and isBattleTypeSupported:
         for mode in data:
             if config.get('sight/removeCentralMarker', False) and ('centerAlphaValue' in data[mode]):
                 data[mode]['centerAlphaValue'] = 0
@@ -136,6 +134,48 @@ def plugins_makeSettingsVO(base, settingsCore, *keys):
     return data
 
 
+# @overrideMethod(plug.SpeedometerWheeledTech, 'start')
+# def SpeedometerWheeledTech_start(base, self):
+#     value = config.get('sight/showSpeedometer', 'wheels').lower()
+#     if value == 'all':
+#         base(self)
+#         vStateCtrl = self.sessionProvider.shared.vehicleState
+#         if vStateCtrl is not None:
+#             vehicle = vStateCtrl.getControllingVehicle()
+#             if vehicle is not None:
+#                 self._SpeedometerWheeledTech__onVehicleControlling(vehicle)
+#     else:
+#         base(self)
+#
+#
+# @overrideMethod(plug.SpeedometerWheeledTech, '_SpeedometerWheeledTech__onVehicleControlling')
+# def SpeedometerWheeledTech__onVehicleControlling(base, self, vehicle):
+#     value = config.get('sight/showSpeedometer', 'wheels').lower()
+#     if value == 'all':
+#         vStateCtrl = self.sessionProvider.shared.vehicleState
+#         self._SpeedometerWheeledTech__addSpedometer(vehicle)
+#         self._SpeedometerWheeledTech__updateCurStateSpeedMode(vStateCtrl)
+#     elif value == 'none':
+#         self.parentObj.as_removeSpeedometerS()
+#     else:
+#         base(self, vehicle)
+#
+#
+# @overrideMethod(plug.SpeedometerWheeledTech, '_SpeedometerWheeledTech__onCrosshairViewChanged')
+# def SpeedometerWheeledTech__onCrosshairViewChanged(base, self, viewID):
+#     value = config.get('sight/showSpeedometer', 'wheels').lower()
+#     if value == 'all':
+#         vStateCtrl = self.sessionProvider.shared.vehicleState
+#         vehicle = vStateCtrl.getControllingVehicle()
+#         if vehicle is not None and viewID == CROSSHAIR_VIEW_ID.ARCADE:
+#             self._SpeedometerWheeledTech__onVehicleControlling(vehicle)
+#             self._SpeedometerWheeledTech__updateCurStateSpeedMode(vStateCtrl)
+#     elif value == 'none':
+#         return
+#     else:
+#         base(self, viewID)
+
+
 @registerEvent(PlayerAvatar, 'onBecomePlayer')
 def PlayerAvatar_onBecomePlayer(self):
     global player
@@ -145,7 +185,7 @@ def PlayerAvatar_onBecomePlayer(self):
 @registerEvent(Vehicle, 'onEnterWorld')
 def Vehicle_onEnterWorld(self, prereqs):
     if self.isPlayerVehicle and config.get('sight/enabled', True):
-        global isNotEvent, vehicle, currentDistance, timeFlight, timeAIM, cameraHeight
+        global vehicle, currentDistance, timeFlight, timeAIM, cameraHeight
         global _explosionRadius, isDisplaySphere, isDownHotkey, player, isAlive
         _explosionRadius = None
         currentDistance = None
@@ -153,10 +193,10 @@ def Vehicle_onEnterWorld(self, prereqs):
         timeAIM = None
         cameraHeight = None
         player = BigWorld.player()
-        isNotEvent = player.arenaGuiType not in [ARENA_GUI_TYPE.EPIC_BATTLE, ARENA_GUI_TYPE.EVENT_BATTLES]
+        # isNotEvent = player.arenaGuiType not in [ARENA_GUI_TYPE.EPIC_BATTLE, ARENA_GUI_TYPE.EVENT_BATTLES]
         # isNotEvent = True
-        if isNotEvent:
-            isAlive = self.isAlive and self.isCrewActive
+        if isBattleTypeSupported:
+            isAlive = self.isAlive
             vehicle = self
             td = self.typeDescriptor
             _type = td.type
@@ -177,12 +217,13 @@ def setValueDead():
     isDownHotkey = False
     cameraHeight = None
     isAlive = False
+    # log('setValueDead')
     as_event('ON_MARKER_POSITION')
 
 
 @registerEvent(Vehicle, 'onHealthChanged')
 def onHealthChanged(self, newHealth, attackerID, attackReasonID):
-    if self.isPlayerVehicle and config.get('sight/enabled', True) and isNotEvent:
+    if self.isPlayerVehicle and config.get('sight/enabled', True) and isBattleTypeSupported:
         isAlive = (newHealth > 0) and bool(vehicle.isCrewActive)
         if (not isAlive) and (sphere in BigWorld.models()):
             BigWorld.delModel(sphere)
@@ -192,8 +233,6 @@ def update_sphere(position):
     global sphere
     if sphere is None:
         sphere = BigWorld.Model('objects/misc/bbox/sphere1.model')
-        # log('sphere = %s' % (filter(lambda x: not x.startswith('__'), dir(sphere))))
-        # sphere = BigWorld.Model('content/Interface/Arrow/normal/lod0/arrow.model')
     elif sphere in BigWorld.models():
         BigWorld.delModel(sphere)
     if (_explosionRadius is not None) and isAlive and isDownHotkey:
@@ -204,7 +243,7 @@ def update_sphere(position):
 
 @overrideMethod(VehicleGunRotator, '_VehicleGunRotator__getGunMarkerPosition')
 def _VehicleGunRotator__getGunMarkerPosition(base, self, shotPos, shotVec, dispersionAngles):
-    if not (config.get('sight/enabled', True) and isNotEvent):
+    if not (config.get('sight/enabled', True) and isBattleTypeSupported):
         return base(self, shotPos, shotVec, dispersionAngles)
     try:
         global timeFlight, currentDistance, timeAIM, cameraHeight
@@ -314,51 +353,3 @@ def sight_timeAIM():
 @xvm.export('sight.cameraHeight', deterministic=False)
 def sight_cameraHeight():
     return cameraHeight
-
-
-@xvm.export('sight.dynamic_colorRGB')
-def smooth_transition_colorRGB(color_100, color_0, percent=None, maximum=100):
-    if percent is None:
-        return None
-    else:
-        return utils.smooth_transition_color('RGB', color_100, color_0, percent, maximum)
-
-
-@xvm.export('sight.dynamic_colorRBG')
-def smooth_transition_colorRBG(color_100, color_0, percent=None, maximum=100):
-    if percent is None:
-        return None
-    else:
-        return utils.smooth_transition_color('RBG', color_100, color_0, percent, maximum)
-
-
-@xvm.export('sight.dynamic_colorGRB')
-def smooth_transition_colorGRB(color_100, color_0, percent=None, maximum=100):
-    if percent is None:
-        return None
-    else:
-        return utils.smooth_transition_color('GRB', color_100, color_0, percent, maximum)
-
-
-@xvm.export('sight.dynamic_colorGBR')
-def smooth_transition_colorGBR(color_100, color_0, percent=None, maximum=100):
-    if percent is None:
-        return None
-    else:
-        return utils.smooth_transition_color('GBR', color_100, color_0, percent, maximum)
-
-
-@xvm.export('sight.dynamic_colorBRG')
-def smooth_transition_colorBRG(color_100, color_0, percent=None, maximum=100):
-    if percent is None:
-        return None
-    else:
-        return utils.smooth_transition_color('BRG', color_100, color_0, percent, maximum)
-
-
-@xvm.export('sight.dynamic_colorBGR')
-def smooth_transition_colorBGR(color_100, color_0, percent=None, maximum=100):
-    if percent is None:
-        return None
-    else:
-        return utils.smooth_transition_color('BGR', color_100, color_0, percent, maximum)

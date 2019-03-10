@@ -9,7 +9,9 @@ from account_helpers.settings_core.options import InterfaceScaleSetting
 from xfw import *
 from xvm_main.python.logger import *
 import xvm_main.python.config as config
+from xvm_battle.python.battle import isBattleTypeSupported
 from xfw_actionscript.python import *
+
 
 
 cameraMode = None
@@ -19,7 +21,7 @@ y = 0.0
 
 @registerEvent(ArcadeAimingSystem, 'enable')
 def ArcadeAimingSystem_enable(self, targetPos, turretYaw=None, gunPitch=None):
-    if config.get('sight/enabled', True):
+    if config.get('sight/enabled', True) and isBattleTypeSupported:
         global y, cameraMode
         y = - BigWorld.screenHeight() * 0.0775
         cameraMode = 'arc'
@@ -28,7 +30,7 @@ def ArcadeAimingSystem_enable(self, targetPos, turretYaw=None, gunPitch=None):
 
 @registerEvent(SniperAimingSystem, 'enable')
 def SniperAimingSystem_enable(self, targetPos, playerGunMatFunction):
-    if config.get('sight/enabled', True):
+    if config.get('sight/enabled', True) and isBattleTypeSupported:
         global y, cameraMode
         y = 0.0
         cameraMode = 'sn'
@@ -37,7 +39,7 @@ def SniperAimingSystem_enable(self, targetPos, playerGunMatFunction):
 
 @registerEvent(StrategicAimingSystem, 'enable')
 def StrategicAimingSystem_enable(self, targetPos):
-    if config.get('sight/enabled', True):
+    if config.get('sight/enabled', True) and isBattleTypeSupported:
         global y, cameraMode
         y = 0.0
         cameraMode = 'str'
@@ -46,19 +48,19 @@ def StrategicAimingSystem_enable(self, targetPos):
 
 @registerEvent(SiegeModeControl, 'notifySiegeModeChanged')
 def SiegeModeControl_notifySiegeModeChanged(self, vehicle, newState, timeToNextMode):
-    if config.get('sight/enabled', True):
+    if config.get('sight/enabled', True) and isBattleTypeSupported:
         global siegeMode
         if not vehicle.isPlayerVehicle:
             return
         prev_siegeMode = siegeMode
-        siegeMode = 'siege' if newState == 2 else None
+        siegeMode = 'siege' if (newState == 2) and not vehicle.isWheeledTech else None
         if prev_siegeMode != siegeMode:
             as_event('ON_CAMERA_MODE')
 
 
 @registerEvent(InterfaceScaleSetting, 'setSystemValue')
 def InterfaceScaleSetting_setSystemValue(self, value):
-    if config.get('sight/enabled', True):
+    if config.get('sight/enabled', True) and isBattleTypeSupported:
         global y
         y = - BigWorld.screenHeight() * 0.0775 if cameraMode == 'arc' else 0.0
         as_event('ON_CAMERA_MODE')
@@ -67,7 +69,7 @@ def InterfaceScaleSetting_setSystemValue(self, value):
 @registerEvent(PlayerAvatar, 'onEnterWorld')
 def Vehicle_onEnterWorld(self, prereqs):
     global y, cameraMode, siegeMode
-    if config.get('sight/enabled', True):
+    if config.get('sight/enabled', True) and isBattleTypeSupported:
         y = - BigWorld.screenHeight() * 0.0775
         cameraMode = 'arc'
         siegeMode = None
