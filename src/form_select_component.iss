@@ -1,5 +1,6 @@
 [Code]
-function BASS_Init(device: Integer; freq, flags: DWORD; win: hwnd; CLSID: DWORD): BOOL;
+
+function BASS_Init(device: Integer; freq, flags: DWORD; win: hwnd; CLSID: DWORD): BOOL;
 external 'BASS_Init@files:BASS.dll stdcall delayload';
 function BASS_StreamCreateFile(mem: BOOL; FileName: PAnsiChar; offset: Int64; length: Int64; flags: DWORD): DWORD;
 external 'BASS_StreamCreateFile@files:BASS.dll stdcall delayload';
@@ -26,7 +27,7 @@ const
 
 type
   TItems = (iCheckBox, iRadioBtn, iGroup);
-  TSettings = record 
+  TSettings = record
     NameFile: string;
     Value: string;
     AdditionalFiles: string;
@@ -124,7 +125,8 @@ var
   Checked: boolean;
 begin
   //MsgBox(Path, mbInformation, MB_OK);
-  //MsgBox(IntToStr(NamesList.Count) + NamesList.Text, mbInformation, MB_OK);
+
+  //MsgBox(IntToStr(NamesList.Count) + NamesList.Text, mbInformation, MB_OK);
   //MsgBox(IntToStr(ValuesList.Count) + ValuesList.Text, mbInformation, MB_OK);
   Setting := TStringList.Create;
   if NamesList.Find('name', Index) then
@@ -165,13 +167,13 @@ begin
   if NamesList.Find('name', Index) then
   begin
     InternalName := ValuesList[Index];
-    Setting.Append(InternalName);       //6 - internal name 
+    Setting.Append(InternalName);       //6 - internal name
     Checked := GetIniBool(SETUP_SETTINGS, InternalName, Checked, ExpandConstant(PATH_INSTALL_SETTINGS) + '\' + FILE_NAME_SETTINGS)
   end;
   if NamesList.Find('description', Index) then
     Setting.Append(GetIniStringEx('DescriptionLabel', ValuesList[Index], '', FNameL10n))   //7 - description
   else
-    Setting.Append('');   
+    Setting.Append('');
   //MsgBox(Name + #13 + Setting.Text, mbInformation, MB_OK);
   case TypeItem of
     iCheckBox:
@@ -184,7 +186,7 @@ begin
   ItemsType[Index] := TypeItem;
   if NamesList.Find('children', Index) then
     GetNamesAndValues(Path + '/children', ALevel + 1, TypeItem);
-  
+
 end;
 
 procedure GetNamesAndValues(Path: String; ALevel: Byte; TypeItem : TItems);
@@ -193,7 +195,7 @@ var
   FileName, BufNames, BufValues: string;
   i: integer;
 begin
-  try    
+  try
     FileName := DirTemp + '\' + FNameSettings;
     //MsgBox('FileName = ' + FileName, mbInformation, MB_OK);
     SetLength(BufNames, sizeBuf);
@@ -266,7 +268,7 @@ begin
           arraySettings[j].IsAdd := False
         else
           arraySettings[j].IsAdd := True;
-        
+
         //MsgBox('AdditionalFiles = ' + AdditionalFiles, mbInformation, MB_OK);
         j:= j + 1;
         if j >= Length(arraySettings) then
@@ -395,7 +397,7 @@ begin
     Bevel.Left := ScaleX(0);                                                                      // 0
     Bevel.Width := SelectComponentForm.ClientWidth;                                               // 730
     Bevel.Height := ScaleY(2);                                                                    // 2
-    Bevel.Parent := SelectComponentForm; 
+    Bevel.Parent := SelectComponentForm;
 
     OKButton := TNewButton.Create(SelectComponentForm);
     OKButton.Parent := SelectComponentForm;

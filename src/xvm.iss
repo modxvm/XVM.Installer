@@ -5,10 +5,8 @@
 #include "form_select_component.iss"
 #include "configuration_settings.iss"
 
-
-
 [Setup]
-AppCopyright    = "2018 (c) XVM team"
+AppCopyright    = "2019 (c) XVM team"
 AppId           = {{2865cd27-6b8b-4413-8272-cd968f316050}
 AppName         = "XVM"
 AppPublisher    = "XVM team"
@@ -48,52 +46,40 @@ Name: "xvmbackup"; Description: "{cm:backupXVM}"; Flags: unchecked
 Filename: http://modxvm.com/; Description: "{cm:websiteXVM}"; Flags: postinstall nowait shellexec;
 
 [Files]
+;backup
 Source: "{app}\res_mods\configs\*"; DestDir: "{app}\xvm_backup\configs"; Tasks: xvmbackup; Flags: external skipifsourcedoesntexist createallsubdirs recursesubdirs uninsneveruninstall
-;Source: "..\..\..\~output\*"; DestDir: "{app}"; Flags: createallsubdirs recursesubdirs
+;xvm
+;Source: "..\..\..\~output\mods\*"; DestDir: "{app}\mods"; Flags: createallsubdirs recursesubdirs; Components: XVM
+;Source: "..\..\..\~output\res_mods\*"; DestDir: "{app}\res_mods"; Flags: createallsubdirs recursesubdirs; Components: XVM
+;Source: "..\..\..\~output\readme*.*"; DestDir: "{app}"; Components: XVM
+
+;installer libs
 Source: "dll\innoextensions.dll"; Flags: dontcopy
 Source: "dll\bass.dll"; Flags: dontcopy
 Source: "dll\unmerg_f.dll"; Flags: dontcopy
 
 
 [InstallDelete]
-;ver\gui\flash
-Type: filesandordirs; Name: "{app}\res_mods\{#VersionWOT}\gui\flash\battle.swf"
-Type: filesandordirs; Name: "{app}\res_mods\{#VersionWOT}\gui\flash\battleVehicleMarkersApp.swf"
-Type: filesandordirs; Name: "{app}\res_mods\{#VersionWOT}\gui\flash\Lobby.swf"
-Type: dirifempty; Name: "{app}\res_mods\{#VersionWOT}\gui\flash"
+;mods\ver\com.modxvm.xfw\*.wotmod
+;Type: filesandordirs; Name: "{app}\mods\{#VersionWOT}\com.modxvm.xfw\com.modxvm.*.wotmod"
+Type: dirifempty; Name: "{app}\mods\{#VersionWOT}\com.modxvm.xfw\"
 
-;ver\gui\scaleform
-Type: filesandordirs; Name: "{app}\res_mods\{#VersionWOT}\gui\scaleform\battle.swf"
-Type: filesandordirs; Name: "{app}\res_mods\{#VersionWOT}\gui\scaleform\Minimap.swf"
-Type: filesandordirs; Name: "{app}\res_mods\{#VersionWOT}\gui\scaleform\PlayersPanel.swf"
-Type: filesandordirs; Name: "{app}\res_mods\{#VersionWOT}\gui\scaleform\StatisticForm.swf"
-Type: filesandordirs; Name: "{app}\res_mods\{#VersionWOT}\gui\scaleform\TeamBasesPanel.swf"
-Type: filesandordirs; Name: "{app}\res_mods\{#VersionWOT}\gui\scaleform\VehicleMarkersManager.swf"
-Type: filesandordirs; Name: "{app}\res_mods\{#VersionWOT}\gui\scaleform\xvm.swf"
-Type: dirifempty; Name: "{app}\res_mods\{#VersionWOT}\gui\scaleform"
+;mods\ver\temp
+;Type: filesandordirs; Name: "{app}\mods\temp\com.modxvm.*"
+Type: dirifempty; Name: "{app}\mods\temp\"
 
-;ver\gui
-Type: dirifempty; Name: "{app}\res_mods\{#VersionWOT}\gui"
+;res_mods\mods\shared_resources
+;Type: filesandordirs; Name: "{app}\res_mods\mods\shared_resources\xvm"
+Type: dirifempty; Name: "{app}\res_mods\mods\shared_resources\"
 
-;ver\scripts\client\gui\scaleform
-Type: filesandordirs; Name: "{app}\res_mods\{#VersionWOT}\scripts\client\gui\scaleform\locale"
-Type: dirifempty; Name: "{app}\res_mods\{#VersionWOT}\scripts\clients\gui\scaleform"
-
-;ver\scripts\client\gui\mods
-Type: filesandordirs; Name: "{app}\res_mods\{#VersionWOT}\scripts\client\gui\mods\mod_.pyc"
-Type: dirifempty; Name: "{app}\res_mods\{#VersionWOT}\scripts\client\gui\mods"
-
-;ver\scripts\client\gui
-Type: dirifempty; Name: "{app}\res_mods\{#VersionWOT}\scripts\client\gui"
-Type: dirifempty; Name: "{app}\res_mods\{#VersionWOT}\scripts\client"
-Type: dirifempty; Name: "{app}\res_mods\{#VersionWOT}\scripts"
-
-;mods\packages
+;res_mods\mods\packages
 ;Type: filesandordirs; Name: "{app}\res_mods\mods\xfw_packages\xvm_*"
-;Type: dirifempty; Name: "{app}\res_mods\mods\xfw_packages\"
+Type: dirifempty; Name: "{app}\res_mods\mods\xfw_packages\"
+Type: dirifempty; Name: "{app}\res_mods\mods\"
 
-;mods\xfw
-Type: filesandordirs; Name: "{app}\res_mods\mods\xfw"
+;res_mods\ver\audioww
+;Type: filesandordirs; Name: "{app}\res_mods\{#VersionWOT}\audioww\xvm.bnk"
+Type: dirifempty; Name: "{app}\res_mods\{#VersionWOT}\audioww\"
 
 ;configs\xvm\py_macro
 Type: filesandordirs; Name: "{app}\res_mods\configs\xvm\py_macro\xvm\*.pyc"
@@ -103,51 +89,34 @@ Type: dirifempty; Name: "{app}\res_mods\configs\xvm\"
 Type: dirifempty; Name: "{app}\res_mods\configs\"
 
 Type: filesandordirs; Name: "{app}\xvm_uninst"
-Type: files; Name: "{app}\readme-*.txt"
+;Type: files; Name: "{app}\readme-*.txt"
 
 [UninstallDelete]
-;ver\gui\flash
-Type: filesandordirs; Name: "{app}\res_mods\{#VersionWOT}\gui\flash\battle.swf"
-Type: filesandordirs; Name: "{app}\res_mods\{#VersionWOT}\gui\flash\battleVehicleMarkersApp.swf"
-Type: filesandordirs; Name: "{app}\res_mods\{#VersionWOT}\gui\flash\Lobby.swf"
-Type: dirifempty; Name: "{app}\res_mods\{#VersionWOT}\gui\flash"
+;mods\ver\com.modxvm.xfw\*.wotmod
+Type: filesandordirs; Name: "{app}\mods\{#VersionWOT}\com.modxvm.xfw\com.modxvm.*.wotmod"
+Type: dirifempty; Name: "{app}\mods\{#VersionWOT}\com.modxvm.xfw\"
 
-;ver\gui\scaleform
-Type: filesandordirs; Name: "{app}\res_mods\{#VersionWOT}\gui\scaleform\battle.swf"
-Type: filesandordirs; Name: "{app}\res_mods\{#VersionWOT}\gui\scaleform\Minimap.swf"
-Type: filesandordirs; Name: "{app}\res_mods\{#VersionWOT}\gui\scaleform\PlayersPanel.swf"
-Type: filesandordirs; Name: "{app}\res_mods\{#VersionWOT}\gui\scaleform\StatisticForm.swf"
-Type: filesandordirs; Name: "{app}\res_mods\{#VersionWOT}\gui\scaleform\TeamBasesPanel.swf"
-Type: filesandordirs; Name: "{app}\res_mods\{#VersionWOT}\gui\scaleform\VehicleMarkersManager.swf"
-Type: filesandordirs; Name: "{app}\res_mods\{#VersionWOT}\gui\scaleform\xvm.swf"
-Type: dirifempty; Name: "{app}\res_mods\{#VersionWOT}\gui\scaleform"
+;mods\ver\temp
+Type: filesandordirs; Name: "{app}\mods\temp\com.modxvm.*"
+Type: dirifempty; Name: "{app}\mods\temp\"
 
-;ver\gui
-Type: dirifempty; Name: "{app}\res_mods\{#VersionWOT}\gui"
+;res_mods\mods\shared_resources
+Type: filesandordirs; Name: "{app}\res_mods\mods\shared_resources\xvm"
+Type: dirifempty; Name: "{app}\res_mods\mods\shared_resources\"
 
-;ver\scripts\client\gui\scaleform
-Type: filesandordirs; Name: "{app}\res_mods\{#VersionWOT}\scripts\client\gui\scaleform\locale"
-Type: dirifempty; Name: "{app}\res_mods\{#VersionWOT}\scripts\clients\gui\scaleform"
-
-;ver\scripts\client\gui\mods
-Type: filesandordirs; Name: "{app}\res_mods\{#VersionWOT}\scripts\client\gui\mods\mod_.pyc"
-Type: dirifempty; Name: "{app}\res_mods\{#VersionWOT}\scripts\client\gui\mods"
-
-;ver\scripts\client\gui
-Type: dirifempty; Name: "{app}\res_mods\{#VersionWOT}\scripts\client\gui"
-Type: dirifempty; Name: "{app}\res_mods\{#VersionWOT}\scripts\client"
-Type: dirifempty; Name: "{app}\res_mods\{#VersionWOT}\scripts"
-
-;mods\packages
+;res_mods\mods\packages
 Type: filesandordirs; Name: "{app}\res_mods\mods\xfw_packages\xvm_*"
 Type: dirifempty; Name: "{app}\res_mods\mods\xfw_packages\"
+Type: dirifempty; Name: "{app}\res_mods\mods\"
 
-;mods\xfw
-Type: filesandordirs; Name: "{app}\res_mods\mods\xfw"
+;res_mods\ver\audioww
+Type: filesandordirs; Name: "{app}\res_mods\{#VersionWOT}\audioww\xvm.bnk"
+Type: dirifempty; Name: "{app}\res_mods\{#VersionWOT}\audioww\"
 
 ;configs\xvm\py_macro
 Type: filesandordirs; Name: "{app}\res_mods\configs\xvm\py_macro\xvm\*.pyc"
 Type: filesandordirs; Name: "{app}\res_mods\configs\xvm\py_macro\*.pyc"
+Type: filesandordirs; Name: "{app}\res_mods\configs\xvm\xvm.xc"
 Type: dirifempty; Name: "{app}\res_mods\configs\xvm\py_macro\"
 Type: dirifempty; Name: "{app}\res_mods\configs\xvm\"
 Type: dirifempty; Name: "{app}\res_mods\configs\"
@@ -160,7 +129,6 @@ Type: files; Name: "{app}\readme-*.txt"
   WotList: TNewComboBox;
   Buffer: String;
 
-
 procedure WotList_Update();
 var
   ClientsCount, Index, ListIndex: Integer;
@@ -169,7 +137,7 @@ begin
   ListIndex := WotList.ItemIndex;
   ClientsCount := WOT_GetClientsCount();
 
-  WotList.Items.Clear();  
+  WotList.Items.Clear();
 
   if ClientsCount > 0 then
   begin
@@ -179,17 +147,17 @@ begin
       Str:=Copy(Buffer,0,Pos(#0, Buffer));
 
       case WOT_GetClientBranch(Index) of
-         1: Insert(' Release: ',Str,Pos(#0, Str));
-         2: Insert(' Common Test: ',Str,Pos(#0, Str));
-         3: Insert(' Super Test: ',Str,Pos(#0, Str));
-         4: Insert(' Sandbox: ',Str,Pos(#0, Str));
+        1: Insert(' Release: ',Str,Pos(#0, Str));
+        2: Insert(' Common Test: ',Str,Pos(#0, Str));
+        3: Insert(' Super Test: ',Str,Pos(#0, Str));
+        4: Insert(' Sandbox: ',Str,Pos(#0, Str));
       end;
-      
+
       WOT_GetClientPathW(Buffer,1024,Index);
       Insert(Buffer,Str,Pos(#0, Str));
 
       WotList.Items.Add(Str);
-     end;
+    end;
   end;
 
   WotList.Items.Add(ExpandConstant('{cm:browse}'));
@@ -208,24 +176,24 @@ begin
 
   Index := WOT_AddClientW(ClientPath);
   if Index >= 0 then begin
-     WotList_Update();
-     WotList.ItemIndex:=Index;
+    WotList_Update();
+    WotList.ItemIndex:=Index;
   end else begin
-     MsgBox( ExpandConstant('{cm:wotNotFound}'), mbError, MB_OK);
-     WotList.ItemIndex:=-1;
+    MsgBox( ExpandConstant('{cm:wotNotFound}'), mbError, MB_OK);
+    WotList.ItemIndex:=-1;
   end;
 end;
 
 procedure WotList_OnChange(Sender: TObject);
-begin 
+begin
   if WoTList.Text = ExpandConstant('{cm:browse}')  then
   begin
     WizardForm.DirBrowseButton.OnClick(nil);
     WotList_AddClient(WizardForm.DirEdit.Text);
   end;
 
-   WOT_GetClientPathW(Buffer,1024,WotList.ItemIndex);
-   WizardForm.DirEdit.Text:=Buffer;
+  WOT_GetClientPathW(Buffer,1024,WotList.ItemIndex);
+  WizardForm.DirEdit.Text:=Buffer;
 end;
 
 function InitializeSetup(): Boolean;
@@ -240,7 +208,7 @@ procedure InitializeWizard();
 begin
   //MsgBox('{cm:Path}', mbInformation, MB_OK);
   WizardForm.TypesCombo.OnChange := @TypesComboOnChange;
-  
+
   SetLength(Buffer, 1024);
 
   WizardForm.DirEdit.Visible := False;
@@ -252,45 +220,43 @@ begin
   WotList.Style := csDropDownList;
   WotList.OnChange := @WotList_OnChange;
   WotList.SetBounds(
-    WizardForm.DirEdit.Left, 
+    WizardForm.DirEdit.Left,
     WizardForm.DirEdit.Top,
-    WizardForm.DirBrowseButton.Left + WizardForm.DirBrowseButton.Width - WizardForm.DirEdit.Left, 
+    WizardForm.DirBrowseButton.Left + WizardForm.DirBrowseButton.Width - WizardForm.DirEdit.Left,
     WizardForm.DirEdit.Height
   );
-  
+
   AddButtonSelectComponent();
-          
+
   WotList_Update();
 end;
 
 procedure CurPageChanged(CurPage: Integer);
 begin
   if (CurPage = wpSelectDir) then
-	begin
-		if WotList.ItemIndex = -1 then 
+  begin
+    if WotList.ItemIndex = -1 then
     begin
       WotList.ItemIndex := 0;
     end;
- 
-		WotList.OnChange(nil);
-	end;
+
+    WotList.OnChange(nil);
+  end;
   if (CurPage = wpFinished) then
     ApplySettings;
 end;
 
 function NextButtonClick(CurPage: Integer): Boolean;
-begin                      
+begin
   Result := True;
-  
+
   if CurPage = wpSelectDir then
   begin
-   if not FileExists(ExpandConstant('{app}\WorldOfTanks.exe')) then 
-   begin
+    if not FileExists(ExpandConstant('{app}\WorldOfTanks.exe')) then
+    begin
       MsgBox( ExpandConstant('{cm:wotNotFound}'), mbError, MB_OK);
       Result := False;
       exit;
     end;
   end;
 end;
-
-

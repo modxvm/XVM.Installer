@@ -1,4 +1,4 @@
-﻿{
+{
   // Название секции может быть любым
   "1battle": {
     // Название пункта, обязательный параметр. Здесь может быть указан ключ из файла перевода. Файлы перевода находятся в \installerXVM\src\SettingsInstall\default\l10n\ секция [CheckListBox].
@@ -333,13 +333,13 @@
                   "def": {
                     "timerAIM": { 
                       "enabled": true, 
-                      "updateEvent": "PY(ON_CAMERA_MODE), PY(ON_MARKER_POSITION), PY(ON_BEGIN_BATTLE), ON_CURRENT_VEHICLE_DESTROYED", 
+                      "updateEvent": "PY(ON_AIM_MODE), PY(ON_MARKER_POSITION), PY(ON_BEGIN_BATTLE), ON_CURRENT_VEHICLE_DESTROYED", 
                       "x": -202,
                       "y": 61,
                       "width": 60, 
                       "height": 30,
                       "layer": "bottom",
-                      "alpha": "{{py:sight.cameraMode=str?{{py:isBattle?{{alive?100|0}}|0}}|0}}",
+                      "alpha": "{{py:aim.mode=str?{{py:isBattle?{{alive?100|0}}|0}}|0}}",
                       "screenHAlign": "center",
                       "screenVAlign": "center", 
                       "textFormat": {"size": 20, "color": "0x{{py:sight.timeAIM=0?2DC822|FF0000}}" }, 
@@ -375,13 +375,13 @@
                   "def": {
                     "timeFlight": { 
                       "enabled": true, 
-                      "updateEvent": "PY(ON_CAMERA_MODE), PY(ON_MARKER_POSITION), PY(ON_BEGIN_BATTLE), ON_CURRENT_VEHICLE_DESTROYED", 
+                      "updateEvent": "PY(ON_AIM_MODE), PY(ON_MARKER_POSITION), PY(ON_BEGIN_BATTLE), ON_CURRENT_VEHICLE_DESTROYED", 
                       "x": -202,
                       "y": -61,
                       "width": 60, 
                       "height": 30,
                       "layer": "bottom",
-                      "alpha": "{{py:sight.cameraMode=str?{{py:isBattle?{{alive?100|0}}|0}}|0}}",
+                      "alpha": "{{py:aim.mode=str?{{py:isBattle?{{alive?100|0}}|0}}|0}}",
                       "screenHAlign": "center",
                       "screenVAlign": "center", 
                       "textFormat": {"size": 20, "color": "0x2DC822" }, 
@@ -596,14 +596,20 @@
         "imageIfNotSelected": "hitlog_false.png",
         "valueIfSelected": "",
         "valueIfNotSelected": {
-          "hitlog_disabled": {
+          "hitlog_disabled_battleLabels": {
             "configFileName": "battleLabelsTemplates.xc",
             "value": {
               "def": {
-                "hitlogBody": {"enabled": false}
+                "hitLogBody": {"enabled": false}
               }
             }
-          }
+          },
+          "hitlog_disabled": {
+            "configFileName": "hitLog.xc",
+            "value": {
+              "hitLog": {"enabled": false}
+            }
+          }          
         },
         "children": {
           "group_hits": {
@@ -617,7 +623,7 @@
               "group_hits_false": {
                 "configFileName": "hitLog.xc",
                 "value": {
-                  "hitLog": {"groupHitsByPlayer": false}
+                  "hitLog": {"log": { "groupHitsByPlayer": false}}
                 }
               }
             }
@@ -627,13 +633,13 @@
             "description": "insert_order",
             "checked": true,
             "imageIfSelected": "hitlog_true.png",
-            "imageIfNotSelected": "hitlog_order_false.png",
+            "imageIfNotSelected": "hitlog_toEnd_true.png",
             "valueIfSelected": "",
             "valueIfNotSelected": {
               "order": {
                 "configFileName": "hitLog.xc",
                 "value": {
-                  "hitLog": {"insertOrder": "end"}
+                  "hitLog": {"log": {"addToEnd": true}}
                 }
               }
             }
@@ -643,21 +649,49 @@
       "07hitlog_header": {
         "name": "hitlog_header",
         "description": "hitlog_header",
-        "checked": false,
-        "imageIfSelected": "hitlog_header_true.png",
-        "imageIfNotSelected": "hitlog_true.png",
-        "valueIfSelected": {
+        "checked": true,
+        "imageIfSelected": "hitlog_true.png",
+        "imageIfNotSelected": "hitlog_header_false.png",
+        "valueIfSelected": "",
+        "valueIfNotSelected":  {
           "header_disabled": {
             "configFileName": "battleLabelsTemplates.xc",
             "value": {
               "def": {
-                "hitlogHeader": {"enabled": true},
-                "totalEfficiency": {"updateEvent": "PY(ON_TOTAL_EFFICIENCY)", "screenVAlign": "bottom", "x": 244, "y": 0}
+                "hitLogHeader": {"enabled": true},
+                "totalEfficiency": {"enabled": false}
               }
             }
           }
         },
-        "valueIfNotSelected": ""
+        "children": {
+          "header_new": {
+            "name": "header_new",
+            "description": "header_new",
+            "itemType": "radioButton",
+            "checked": true,
+            "imageIfSelected": "hitlog_true.png"
+          },
+          "header_old": {
+            "name": "header_old",
+            "description": "header_old",
+            "itemType": "radioButton",
+            "checked": false,
+            "imageIfSelected": "hitlog_header_old.png",
+            "valueIfSelected": "",
+            "valueIfNotSelected": {
+              "order": {
+                "configFileName": "battleLabelsTemplates.xc",
+                "value": {
+                  "def": {
+                    "hitLogHeader": {"enabled": false},
+                    "totalEfficiency": {"enabled": true}
+                  }
+                }
+              }
+            }
+          }
+        }        
       },
       "04damageLog": {
         "name": "damagelog",
@@ -939,6 +973,26 @@
             "value": {
               "markers": {"enabled": false}
             }
+          }
+        },
+        "children": {
+          "stars": {
+            "name": "marker_stars",
+            "description": "marker_stars",
+            "checked": false,
+            "imageIfSelected": "marker_stars_true.png",
+            "imageIfNotSelected": "marker_stars_false.png",
+            "valueIfSelected":  {
+              "marker_stars_true": {
+                "configFileName": "markersAliveNormal.xc",
+                "value": {
+                  "def": {
+                    "rating": {"x": 52, "format": "&#x21;"}
+                  }
+                }
+              }
+            },
+            "valueIfNotSelected": ""           
           }
         }
       },

@@ -7,6 +7,7 @@ from xfw_actionscript.python import *
 
 battleBegin = None
 
+
 @registerEvent(Vehicle, 'onEnterWorld')
 def Vehicle_onEnterWorld(self, prereqs):
     global battleBegin
