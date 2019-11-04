@@ -33,7 +33,7 @@
           "disabledMinimap": {
             // Файл конфигурации в который будут вносится изменения из секции "value"
             "configFileName": "minimap.xc",
-            // Значение        
+            // Значение
             "value": {
               "minimap": {"enabled": false}
             }
@@ -235,7 +235,7 @@
               }
             },
             "valueIfNotSelected": ""
-          },          
+          },
           "sixthSenseDefault": {
             "name": "standard_lamp",
             "description": "images_for_sixth_sense",
@@ -320,7 +320,7 @@
                 "@files": [
                   "res_mods/configs/xvm/py_macro/aimingSystem.py",
                   "res_mods/configs/xvm/py_macro/beginBattle.py",
-                  "res_mods/configs/xvm/py_macro/sight.py"
+                  "res_mods/configs/xvm/py_macro/aiming.py"
                 ],
                 "configFileName": "battleLabels.xc",
                 "value": {
@@ -331,19 +331,19 @@
                 "configFileName": "battleLabelsTemplates.xc",
                 "value": {
                   "def": {
-                    "timerAIM": { 
-                      "enabled": true, 
-                      "updateEvent": "PY(ON_AIM_MODE), PY(ON_MARKER_POSITION), PY(ON_BEGIN_BATTLE), ON_CURRENT_VEHICLE_DESTROYED", 
+                    "timerAIM": {
+                      "enabled": true,
+                      "updateEvent": "PY(ON_AIM_MODE), PY(ON_AIMING), PY(ON_BEGIN_BATTLE), ON_CURRENT_VEHICLE_DESTROYED",
                       "x": -202,
                       "y": 61,
-                      "width": 60, 
+                      "width": 60,
                       "height": 30,
                       "layer": "bottom",
                       "alpha": "{{py:aim.mode=str?{{py:isBattle?{{alive?100|0}}|0}}|0}}",
                       "screenHAlign": "center",
-                      "screenVAlign": "center", 
-                      "textFormat": {"size": 20, "color": "0x{{py:sight.timeAIM=0?2DC822|FF0000}}" }, 
-                      "format": "{{py:sight.timeAIM%2.1f}}" 
+                      "screenVAlign": "center",
+                      "textFormat": {"size": 20, "color": "0x{{py:sight.timeAIM=0?2DC822|FF0000}}" },
+                      "format": "{{py:sight.timeAIM%2.1f}}"
                     }
                   }
                 }
@@ -362,7 +362,7 @@
                 "@files": [
                   "res_mods/configs/xvm/py_macro/aimingSystem.py",
                   "res_mods/configs/xvm/py_macro/beginBattle.py",
-                  "res_mods/configs/xvm/py_macro/sight.py"
+                  "res_mods/configs/xvm/py_macro/markerPosition.py"
                 ],
                 "configFileName": "battleLabels.xc",
                 "value": {
@@ -373,19 +373,19 @@
                 "configFileName": "battleLabelsTemplates.xc",
                 "value": {
                   "def": {
-                    "timeFlight": { 
-                      "enabled": true, 
-                      "updateEvent": "PY(ON_AIM_MODE), PY(ON_MARKER_POSITION), PY(ON_BEGIN_BATTLE), ON_CURRENT_VEHICLE_DESTROYED", 
+                    "timeFlight": {
+                      "enabled": true,
+                      "updateEvent": "PY(ON_AIM_MODE), PY(ON_MARKER_POSITION), PY(ON_BEGIN_BATTLE), ON_CURRENT_VEHICLE_DESTROYED",
                       "x": -202,
                       "y": -61,
-                      "width": 60, 
+                      "width": 60,
                       "height": 30,
                       "layer": "bottom",
                       "alpha": "{{py:aim.mode=str?{{py:isBattle?{{alive?100|0}}|0}}|0}}",
                       "screenHAlign": "center",
-                      "screenVAlign": "center", 
-                      "textFormat": {"size": 20, "color": "0x2DC822" }, 
-                      "format": "{{py:sight.timeFlight%2.1f}} {{l10n:sec}}" 
+                      "screenVAlign": "center",
+                      "textFormat": {"size": 20, "color": "0x2DC822" },
+                      "format": "{{py:sight.timeFlight%2.1f}} {{l10n:sec}}"
                     }
                   }
                 }
@@ -476,7 +476,7 @@
                     "configFileName": "playersPanel.xc",
                     "value": {
                       "def": {
-                        "hp_thin_bg": {"y": 22, "height": 4, "alpha": 50, "bgColor": "0x555555", "borderColor": "0x000000"},    
+                        "hp_thin_bg": {"y": 22, "height": 4, "alpha": 50, "bgColor": "0x555555", "borderColor": "0x000000"},
                         "hp_thin": {"y": 23, "height": 2, "alpha": 100, "bgColor": ${ "colors.xc":"def.al" }
                         }
                       }
@@ -502,7 +502,7 @@
                                 {"$ref": { "path": "def.hp_thin"}, "x": 73, "width": "{{hp-ratio:98}}"}
                               ],
                               "extraFieldsRight": [
-                                {"$ref": { "path": "def.hp_thin_bg"}, "x": 70, "width": 100},        
+                                {"$ref": { "path": "def.hp_thin_bg"}, "x": 70, "width": 100},
                                 {"$ref": { "path": "def.hp_thin"}, "bgColor": ${ "colors.xc":"def.en" }, "x": 71, "width": "{{hp-ratio:98}}"}
                               ]
                             }
@@ -529,7 +529,7 @@
                                 {"$ref": { "path": "def.hp_thin"}, "x": 49, "width": "{{hp-ratio:70}}"}
                               ],
                               "extraFieldsRight": [
-                                {"$ref": { "path": "def.hp_thin_bg"}, "x": 48, "width": 72},        
+                                {"$ref": { "path": "def.hp_thin_bg"}, "x": 48, "width": 72},
                                 {"$ref": { "path": "def.hp_thin"}, "bgColor": ${ "colors.xc":"def.en" }, "x": 49, "width": "{{hp-ratio:70}}"}
                               ]
                             }
@@ -556,7 +556,7 @@
                                 {"$ref": { "path": "def.hp_thin"}, "x": 73, "width": "{{hp-ratio:188}}"}
                               ],
                               "extraFieldsRight": [
-                                {"$ref": { "path": "def.hp_thin_bg"}, "x": 70, "width": 190},        
+                                {"$ref": { "path": "def.hp_thin_bg"}, "x": 70, "width": 190},
                                 {"$ref": { "path": "def.hp_thin"}, "bgColor": ${ "colors.xc":"def.en" }, "x": 71, "width": "{{hp-ratio:188}}"}
                               ]
                             }
@@ -609,7 +609,7 @@
             "value": {
               "hitLog": {"enabled": false}
             }
-          }          
+          }
         },
         "children": {
           "group_hits": {
@@ -691,7 +691,7 @@
               }
             }
           }
-        }        
+        }
       },
       "04damageLog": {
         "name": "damagelog",
@@ -992,7 +992,7 @@
                 }
               }
             },
-            "valueIfNotSelected": ""           
+            "valueIfNotSelected": ""
           }
         }
       },
@@ -1307,7 +1307,7 @@
             }
           }
         }
-      }      
+      }
     }
   },
   "3color_theme": {
