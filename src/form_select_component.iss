@@ -6,7 +6,7 @@ function BASS_StreamCreateFile(mem: BOOL; FileName: PAnsiChar; offset: Int64; le
 external 'BASS_StreamCreateFile@files:BASS.dll stdcall delayload';
 function BASS_ChannelPlay(Handle: DWORD; restart: BOOL): BOOL;
 external 'BASS_ChannelPlay@files:BASS.dll stdcall delayload';
-function BASS_Free: BOOL;
+function BASS_Free(): BOOL;
 external 'BASS_Free@files:BASS.dll stdcall delayload';
 function BASS_ChannelIsActive(Handle: DWORD): DWORD;
 external 'BASS_ChannelIsActive@files:bass.dll stdcall delayload';
@@ -28,15 +28,15 @@ const
 type
   TItems = (iCheckBox, iRadioBtn, iGroup);
   TSettings = record
-    NameFile: string;
-    Value: string;
-    AdditionalFiles: string;
+    NameFile: String;
+    Value: String;
+    AdditionalFiles: String;
     IsAdd: Boolean;
   end;
 
 var
   arraySettings: array of TSettings;
-  FNameSettings, SelectPreset, DirTemp, FNameL10n, LinkSupport: string;
+  FNameSettings, SelectPreset, DirTemp, FNameL10n, LinkSupport: String;
   Image: TBitmapImage;
   SettingsCheckListBox: TNewCheckListBox;
   DescriptionLabel: TLabel;
@@ -45,7 +45,7 @@ var
   SoundStream: DWORD;
 
 
-procedure GetNamesAndValues(Path: String; ALevel: Byte; TypeItem : TItems);  forward;
+procedure GetNamesAndValues(Path: String; ALevel: Byte; TypeItem : TItems); forward;
 
 function GetIniStringEx(const Section, Key, Default, Filename: String): String;
 begin
@@ -53,7 +53,7 @@ begin
   StringChangeEx(Result, '\n', #13#10, True);
 end;
 
-procedure Init;
+procedure Init();
 var
   ResultCode: Integer;
 begin
@@ -61,22 +61,22 @@ begin
   DirTemp := ExpandConstant('{tmp}\') + SelectPreset;
   ExtractTemporaryFile(SelectPreset + '.mrg');
   ResultCode := UNPACK_divide(DirTemp + '\', DirTemp + '.mrg');
-  FNameL10n:= DirTemp + '\l10n\' + ActiveLanguage + '.lng';
+  FNameL10n := DirTemp + '\l10n\' + ActiveLanguage + '.lng';
   BASS_Init(-1, 44100, 0, 0, 0);
-  SoundStream:= 0;
+  SoundStream := 0;
 end;
 
-procedure CopyingAdditionalFiles(AdditionalFiles : String);
+procedure CopyingAdditionalFiles(AdditionalFiles: String);
 var
   FileNames : TStringList;
   i: Integer;
-  tmp, app, FileName, Buffer : String;
+  tmp, app, FileName, Buffer: String;
 begin
   SetLength(Buffer, sizeBuf);
   JSON_GetArrayValueW_S(AdditionalFiles, Buffer, sizeBuf);
   FileNames := TStringList.Create;
   try
-    FileNames.Text := Copy(Buffer,0,Pos(#0, Buffer));
+    FileNames.Text := Copy(Buffer, 0, Pos(#0, Buffer));
     for i := 0 to FileNames.Count - 1 do
       if FileNames[i] <> '' then
         begin
@@ -86,8 +86,7 @@ begin
           begin
             tmp := DirTemp + '\files' + FileName;
             app := ExpandConstant('{app}') + FileName;
-          end
-          else
+          end else
           begin
             tmp := DirTemp + '\files\' + FileName;
             app := ExpandConstant('{app}\') + FileName;
@@ -104,7 +103,7 @@ procedure ApplySettings;
 var
   Count, i: Integer;
 begin
-  Count:= Length(arraySettings);
+  Count := Length(arraySettings);
   for i := 0 to Count - 1 do
   begin
     if (arraySettings[i].NameFile <> '') and (arraySettings[i].Value <> '') then
@@ -117,12 +116,12 @@ begin
   end;
 end;
 
-procedure AddItem(Path : String; NamesList, ValuesList: TStringList; ALevel : Byte; TypeItem : TItems);
+procedure AddItem(Path: String; NamesList, ValuesList: TStringList; ALevel: Byte; TypeItem: TItems);
 var
   Setting: TStringList;
   Index: Integer;
-  Name, InternalName: string;
-  Checked: boolean;
+  Name, InternalName: String;
+  Checked: Boolean;
 begin
   //MsgBox(Path, mbInformation, MB_OK);
 
@@ -189,11 +188,11 @@ begin
 
 end;
 
-procedure GetNamesAndValues(Path: String; ALevel: Byte; TypeItem : TItems);
+procedure GetNamesAndValues(Path: String; ALevel: Byte; TypeItem: TItems);
 var
   RootList, NamesList, ValuesList: TStringList;
-  FileName, BufNames, BufValues: string;
-  i: integer;
+  FileName, BufNames, BufValues: String;
+  i: Integer;
 begin
   try
     FileName := DirTemp + '\' + FNameSettings;
@@ -203,7 +202,7 @@ begin
     JSON_GetNamesAndValuesW(FileName, Path, BufNames, BufValues, sizeBuf);
     RootList := TStringList.Create;
     try
-      RootList.Text := Copy(BufNames,0,Pos(#0, BufNames));
+      RootList.Text := Copy(BufNames, 0, Pos(#0, BufNames));
       //MsgBox(IntToStr(RootList.Count) + RootList.Text, mbInformation, MB_OK);
       if Trim(Path) <> '' then Path := Path + '/';
       for i := 0 to RootList.Count - 1 do
@@ -212,7 +211,7 @@ begin
         ValuesList := TStringList.Create;
         try
           JSON_GetNamesAndValuesW(FileName, Path + RootList[i], BufNames, BufValues, sizeBuf);
-          NamesList.Text := AnsiLowercase(Copy(BufNames,0,Pos(#0, BufNames)));
+          NamesList.Text := AnsiLowercase(Copy(BufNames, 0, Pos(#0, BufNames)));
           ValuesList.Text := Copy(BufValues,0,Pos(#0, BufValues));
           AddItem(Path + RootList[i], NamesList, ValuesList, ALevel, TypeItem);
         finally
@@ -232,7 +231,7 @@ procedure AddToArrayS(Value: string; var j: Integer);
 var
   RootList, NamesList, ValuesList: TStringList;
   i, Index: Integer;
-  BufNames, BufValues: string;
+  BufNames, BufValues: String;
 begin
   SetLength(BufNames, sizeBuf);
   SetLength(BufValues, sizeBuf);
@@ -247,15 +246,14 @@ begin
       ValuesList := TStringList.Create;
       try
         JSON_GetNamesAndValuesW_S(RootList[i], BufNames, BufValues, sizeBuf);
-        NamesList.Text := AnsiLowercase(Copy(BufNames,0,Pos(#0, BufNames)));
+        NamesList.Text := AnsiLowercase(Copy(BufNames, 0, Pos(#0, BufNames)));
         ValuesList.Text := Copy(BufValues,0,Pos(#0, BufValues));
         if NamesList.Find('configfilename', Index) then
         begin
           arraySettings[j].NameFile := ValuesList[Index];
           if NamesList.Find('value', Index) then
             arraySettings[j].Value := ValuesList[Index];
-        end
-        else
+        end else
         begin
           arraySettings[j].NameFile := '';
           arraySettings[j].Value := '';
@@ -270,7 +268,7 @@ begin
           arraySettings[j].IsAdd := True;
 
         //MsgBox('AdditionalFiles = ' + AdditionalFiles, mbInformation, MB_OK);
-        j:= j + 1;
+        j := j + 1;
         if j >= Length(arraySettings) then
           SetLength(arraySettings, j + 20);
       finally
@@ -283,10 +281,10 @@ begin
   end;
 end;
 
-procedure SetSettings;
+procedure SetSettings();
 var
   i, j: Integer;
-  Value, Path, FilePath: string;
+  Value, Path, FilePath: String;
 begin
   with SettingsCheckListBox do
   begin
@@ -304,8 +302,7 @@ begin
           begin
             Value := TStringList(ItemObject[i]).Strings[2];
             SetIniBool(SETUP_SETTINGS, TStringList(ItemObject[i]).Strings[6], True, FilePath);
-          end
-          else
+          end else
           begin
             Value := TStringList(ItemObject[i]).Strings[3];
             SetIniBool(SETUP_SETTINGS, TStringList(ItemObject[i]).Strings[6], False, FilePath);
@@ -320,7 +317,7 @@ end;
 
 procedure ShowPreview(FileName: String);
 var
-  ImageNameBMP: string;
+  ImageNameBMP: String;
 begin
   try
     ImageNameBMP := DirTemp + '\images\' + ChangeFileExt(FileName, '.bmp');
@@ -384,7 +381,7 @@ var
   Bevel: TBevel;
   LinkSupportLabel: TLabel;
 begin
-  init;
+  Init();
   SelectComponentForm := CreateCustomForm();
   try
     SelectComponentForm.ClientWidth := ScaleX(730);
@@ -440,7 +437,7 @@ begin
 
     LinkSupportLabel := TLabel.Create(SelectComponentForm);
     LinkSupportLabel.Parent := SelectComponentForm;
-    LinkSupportLabel.Top := CancelButton.Top + 3;                  // 470
+    LinkSupportLabel.Top := CancelButton.Top + 3;              // 470
     LinkSupportLabel.Left := ScaleX(BORDER_WIDTH);             // 20
     LinkSupportLabel.AutoSize := True;
     LinkSupportLabel.Alignment := taLeftJustify;
@@ -468,8 +465,8 @@ begin
 
     if SelectComponentForm.ShowModal() = mrOk then
     begin
-      BASS_Free;
-      SetSettings;
+      BASS_Free();
+      SetSettings();
     end;
   finally
     SelectComponentForm.Free();
