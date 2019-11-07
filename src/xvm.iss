@@ -6,13 +6,13 @@
 #include "configuration_settings.iss"
 
 [Setup]
-AppCopyright    = "2019 (c) XVM team"
+AppCopyright    = "2019 (c) XVM Team"
 AppId           = {{2865cd27-6b8b-4413-8272-cd968f316050}
 AppName         = "XVM"
-AppPublisher    = "XVM team"
-AppPublisherURL = "http://modxvm.com/"
-AppSupportURL   = "http://modxvm.com/"
-AppUpdatesURL   = "http://modxvm.com/"
+AppPublisher    = "XVM Team"
+AppPublisherURL = "https://modxvm.com/"
+AppSupportURL   = "https://modxvm.com/"
+AppUpdatesURL   = "https://modxvm.com/"
 AppVersion      = {#VersionXVM}
 
 WizardImageFile      = images\big_image.bmp
@@ -40,23 +40,23 @@ DefaultDirName=C:\
 SetupLogging=yes
 
 [Tasks]
-Name: "xvmbackup"; Description: "{cm:backupXVM}"; Flags: unchecked
+Name: "xvmbackup"; Description: "{cm:backupXVM}"; Flags: unchecked;
 
 [Run]
 Filename: http://modxvm.com/; Description: "{cm:websiteXVM}"; Flags: postinstall nowait shellexec;
 
 [Files]
 ;backup
-Source: "{app}\res_mods\configs\*"; DestDir: "{app}\xvm_backup\configs"; Tasks: xvmbackup; Flags: external skipifsourcedoesntexist createallsubdirs recursesubdirs uninsneveruninstall
+Source: "{app}\res_mods\configs\*"; DestDir: "{app}\xvm_backup\configs"; Tasks: xvmbackup; Flags: external skipifsourcedoesntexist createallsubdirs recursesubdirs uninsneveruninstall;
 ;xvm
 ;Source: "..\..\..\~output\mods\*"; DestDir: "{app}\mods"; Flags: createallsubdirs recursesubdirs; Components: XVM
 ;Source: "..\..\..\~output\res_mods\*"; DestDir: "{app}\res_mods"; Flags: createallsubdirs recursesubdirs; Components: XVM
 ;Source: "..\..\..\~output\readme*.*"; DestDir: "{app}"; Components: XVM
 
 ;installer libs
-Source: "dll\innoextensions.dll"; Flags: dontcopy
-Source: "dll\bass.dll"; Flags: dontcopy
-Source: "dll\unmerg_f.dll"; Flags: dontcopy
+Source: "dll\innoextensions.dll"; Flags: dontcopy;
+Source: "dll\bass.dll"; Flags: dontcopy;
+Source: "dll\unmerg_f.dll"; Flags: dontcopy;
 
 
 [InstallDelete]
@@ -141,20 +141,20 @@ begin
 
   if ClientsCount > 0 then
   begin
-    for Index:=0 to ClientsCount-1 do
+    for Index := 0 to ClientsCount - 1 do
     begin
-      WOT_GetClientVersionW(Buffer,1024,Index);
-      Str:=Copy(Buffer,0,Pos(#0, Buffer));
+      WOT_GetClientVersionW(Buffer, 1024, Index);
+      Str:=Copy(Buffer, 0, Pos(#0, Buffer));
 
       case WOT_GetClientBranch(Index) of
-        1: Insert(' Release: ',Str,Pos(#0, Str));
-        2: Insert(' Common Test: ',Str,Pos(#0, Str));
-        3: Insert(' Super Test: ',Str,Pos(#0, Str));
-        4: Insert(' Sandbox: ',Str,Pos(#0, Str));
+        1: Insert(' Release: ', Str, Pos(#0, Str));
+        2: Insert(' Common Test: ', Str, Pos(#0, Str));
+        3: Insert(' Super Test: ', Str, Pos(#0, Str));
+        4: Insert(' Sandbox: ', Str, Pos(#0, Str));
       end;
 
-      WOT_GetClientPathW(Buffer,1024,Index);
-      Insert(Buffer,Str,Pos(#0, Str));
+      WOT_GetClientPathW(Buffer, 1024, Index);
+      Insert(Buffer, Str, Pos(#0, Str));
 
       WotList.Items.Add(Str);
     end;
@@ -170,30 +170,32 @@ var
 begin
   if Length(ClientPath) = 0 then
   begin
-    WotList.ItemIndex:=-1;
-    exit;
+    WotList.ItemIndex := -1;
+    Exit;
   end;
 
   Index := WOT_AddClientW(ClientPath);
-  if Index >= 0 then begin
+  if Index >= 0 then
+  begin
     WotList_Update();
-    WotList.ItemIndex:=Index;
-  end else begin
+    WotList.ItemIndex := Index;
+  end else
+  begin
     MsgBox( ExpandConstant('{cm:wotNotFound}'), mbError, MB_OK);
-    WotList.ItemIndex:=-1;
+    WotList.ItemIndex := -1;
   end;
 end;
 
 procedure WotList_OnChange(Sender: TObject);
 begin
-  if WoTList.Text = ExpandConstant('{cm:browse}')  then
+  if WoTList.Text = ExpandConstant('{cm:browse}') then
   begin
     WizardForm.DirBrowseButton.OnClick(nil);
     WotList_AddClient(WizardForm.DirEdit.Text);
   end;
 
-  WOT_GetClientPathW(Buffer,1024,WotList.ItemIndex);
-  WizardForm.DirEdit.Text:=Buffer;
+  WOT_GetClientPathW(Buffer, 1024, WotList.ItemIndex);
+  WizardForm.DirEdit.Text := Buffer;
 end;
 
 function InitializeSetup(): Boolean;
@@ -250,13 +252,13 @@ function NextButtonClick(CurPage: Integer): Boolean;
 begin
   Result := True;
 
-  if CurPage = wpSelectDir then
+  if (CurPage = wpSelectDir) then
   begin
     if not FileExists(ExpandConstant('{app}\WorldOfTanks.exe')) then
     begin
-      MsgBox( ExpandConstant('{cm:wotNotFound}'), mbError, MB_OK);
+      MsgBox(ExpandConstant('{cm:wotNotFound}'), mbError, MB_OK);
       Result := False;
-      exit;
+      Exit;
     end;
   end;
 end;
