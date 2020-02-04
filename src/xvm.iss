@@ -31,7 +31,7 @@ Uninstallable=true
 DisableDirPage=false
 
 OutputDir=..\output
-OutputBaseFilename=setup_xvm
+OutputBaseFilename=setup_xvm_v2
 
 UninstallFilesDir={app}\xvm_uninst
 

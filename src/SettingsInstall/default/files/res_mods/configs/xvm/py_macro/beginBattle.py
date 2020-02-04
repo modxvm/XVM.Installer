@@ -2,7 +2,7 @@ import BigWorld
 from Vehicle import Vehicle
 from gui.Scaleform.daapi.view.battle.shared.battle_timers import PreBattleTimer
 
-from xfw import *
+from xfw.events import registerEvent
 from xfw_actionscript.python import *
 
 battleBegin = None

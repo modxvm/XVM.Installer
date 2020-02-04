@@ -11,7 +11,7 @@ from gui.Scaleform.daapi.view.battle.classic.stats_exchange import FragsCollecta
 
 import xvm_battle.python.battle as battle
 import xvm_main.python.config as config
-from xfw import *
+from xfw.events import registerEvent, overrideMethod
 from xfw_actionscript.python import *
 from xvm_main.python.logger import *
 
@@ -117,3 +117,4 @@ def sight_timeFlight():
 @xvm.export('sight.cameraHeight', deterministic=False)
 def sight_cameraHeight():
     return cameraHeight
+

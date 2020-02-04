@@ -1,5 +1,5 @@
 from gui.Scaleform.daapi.view.battle.shared.indicators import SixthSenseIndicator
-from xfw import *
+from xfw.events import registerEvent
 from xfw_actionscript.python import *
 import BigWorld
 from Avatar import PlayerAvatar
