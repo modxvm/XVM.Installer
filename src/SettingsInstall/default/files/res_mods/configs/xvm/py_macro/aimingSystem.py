@@ -5,7 +5,7 @@ from AvatarInputHandler.AimingSystems.ArcadeAimingSystem import ArcadeAimingSyst
 from AvatarInputHandler.AimingSystems.SniperAimingSystem import SniperAimingSystem
 from AvatarInputHandler.AimingSystems.StrategicAimingSystem import StrategicAimingSystem
 
-from xfw import *
+from xfw.events import registerEvent
 import xvm_battle.python.battle as battle
 from xfw_actionscript.python import *
 from xvm_main.python.logger import *

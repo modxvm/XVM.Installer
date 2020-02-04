@@ -1,10 +1,10 @@
 from xvm_main.python.logger import *
 import xvm_main.python.config as config
+from xfw.events import registerEvent, overrideMethod
 
 import BigWorld
 from Account import PlayerAccount
 from Avatar import PlayerAvatar
-from Vehicle import Vehicle
 from gui.Scaleform.daapi.view.battle.shared.messages.fading_messages import FadingMessages
 from helpers.EdgeDetectColorController import g_instance
 

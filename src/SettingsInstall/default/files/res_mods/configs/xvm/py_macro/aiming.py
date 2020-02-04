@@ -7,7 +7,7 @@ from Vehicle import Vehicle
 
 import xvm_battle.python.battle as battle
 import xvm_main.python.config as config
-from xfw import *
+from xfw.events import registerEvent
 from xfw_actionscript.python import *
 from xvm_main.python.logger import *
 

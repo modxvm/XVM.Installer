@@ -424,7 +424,7 @@
                 "value": {
                   "playersPanel": {
                     "medium":{
-                      "nickFormatLeft": "<font alpha='{{alive?#FF|#80}}'>{{name%.12s~..}}</font> <font alpha='#A0'>{{clan}}</font>",
+                      "nickFormatLeft": "<font alpha='{{alive?#FF|#80}}'>{{name%.{{anonym?10|12}}s~..}}</font>{{anonym? <font face='xvm' size='19'>&#x11E;</font>}} <font alpha='#A0'>{{clan}}</font>",
                       "nickFormatRight": "<font alpha='#A0'>{{clan}}</font> <font alpha='{{alive?#FF|#80}}'>{{name%.12s~..}}</font>"
                     },
                     "medium2": {
@@ -432,7 +432,7 @@
                       "vehicleFormatRight": "<font alpha='{{alive?#FF|#80}}'>{{vehicle}}</font>"
                     },
                     "large": {
-                      "nickFormatLeft": "{{name%.15s~..}}<font alpha='#A0'>{{clan}}</font>",
+                      "nickFormatLeft": "{{name%.{{anonym?12|15}}s~..}}{{anonym? <font face='xvm' size='13'>&#x11E;</font>}}<font alpha='#A0'>{{clan}}</font>",
                       "nickFormatRight": "<font alpha='#A0'>{{clan}}</font>{{name%.15}~..}}"
                     }
                   }

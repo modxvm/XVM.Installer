@@ -1,0 +1,5 @@
+src/dll/innoextensions.dll
+output/
+src/SettingsInstall/default/default.mrg
+src/SettingsInstall/default/config/
+temp/
