@@ -58,7 +58,7 @@
               }
             },
             "children": {
-              "zoomMinimap": {
+              "zoomMinimapCenter": {
                 "name": "increase_center",
                 "description": "increase_minimap",
                 "checked": false,
@@ -175,6 +175,45 @@
                 "valueIfNotSelected": ""
               }
             }
+          },
+          "minimap_hp": {
+            "name": "minimap_hp_in_basic_mode",
+            "description": "minimap_hp_in_basic_mode",
+            "checked": false,
+            "imageIfSelected": "minimap_alt_hp_true.png",
+            "imageIfNotSelected": "minimap_alt_hp_false.png",
+            "valueIfSelected": {
+              "minimap_alt_hp1": {
+                "configFileName": "minimapLabels.xc",
+                "value": {
+                  "labels":{
+                    "formats": [
+                      ${ "minimapLabelsTemplates.xc":"def.hpLost" },
+                      ${ "minimapLabelsTemplates.xc":"def.hpSpotted" }
+                    ]
+                  }
+                }
+              },
+              "minimap_alt_hp2": {
+                "configFileName": "minimapLabelsTemplates.xc",
+                "value": {
+                  "def":{
+                    "hpSpotted": {
+                      "$ref": { "path":"def.vtypeSpotted" },
+                      "enabled": true,
+                      "textFormat": { "font": "dynamic2", "size": 20, "align": "center", "valign": "center" },
+                      "format": "<font color='{{.minimap.labelsData.colors.dot.{{sys-color-key}}}}'>{{hp-ratio%.335a|&#x1B3;}}</font>"
+                    },
+                    "hpLost": {
+                      "$ref": { "path":"def.vtypeLost" },
+                      "textFormat": { "font": "dynamic2", "size": 20, "align": "center", "valign": "center" },
+                      "format": "<font color='{{.minimap.labelsData.colors.lostDot.{{sys-color-key}}}}'>{{hp-ratio%.335a|&#x1B3;}}</font>"
+                    }
+                  }
+                }
+              }
+            },
+            "valueIfNotSelected": ""
           }
         }
       },
@@ -1094,6 +1133,7 @@
         "children": {
           "ping_login": {
             "name": "on_login_screen",
+            "description": "on_login_screen",
             "checked": false,
             "imageIfSelected": "ping_login_true.png",
             "imageIfNotSelected": "ping_login_false.png",
@@ -1178,7 +1218,7 @@
                     "formats": [
                       {
                         "updateEvent": "ON_EVERY_SECOND",
-                        "x": 315,
+                        "x": -315,
                         "y": 80,
                         "width": 200,
                         "height": 50,
@@ -1307,7 +1347,72 @@
             }
           }
         }
-      }
+      },
+      "lockers": {
+        "name": "lockers",
+        "description": "lockers",
+        "checked": false,
+        "imageIfSelected": "",
+        "imageIfNotSelected": "",
+        "valueIfSelected": "",
+        "valueIfNotSelected": "",
+        "children": {
+          "gold_locker": {
+            "name": "gold_locker",
+            "description": "gold_locker",
+            "checked": false,
+            "imageIfSelected": "gold_locker_true.png",
+            "imageIfNotSelected": "locker_false.png",
+            "valueIfSelected": {
+              "gold_locker_enabled": {
+                "configFileName": "hangar.xc",
+                "value": {
+                  "hangar": {
+                    "enableGoldLocker": true
+                  }
+                }
+              }
+            },
+            "valueIfNotSelected": ""
+          },
+          "free_xp_locker": {
+            "name": "free_xp_locker",
+            "description": "free_xp_locker",
+            "checked": false,
+            "imageIfSelected": "free_xp_locker_true.png",
+            "imageIfNotSelected": "locker_false.png",
+            "valueIfSelected": {
+              "free_xp_locker_enabled": {
+                "configFileName": "hangar.xc",
+                "value": {
+                  "hangar": {
+                    "enableFreeXpLocker": true
+                  }
+                }
+              }
+            },
+            "valueIfNotSelected": ""
+          },
+          "crystal_locker": {
+            "name": "crystal_locker",
+            "description": "crystal_locker",
+            "checked": false,
+            "imageIfSelected": "crystal_locker_true.png",
+            "imageIfNotSelected": "locker_false.png",
+            "valueIfSelected": {
+              "crystal_locker_enabled": {
+                "configFileName": "hangar.xc",
+                "value": {
+                  "hangar": {
+                    "enableCrystalLocker": true
+                  }
+                }
+              }
+            },
+            "valueIfNotSelected": ""
+          }
+        }
+      },
     }
   },
   "3color_theme": {

@@ -3,6 +3,7 @@ battle_interface=Боевой интерфейс
 minimap=Миникарта
 increase_minimap=Увеличение миникарты
 increase_center=Увеличение по центру
+minimap_hp_in_basic_mode=Очки прочности
 images_for_sixth_sense=Изображения для шестого чувства
 eye_Sauron=Глаз Саурона
 smiley=Смайлик
@@ -70,13 +71,19 @@ crew_auto_return=Автовозврат экипажа
 marker_stars=Рейтинг - звезда
 header_old="Старый" заголовок
 header_new="Новый" заголовок
+lockers=Замки
+gold_locker=Золото
+free_xp_locker=Свободный опыт 
+crystal_locker=Боны
+
 
 ; В секции DescriptionLabel для переноса строк можно использовать экранированную последовательность \n
 [DescriptionLabel]
 battle_interface=
 minimap=Если хотите играть со стандартной миникартой, то отключите данный пункт.
 increase_minimap=Подсказка: размер увеличенной миникарты можно настроить в файле minimaps.xc в секции "zoom" параметр "index".
-increase_center=
+increase_center=Подсказка: размер увеличенной миникарты можно настроить в файле minimaps.xc в секции "zoom" параметр "index".
+minimap_hp_in_basic_mode=Отображение очков прочности на миникарте в виде кольца.
 images_for_sixth_sense=Подсказка: если хотите использовать свое изображение, то выберите пункт "Лампа XVM", назовите свой файл "SixthSense.png" и скопируйте его в /res_mods/mods/shared_resources/xvm/res/ .
 lamp_XVM=Подсказка: если хотите использовать свое изображение, то назовите свой файл с изображением "SixthSense.png" и скопируйте его в /res_mods/mods/shared_resources/xvm/res/ .
 sixth_sense_timer=Рекомендуется использовать с "Лампа XVM".
@@ -139,3 +146,7 @@ crew_auto_return=Включить/отключить функцию автовозврат экипажа.
 marker_stars=Отображение рейтинга с помощью цвета звезды.
 header_old=Заголовок выполнен в старом стиле.
 header_new=Заголовок выполнен в новом стиле.
+lockers=
+gold_locker=При включении данной опции вы можете заблокировать покупки за "золото".
+free_xp_locker=При включении данной опции вы можете заблокировать перевод боевого опыта в свободный.
+crystal_locker=При включении данной опции вы можете заблокировать покупки за боны.
