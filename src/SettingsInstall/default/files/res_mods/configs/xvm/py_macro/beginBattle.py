@@ -4,6 +4,7 @@ from gui.Scaleform.daapi.view.battle.shared.battle_timers import PreBattleTimer
 
 from xfw.events import registerEvent
 from xfw_actionscript.python import *
+from xvm_main.python.logger import *
 
 battleBegin = None
 

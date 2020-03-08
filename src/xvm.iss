@@ -54,7 +54,7 @@ Source: "{app}\res_mods\configs\*"; DestDir: "{app}\xvm_backup\configs"; Tasks: 
 ;Source: "..\..\..\~output\readme*.*"; DestDir: "{app}"; Components: XVM
 
 ;installer libs
-Source: "dll\innoextensions.dll"; Flags: dontcopy;
+Source: "dll\xvmextensions.x86_32.dll"; Flags: dontcopy;
 Source: "dll\bass.dll"; Flags: dontcopy;
 Source: "dll\unmerg_f.dll"; Flags: dontcopy;
 
@@ -125,7 +125,8 @@ Type: filesandordirs; Name: "{app}\xvm_uninst"
 Type: files; Name: "{app}\readme-*.txt"
 
 [Code]
-var
+
+var
   WotList: TNewComboBox;
   Buffer: String;
 
