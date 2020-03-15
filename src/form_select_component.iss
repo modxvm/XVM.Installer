@@ -14,6 +14,7 @@ function BASS_ChannelStop(Handle: DWORD): BOOL;
 external 'BASS_ChannelStop@files:bass.dll stdcall delayload';
 function BASS_StreamFree(Handle: DWORD): BOOL;
 external 'BASS_StreamFree@files:bass.dll stdcall delayload';
+
 function UNPACK_divide(Path: String; FileName: String): Byte;
 external 'UNPACK_divide@files:unmerg_f.dll cdecl';
 
@@ -24,6 +25,15 @@ const
   PATH_INSTALL_SETTINGS = '{userappdata}\Wargaming.net\WorldOfTanks\xvm\install';
   FILE_NAME_SETTINGS = 'settings.ini';
   SETUP_SETTINGS = 'SetupSettings';
+
+  IMAGE_IF_SELECTED = 0;
+  IMAGE_IF_NOT_SELECTED = 1;
+  VALUE_IF_SELECTED = 2;
+  VALUE_IF_NOT_SELECTED = 3;
+  SOUND_IF_SELECTED = 4;
+  SOUND_IF_NOT_SELECTED = 5;
+  INTERNAL_NAME = 6;
+  DESCRIPTION = 7;
 
 type
   TItems = (iCheckBox, iRadioBtn, iGroup);
@@ -40,7 +50,7 @@ var
   Image: TBitmapImage;
   SettingsCheckListBox: TNewCheckListBox;
   DescriptionLabel: TLabel;
-  sizeBuf: Integer;
+  SizeBuf: Integer;
   ItemsType: array [0..4096] of TItems;
   SoundStream: DWORD;
 
@@ -72,8 +82,8 @@ var
   i: Integer;
   tmp, app, FileName, Buffer: String;
 begin
-  SetLength(Buffer, sizeBuf);
-  JSON_GetArrayValueW_S(AdditionalFiles, Buffer, sizeBuf);
+  SetLength(Buffer, SizeBuf);
+  JSON_GetArrayValueW_S(AdditionalFiles, Buffer, SizeBuf);
   FileNames := TStringList.Create;
   try
     FileNames.Text := Copy(Buffer, 0, Pos(#0, Buffer));
@@ -197,9 +207,9 @@ begin
   try
     FileName := DirTemp + '\' + FNameSettings;
     //MsgBox('FileName = ' + FileName, mbInformation, MB_OK);
-    SetLength(BufNames, sizeBuf);
-    SetLength(BufValues, sizeBuf);
-    JSON_GetNamesAndValuesW(FileName, Path, BufNames, BufValues, sizeBuf);
+    SetLength(BufNames, SizeBuf);
+    SetLength(BufValues, SizeBuf);
+    JSON_GetNamesAndValuesW(FileName, Path, BufNames, BufValues, SizeBuf);
     RootList := TStringList.Create;
     try
       RootList.Text := Copy(BufNames, 0, Pos(#0, BufNames));
@@ -210,9 +220,9 @@ begin
         NamesList := TStringList.Create;
         ValuesList := TStringList.Create;
         try
-          JSON_GetNamesAndValuesW(FileName, Path + RootList[i], BufNames, BufValues, sizeBuf);
+          JSON_GetNamesAndValuesW(FileName, Path + RootList[i], BufNames, BufValues, SizeBuf);
           NamesList.Text := AnsiLowercase(Copy(BufNames, 0, Pos(#0, BufNames)));
-          ValuesList.Text := Copy(BufValues,0,Pos(#0, BufValues));
+          ValuesList.Text := Copy(BufValues, 0, Pos(#0, BufValues));
           AddItem(Path + RootList[i], NamesList, ValuesList, ALevel, TypeItem);
         finally
           NamesList.Free;
@@ -233,21 +243,21 @@ var
   i, Index: Integer;
   BufNames, BufValues: String;
 begin
-  SetLength(BufNames, sizeBuf);
-  SetLength(BufValues, sizeBuf);
-  JSON_GetNamesAndValuesW_S(Value, BufNames, BufValues, sizeBuf);
+  SetLength(BufNames, SizeBuf);
+  SetLength(BufValues, SizeBuf);
+  JSON_GetNamesAndValuesW_S(Value, BufNames, BufValues, SizeBuf);
   RootList := TStringList.Create;
   try
-    RootList.Text := Copy(BufValues,0,Pos(#0, BufValues));
+    RootList.Text := Copy(BufValues, 0, Pos(#0, BufValues));
     //MsgBox(IntToStr(RootList.Count) + RootList.Text, mbInformation, MB_OK);
     for i := 0 to RootList.Count - 1 do
     begin
       NamesList := TStringList.Create;
       ValuesList := TStringList.Create;
       try
-        JSON_GetNamesAndValuesW_S(RootList[i], BufNames, BufValues, sizeBuf);
+        JSON_GetNamesAndValuesW_S(RootList[i], BufNames, BufValues, SizeBuf);
         NamesList.Text := AnsiLowercase(Copy(BufNames, 0, Pos(#0, BufNames)));
-        ValuesList.Text := Copy(BufValues,0,Pos(#0, BufValues));
+        ValuesList.Text := Copy(BufValues, 0, Pos(#0, BufValues));
         if NamesList.Find('configfilename', Index) then
         begin
           arraySettings[j].NameFile := ValuesList[Index];
@@ -300,12 +310,12 @@ begin
         begin
           if Checked[i] then
           begin
-            Value := TStringList(ItemObject[i]).Strings[2];
-            SetIniBool(SETUP_SETTINGS, TStringList(ItemObject[i]).Strings[6], True, FilePath);
+            Value := TStringList(ItemObject[i]).Strings[VALUE_IF_SELECTED];
+            SetIniBool(SETUP_SETTINGS, TStringList(ItemObject[i]).Strings[INTERNAL_NAME], True, FilePath);
           end else
           begin
-            Value := TStringList(ItemObject[i]).Strings[3];
-            SetIniBool(SETUP_SETTINGS, TStringList(ItemObject[i]).Strings[6], False, FilePath);
+            Value := TStringList(ItemObject[i]).Strings[VALUE_IF_NOT_SELECTED];
+            SetIniBool(SETUP_SETTINGS, TStringList(ItemObject[i]).Strings[INTERNAL_NAME], False, FilePath);
           end;
           if Trim(Value) <> '' then
             AddToArrayS(Value, j);
@@ -387,7 +397,8 @@ begin
     SelectComponentForm.ClientWidth := ScaleX(730);
     SelectComponentForm.ClientHeight := ScaleY(500);
     SelectComponentForm.Caption := ExpandConstant('{cm:SettingConfigurationForm}');
-    SelectComponentForm.CenterInsideControl(WizardForm, False);
+    //SelectComponentForm.CenterInsideControl(WizardForm, False);
+    SelectComponentForm.FlipSizeAndCenterIfNeeded(False, WizardForm, False);
 
     Bevel := TBevel.Create(SelectComponentForm);
     Bevel.Top := SelectComponentForm.ClientHeight - ScaleY(BTN_HEIGHT + 10 + 14);                 // 453
@@ -447,7 +458,7 @@ begin
     LinkSupportLabel.Cursor := crHand;
     LinkSupportLabel.OnClick := @LinkSupportLabelOnClick;
 
-    FileSize(DirTemp + '\' + FNameSettings, sizeBuf);
+    FileSize(DirTemp + '\' + FNameSettings, SizeBuf);
     GetNamesAndValues(' ', 0, iCheckBox);
 
     Image := TBitmapImage.Create(SelectComponentForm);
@@ -472,7 +483,6 @@ begin
     SelectComponentForm.Free();
   end;
 end;
-
 
 procedure AddButtonSelectComponent();
 var

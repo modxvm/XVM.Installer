@@ -39,6 +39,8 @@ DefaultDirName=C:\
 
 SetupLogging=yes
 
+WizardStyle=modern
+
 [Tasks]
 Name: "xvmbackup"; Description: "{cm:backupXVM}"; Flags: unchecked;
 
@@ -222,14 +224,6 @@ begin
   WotList.Parent := WizardForm.DirEdit.Parent;
   WotList.Style := csDropDownList;
   WotList.OnChange := @WotList_OnChange;
-  WotList.SetBounds(
-    WizardForm.DirEdit.Left,
-    WizardForm.DirEdit.Top,
-    WizardForm.DirBrowseButton.Left + WizardForm.DirBrowseButton.Width - WizardForm.DirEdit.Left,
-    WizardForm.DirEdit.Height
-  );
-
-  AddButtonSelectComponent();
 
   WotList_Update();
 end;
@@ -242,11 +236,18 @@ begin
     begin
       WotList.ItemIndex := 0;
     end;
-
+      WotList.SetBounds(
+        WizardForm.DirEdit.Left,
+        WizardForm.DirEdit.Top,
+        WizardForm.DirBrowseButton.Left + WizardForm.DirBrowseButton.Width - WizardForm.DirEdit.Left,
+        WizardForm.DirEdit.Height
+      );
     WotList.OnChange(nil);
   end;
+  if (CurPage = wpSelectComponents) then
+    AddButtonSelectComponent();
   if (CurPage = wpFinished) then
-    ApplySettings;
+    ApplySettings();
 end;
 
 function NextButtonClick(CurPage: Integer): Boolean;
