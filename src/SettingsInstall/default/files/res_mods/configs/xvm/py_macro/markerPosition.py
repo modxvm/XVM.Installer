@@ -3,11 +3,12 @@ import traceback
 import BattleReplay
 import BigWorld
 from Avatar import PlayerAvatar
+from AvatarInputHandler import AvatarInputHandler
 from AvatarInputHandler.AimingSystems import CollisionStrategy, getCappedShotTargetInfos
 from Math import Vector3, Vector2
 from Vehicle import Vehicle
 from VehicleGunRotator import VehicleGunRotator
-from gui.Scaleform.daapi.view.battle.classic.stats_exchange import FragsCollectableStats
+from aih_constants import CTRL_MODE_NAME
 
 import xvm_battle.python.battle as battle
 import xvm_main.python.config as config
@@ -16,50 +17,44 @@ from xfw_actionscript.python import *
 from xvm_main.python.logger import *
 
 currentDistance = None
-vehicle = None
-player = None
-camera = None
 timeFlight = None
 timeAIM = None
 cameraHeight = None
+visible = True
+DISPLAY_IN_MODES = [CTRL_MODE_NAME.ARCADE,
+                    CTRL_MODE_NAME.ARTY,
+                    CTRL_MODE_NAME.DUAL_GUN,
+                    CTRL_MODE_NAME.SNIPER,
+                    CTRL_MODE_NAME.STRATEGIC]
 
 
-@registerEvent(FragsCollectableStats, 'addVehicleStatusUpdate')
-def FragsCollectableStats_addVehicleStatusUpdate(self, vInfoVO):
-    if config.get('sight/enabled', True) and battle.isBattleTypeSupported:
-        if (not vInfoVO.isAlive()) and (vehicle is not None) and (vehicle.id == vInfoVO.vehicleID):
-            global currentDistance, timeFlight, cameraHeight
-            currentDistance = None
-            timeFlight = None
-            cameraHeight = None
-            as_event('ON_MARKER_POSITION')
+@registerEvent(AvatarInputHandler, 'onControlModeChanged')
+def AvatarInputHandler_onControlModeChanged(self, eMode, **args):
+    global visible
+    newVisible = eMode in DISPLAY_IN_MODES
+    if newVisible != visible:
+        visible = newVisible
+        as_event('ON_MARKER_POSITION')
 
 
-@registerEvent(PlayerAvatar, 'onBecomePlayer')
-def PlayerAvatar_onBecomePlayer(self):
-    global player, camera
-    player = BigWorld.player()
-    camera = BigWorld.camera()
-
-
-@registerEvent(PlayerAvatar, '_PlayerAvatar__destroyGUI')
-def sight_destroyGUI(self):
-    global player, camera
-    player = None
-    camera = None
+@registerEvent(PlayerAvatar, 'updateVehicleHealth')
+def PlayerAvatar_updateVehicleHealth(self, vehicleID, health, deathReasonID, isCrewActive, isRespawn):
+    if not (health > 0 and isCrewActive) and config.get('sight/enabled', True) and battle.isBattleTypeSupported:
+        global currentDistance, timeFlight, cameraHeight
+        currentDistance = None
+        timeFlight = None
+        cameraHeight = None
+        as_event('ON_MARKER_POSITION')
 
 
 @registerEvent(Vehicle, 'onEnterWorld')
 def Vehicle_onEnterWorld(self, prereqs):
-    if self.isPlayerVehicle and config.get('sight/enabled', True):
-        global vehicle, currentDistance, timeFlight, cameraHeight, camera, player
+    if self.isPlayerVehicle and config.get('sight/enabled', True) and battle.isBattleTypeSupported:
+        global currentDistance, timeFlight, cameraHeight, visible
         currentDistance = None
         timeFlight = None
         cameraHeight = None
-        player = BigWorld.player()
-        camera = BigWorld.camera()
-        if battle.isBattleTypeSupported:
-            vehicle = self
+        visible = True
 
 
 @overrideMethod(VehicleGunRotator, '_VehicleGunRotator__getGunMarkerPosition')
@@ -69,12 +64,13 @@ def _VehicleGunRotator__getGunMarkerPosition(base, self, shotPos, shotVec, dispe
     try:
         global timeFlight, currentDistance, cameraHeight
         prevTimeFlight, prevCurrentDistance, prevCameraHeight = timeFlight, currentDistance, cameraHeight
-        shotDescr = player.getVehicleDescriptor().shot
+        shotDescr = self._avatar.getVehicleDescriptor().shot
         gravity = Vector3(0.0, -shotDescr.gravity, 0.0)
         testVehicleID = self.getAttachedVehicleID()
         collisionStrategy = CollisionStrategy.COLLIDE_DYNAMIC_AND_STATIC
-        minBounds, maxBounds = player.arena.getSpaceBB()
-        endPos, direction, collData, usedMaxDistance = getCappedShotTargetInfos(shotPos, shotVec, gravity, shotDescr, testVehicleID, minBounds, maxBounds, collisionStrategy)
+        minBounds, maxBounds = BigWorld.player().arena.getSpaceBB()
+        endPos, direction, collData, usedMaxDistance = getCappedShotTargetInfos(shotPos, shotVec, gravity, shotDescr, testVehicleID, minBounds, maxBounds,
+                                                                                collisionStrategy)
         distance = shotDescr.maxDistance if usedMaxDistance else (endPos - shotPos).length
         dispersAngle, idealDispersAngle = dispersionAngles
         doubleDistance = distance + distance
@@ -87,7 +83,7 @@ def _VehicleGunRotator__getGunMarkerPosition(base, self, shotPos, shotVec, dispe
         shotVecXZ = Vector2(shotVec.x, shotVec.z)
         delta = Vector2(endPos.x - shotPos.x, endPos.z - shotPos.z)
         timeFlight = delta.length / shotVecXZ.length
-        cameraHeight = camera.position.y - endPos.y
+        cameraHeight = BigWorld.camera().position.y - endPos.y
         currentDistance = distance
         try:
             update = not (-0.01 < (prevTimeFlight - timeFlight) < 0.01)
@@ -106,15 +102,14 @@ def _VehicleGunRotator__getGunMarkerPosition(base, self, shotPos, shotVec, dispe
 
 @xvm.export('sight.distance', deterministic=False)
 def sight_distance():
-    return currentDistance
+    return currentDistance if visible else None
 
 
 @xvm.export('sight.timeFlight', deterministic=False)
 def sight_timeFlight():
-    return timeFlight
+    return timeFlight if visible else None
 
 
 @xvm.export('sight.cameraHeight', deterministic=False)
 def sight_cameraHeight():
-    return cameraHeight
-
+    return cameraHeight if visible else None

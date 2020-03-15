@@ -1412,7 +1412,7 @@
             "valueIfNotSelected": ""
           }
         }
-      },
+      }
     }
   },
   "3color_theme": {

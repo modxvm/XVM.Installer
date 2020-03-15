@@ -1,9 +1,9 @@
-import math
-
 import BigWorld
+import math
 from Avatar import PlayerAvatar
-from gui.Scaleform.daapi.view.battle.classic.stats_exchange import FragsCollectableStats
+from AvatarInputHandler import AvatarInputHandler
 from Vehicle import Vehicle
+from aih_constants import CTRL_MODE_NAME
 
 import xvm_battle.python.battle as battle
 import xvm_main.python.config as config
@@ -12,27 +12,37 @@ from xfw_actionscript.python import *
 from xvm_main.python.logger import *
 
 timeAIM = None
-vehicle = None
+visible = True
+DISPLAY_IN_MODES = [CTRL_MODE_NAME.ARCADE,
+                    CTRL_MODE_NAME.ARTY,
+                    CTRL_MODE_NAME.DUAL_GUN,
+                    CTRL_MODE_NAME.SNIPER,
+                    CTRL_MODE_NAME.STRATEGIC]
 
 
-@registerEvent(FragsCollectableStats, 'addVehicleStatusUpdate')
-def aiming_addVehicleStatusUpdate(self, vInfoVO):
-    if config.get('sight/enabled', True) and battle.isBattleTypeSupported:
-        if (not vInfoVO.isAlive()) and (vehicle is not None) and (vehicle.id == vInfoVO.vehicleID):
-            global timeAIM
-            timeAIM = None
-            as_event('ON_AIMING')
+@registerEvent(AvatarInputHandler, 'onControlModeChanged')
+def AvatarInputHandler_onControlModeChanged(self, eMode, **args):
+    global visible
+    newVisible = eMode in DISPLAY_IN_MODES
+    if newVisible != visible:
+        visible = newVisible
+        as_event('ON_AIMING')
 
 
 @registerEvent(Vehicle, 'onEnterWorld')
 def aiming_onEnterWorld(self, prereqs):
-    if self.isPlayerVehicle and config.get('sight/enabled', True):
-        global vehicle, timeAIM
+    if self.isPlayerVehicle and config.get('sight/enabled', True) and battle.isBattleTypeSupported:
+        global timeAIM, visible
+        visible = True
         timeAIM = None
-        if battle.isBattleTypeSupported:
-            vehicle = self
-        else:
-            vehicle = None
+
+
+@registerEvent(PlayerAvatar, 'updateVehicleHealth')
+def PlayerAvatar_updateVehicleHealth(self, vehicleID, health, deathReasonID, isCrewActive, isRespawn):
+    if not (health > 0 and isCrewActive) and config.get('sight/enabled', True) and battle.isBattleTypeSupported:
+        global timeAIM
+        timeAIM = None
+        as_event('ON_AIMING')
 
 
 @registerEvent(PlayerAvatar, 'getOwnVehicleShotDispersionAngle')
@@ -60,4 +70,4 @@ def aiming_getOwnVehicleShotDispersionAngle(self, turretRotationSpeed, withShot=
 
 @xvm.export('sight.timeAIM', deterministic=False)
 def sight_timeAIM():
-    return timeAIM
+    return timeAIM if visible else None
