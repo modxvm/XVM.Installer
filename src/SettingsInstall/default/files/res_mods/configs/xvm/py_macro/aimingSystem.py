@@ -31,17 +31,20 @@ def AvatarInputHandler_onControlModeChanged(self, eMode, **args):
     global y, aimMode
     if battle.isBattleTypeSupported:
         oldAimMMode = aimMode
-        if eMode in [CTRL_MODE_NAME.ARCADE, CTRL_MODE_NAME.DUAL_GUN]:
-            y = - BigWorld.screenHeight() * SHIFT
-            aimMode = ARCADE_MODE
-        elif eMode == CTRL_MODE_NAME.SNIPER:
-            y = 0.0
-            aimMode = SNIPER_MODE
-        elif eMode in [CTRL_MODE_NAME.ARTY, CTRL_MODE_NAME.STRATEGIC]:
-            y = 0.0
-            aimMode = STRATEGIC_MODE
+        if self._AvatarInputHandler__isArenaStarted:
+            if eMode == CTRL_MODE_NAME.ARCADE:
+                y = - BigWorld.screenHeight() * SHIFT
+                aimMode = ARCADE_MODE
+            elif eMode in [CTRL_MODE_NAME.SNIPER, CTRL_MODE_NAME.DUAL_GUN]:
+                y = 0.0
+                aimMode = SNIPER_MODE
+            elif eMode in [CTRL_MODE_NAME.ARTY, CTRL_MODE_NAME.STRATEGIC]:
+                y = 0.0
+                aimMode = STRATEGIC_MODE
+            else:
+                aimMode = None
         else:
-            aimMode = None
+            aimMode = ARCADE_MODE
         if oldAimMMode != aimMode:
             as_event('ON_AIM_MODE')
 

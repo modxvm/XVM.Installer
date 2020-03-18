@@ -394,8 +394,8 @@ begin
   Init();
   SelectComponentForm := CreateCustomForm();
   try
-    SelectComponentForm.ClientWidth := ScaleX(730);
-    SelectComponentForm.ClientHeight := ScaleY(500);
+    SelectComponentForm.ClientWidth := ScaleX(610);
+    SelectComponentForm.ClientHeight := ScaleY(420);
     SelectComponentForm.Caption := ExpandConstant('{cm:SettingConfigurationForm}');
     //SelectComponentForm.CenterInsideControl(WizardForm, False);
     SelectComponentForm.FlipSizeAndCenterIfNeeded(False, WizardForm, False);
@@ -495,6 +495,7 @@ begin
     SelectComponentButton.Left := TypesCombo.Left + TypesCombo.Width - SelectComponentButton.Width + ScaleX(1);
     SelectComponentButton.Top := TypesCombo.Top + TypesCombo.Height + ScaleX(15);
     SelectComponentButton.Height := CancelButton.Height;
+    SelectComponentButton.Anchors :=[akRight, akTop];
     SelectComponentButton.Caption := ExpandConstant('{cm:SettingConfigurationBtn}');
     SelectComponentButton.OnClick := @SelectComponentButtonOnClick;
     SelectComponentButton.Parent := SelectComponentsLabel.Parent;
