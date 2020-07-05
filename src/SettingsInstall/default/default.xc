@@ -60,7 +60,7 @@
             "children": {
               "zoomMinimapCenter": {
                 "name": "increase_center",
-                "description": "increase_minimap",
+                "description": "increase_center",
                 "checked": false,
                 "imageIfSelected": "minimap_true.png",
                 "imageIfNotSelected": "minimap_true.png",
@@ -1332,6 +1332,22 @@
             "configFileName": "hangar.xc",
             "value": {
               "hangar": { "showPromoPremVehicle": false }
+            }
+          }
+        }
+      },
+      "customizationCounter": {
+        "name": "customize_counter",
+        "description": "customize_counter",
+        "checked": true,
+        "imageIfSelected": "customize_counter_true.png",
+        "imageIfNotSelected": "customize_counter_false.png",
+        "valueIfSelected": "",
+        "valueIfNotSelected": {
+          "customizationCounterHide": {
+            "configFileName": "hangar.xc",
+            "value": {
+              "hangar": { "showCustomizationCounter": false }
             }
           }
         }

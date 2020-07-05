@@ -6,7 +6,7 @@
 XVMINST_ROOT_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 XVMBUILD_ROOT_PATH="$XVMINST_ROOT_PATH/../../"
 
-source "$XVMBUILD_ROOT_PATH"/src/xfw/build/library.sh
+source "$XVMBUILD_ROOT_PATH"/build_lib/library.sh
 source "$XVMBUILD_ROOT_PATH"/build/xvm-build.conf
 
 ##########################
@@ -27,15 +27,6 @@ extend_path()
     export PATH="$XVMBUILD_ROOT_PATH/build/bin/Windows_i686/innosetup/:$PATH"
 }
 
-load_repositorystats(){
-    #read xvm revision and hash
-    pushd "$XVMBUILD_ROOT_PATH"/ > /dev/null
-        export XVMBUILD_XVM_BRANCH=$(hg parent --template "{branch}") || exit 1
-        export XVMBUILD_XVM_HASH=$(hg parent --template "{node|short}") || exit 1
-        export XVMBUILD_XVM_REVISION=$(hg parent --template "{rev}") || exit 1
-    popd > /dev/null
-}
-
 clean_directories()
 {
     rm -rf "$XVMINST_ROOT_PATH/temp"
@@ -49,12 +40,12 @@ clean_directories()
 
 prepare_changelog()
 {
-    cp "$XVMBUILD_ROOT_PATH/~output/res_mods/mods/shared_resources/xvm/doc/ChangeLog-en.txt" "$XVMINST_ROOT_PATH/temp/changelogs/"
-    cp "$XVMBUILD_ROOT_PATH/~output/res_mods/mods/shared_resources/xvm/doc/ChangeLog-ru.txt" "$XVMINST_ROOT_PATH/temp/changelogs/"
+    cp "$XVMBUILD_ROOT_PATH/release/doc/ChangeLog-en.md" "$XVMINST_ROOT_PATH/temp/changelogs/"
+    cp "$XVMBUILD_ROOT_PATH/release/doc/ChangeLog-ru.md" "$XVMINST_ROOT_PATH/temp/changelogs/"
 
-    sed -i '1s/^\xef\xbb\xbf//' "$XVMINST_ROOT_PATH/temp/changelogs/ChangeLog-ru.txt"
-    iconv --from-code=utf-8 --to-code=cp1251 "$XVMINST_ROOT_PATH/temp/changelogs/ChangeLog-ru.txt" > "$XVMINST_ROOT_PATH/temp/changelogs/ChangeLog-ru.txt.new"
-    mv "$XVMINST_ROOT_PATH/temp/changelogs/ChangeLog-ru.txt.new" "$XVMINST_ROOT_PATH/temp/changelogs/ChangeLog-ru.txt"
+    sed -i '1s/^\xef\xbb\xbf//' "$XVMINST_ROOT_PATH/temp/changelogs/ChangeLog-ru.md"
+    iconv --from-code=utf-8 --to-code=cp1251 "$XVMINST_ROOT_PATH/temp/changelogs/ChangeLog-ru.md" > "$XVMINST_ROOT_PATH/temp/changelogs/ChangeLog-ru.md.new"
+    mv "$XVMINST_ROOT_PATH/temp/changelogs/ChangeLog-ru.md.new" "$XVMINST_ROOT_PATH/temp/changelogs/ChangeLog-ru.md"
 }
 
 prepare_defines()
@@ -89,7 +80,7 @@ prepare_languages()
 
     echo "[Languages]" >> lang.iss
 
-    echo "Name: \"en\"; MessagesFile: \"l10n_inno\\en.islu,..\\temp\\l10n_result\\en.islu\"; InfoBeforeFile: \"..\\temp\\changelogs\\ChangeLog-en.txt\"" >> lang.iss
+    echo "Name: \"en\"; MessagesFile: \"l10n_inno\\en.islu,..\\temp\\l10n_result\\en.islu\"; InfoBeforeFile: \"..\\temp\\changelogs\\ChangeLog-en.md\"" >> lang.iss
 
     for file in *.islu; do
         lang="${file%.*}"
@@ -103,7 +94,7 @@ prepare_languages()
             fi
 
             if [ -f "$XVMINST_ROOT_PATH/src/l10n_inno/$lang.islu" ]; then
-                echo "Name: \"$lang\"; MessagesFile: \"l10n_inno\\$lang.islu,..\\temp\\l10n_result\\$lang.islu\"; InfoBeforeFile: \"..\\temp\\changelogs\\ChangeLog-$langchg.txt\"" >> lang.iss
+                echo "Name: \"$lang\"; MessagesFile: \"l10n_inno\\$lang.islu,..\\temp\\l10n_result\\$lang.islu\"; InfoBeforeFile: \"..\\temp\\changelogs\\ChangeLog-$langchg.md\"" >> lang.iss
             fi
         fi
     done
@@ -117,7 +108,7 @@ build_run(){
 
     pushd "$XVMINST_ROOT_PATH"/src/ >/dev/null
 
-    $XVMBUILD_WINE_FILENAME "$XVMBUILD_ROOT_PATH/build/bin/Windows_i686/innosetup/ISCC.exe" "xvm.iss"
+    $XVMBUILD_WINE_FILENAME "$XVMBUILD_ROOT_PATH/build_lib/bin/Windows_i686/innosetup/ISCC.exe" "xvm.iss"
 
     popd >/dev/null
 }
@@ -125,16 +116,10 @@ build_run(){
 build_deploy(){
     pushd "$XVMINST_ROOT_PATH/" >/dev/null
 
-    mkdir -p ./output/"$XVMBUILD_XVM_BRANCH"/
-    mv ./output/setup_xvm.exe ./output/"$XVMBUILD_XVM_BRANCH"/latest_"$XVMBUILD_XVM_BRANCH"_xvm.exe
-    cp ./output/"$XVMBUILD_XVM_BRANCH"/latest_"$XVMBUILD_XVM_BRANCH"_xvm.exe ./output/"$XVMBUILD_XVM_BRANCH"/"$XVMBUILD_XVM_REVISION"_"$XVMBUILD_XVM_BRANCH"_xvm.exe
-
-    popd >/dev/null
-}
-
-build_sign(){
-    pushd "$XVMINST_ROOT_PATH/output" >/dev/null
-    sign_file ./setup_xvm.exe
+    mkdir -p ../../~output/installer
+    cp ./output/setup_xvm.exe ../../~output/installer/xvm_latest_"$REPOSITORY_BRANCH".exe
+    cp ./output/setup_xvm.exe ../../~output/installer/xvm_"$XVMBUILD_XVM_VERSION"_"$REPOSITORY_COMMITS_NUMBER"_"$REPOSITORY_BRANCH"_"$REPOSITORY_HASH".exe
+    rm ./output/setup_xvm.exe
     popd >/dev/null
 }
 
@@ -142,10 +127,10 @@ main(){
     detect_os
     detect_wine
     detect_wget
-    detect_mercurial
+    detect_git
     detect_unzip
 
-    load_repositorystats
+    git_get_repostats "$XVMINST_ROOT_PATH"
     extend_path
 
     clean_directories
@@ -156,11 +141,8 @@ main(){
 
     build_run
 
-    if [ "$XVMBUILD_SIGN" != "" ]; then
-        build_sign
-    fi
-
     build_deploy
+    clean_directories
 }
 
 main
