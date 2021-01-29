@@ -806,29 +806,6 @@
           }
         }
       },
-      "05repairTime": {
-        "name": "timer_repair_modules",
-        "description": "timer_repair_modules",
-        "checked": true,
-        "imageIfSelected": "repairTime_true.png",
-        "imageIfNotSelected": "repairTime_false.png",
-        "valueIfSelected": "",
-        "valueIfNotSelected": {
-          "rt_disabled": {
-            "configFileName": "battleLabelsTemplates.xc",
-            "value": {
-              "def": {
-                "repairTimeEngine": { "enabled": false },
-                "repairTimeGun": { "enabled": false },
-                "repairTimeTurret": { "enabled": false },
-                "repairTimeTracks": { "enabled": false },
-                "repairTimeSurveying": { "enabled": false },
-                "repairTimeRadio": { "enabled": false }
-              }
-            }
-          }
-        }
-      },
       "11hp_panel": {
         "name": "indicator_amount_HP_commands",
         "description": "indicator_amount_HP_commands",
@@ -1256,22 +1233,6 @@
           }
         }
       },
-      "1saveLastServer": {
-        "name": "save_last_server",
-        "description": "save_last_server",
-        "checked": false,
-        "imageIfSelected": "",
-        "imageIfNotSelected": "",
-        "valueIfSelected": {
-          "sls_enabled": {
-            "configFileName": "login.xc",
-            "value": {
-              "login": { "saveLastServer": true }
-            }
-          }
-        },
-        "valueIfNotSelected": ""
-      },
       "autologin": {
         "name": "automatic_login_to_game",
         "description": "automatic_login_to_game",
@@ -1352,22 +1313,6 @@
           }
         }
       },
-      "equipAutoReturn": {
-        "name": "equipment_auto_return",
-        "description": "equipment_auto_return",
-        "checked": false,
-        "imageIfSelected": "",
-        "imageIfNotSelected": "",
-        "valueIfSelected": {
-          "equipAutoReturnEnabled": {
-            "configFileName": "hangar.xc",
-            "value": {
-              "hangar": { "enableEquipAutoReturn": true }
-            }
-          }
-        },
-        "valueIfNotSelected": ""
-      },
       "crewAutoReturn": {
         "name": "crew_auto_return",
         "description": "crew_auto_return",
@@ -1383,6 +1328,22 @@
             }
           }
         }
+      },
+      "crewReturnByDefault": {
+        "name": "crew_return_default",
+        "description": "crew_return_default",
+        "checked": false,
+        "imageIfSelected": "",
+        "imageIfNotSelected": "",
+        "valueIfSelected":  {
+          "crewReturnByDefaultDisabled": {
+            "configFileName": "hangar.xc",
+            "value": {
+              "hangar": {"crewReturnByDefault": true}
+            }
+          }
+        },
+        "valueIfNotSelected": ""
       },
       "lockers": {
         "name": "lockers",

@@ -1,16 +1,16 @@
-from xvm_main.python.logger import *
-import xvm_main.python.config as config
-from xfw.events import registerEvent, overrideMethod
-
 import BigWorld
 from Account import PlayerAccount
 from Avatar import PlayerAvatar
 from gui.Scaleform.daapi.view.battle.shared.messages.fading_messages import FadingMessages
 from helpers.EdgeDetectColorController import g_instance
 
+import xvm_main.python.config as config
+from xfw.events import registerEvent, overrideMethod
+from xvm_main.python.logger import *
 
 isSquad = False
 isTeamKill = False
+
 
 def toHTMLColor(color):
     return '#{}'.format(color[2:]) if color[:2] == '0x' else color
@@ -79,4 +79,3 @@ def PlayerAvatar_targetFocus(self, entity):
         isTeamKill = getArenaDP.isTeamKiller(vID=entity.id)
         if (prev_isSquad != isSquad) or (prev_isTeamKill != isTeamKill):
             g_instance.updateColors()
-
