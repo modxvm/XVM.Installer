@@ -217,7 +217,7 @@
           }
         }
       },
-      "13sixthSense": {
+      "15sixthSense": {
         "name": "images_for_sixth_sense",
         "itemType": "group",
         "children": {
@@ -300,7 +300,7 @@
           }
         }
       },
-      "14durationSixthSense": {
+      "16durationSixthSense": {
         "name": "sixth_sense_timer",
         "description": "sixth_sense_timer",
         "checked": false,
@@ -631,7 +631,7 @@
           }
         }
       },
-      "12fragCorrelation": {
+      "14fragCorrelation": {
         "name": "display_live",
         "description": "display_live",
         "checked": false,
@@ -809,60 +809,58 @@
       "11hp_panel": {
         "name": "indicator_amount_HP_commands",
         "description": "indicator_amount_HP_commands",
-        "checked": true,
+        "checked": false,
         "imageIfSelected": "hp_panel_true.png",
         "imageIfNotSelected": "hp_panel_false.png",
-        "valueIfSelected": "",
-        "valueIfNotSelected": {
-          "hppl_disabled": {
+        "valueIfSelected": {
+          "hppl_enabled": {
             "configFileName": "battleLabelsTemplates.xc",
             "value": {
               "def": {
-                "totalHP": { "enabled": false }
+                "totalHP": { "enabled": true }
               }
             }
           }
         },
-        "children": {
-          "avgDamage": {
-            "name": "average_damage_on_current_vehicle",
-            "description": "average_damage_on_current_vehicle",
-            "checked": true,
-            "imageIfSelected": "avgDamage_true.png",
-            "imageIfNotSelected": "avgDamage_false.png",
-            "valueIfSelected": "",
-            "valueIfNotSelected": {
-              "avgDamage_disabled": {
-                "configFileName": "battleLabelsTemplates.xc",
-                "value": {
-                  "def": {
-                    "avgDamage": { "enabled": false }
-                  }
-                }
-              }
-            }
-          },
-          "mainGun": {
-            "name": "damage_to_main_caliber",
-            "description": "damage_to_main_caliber",
-            "checked": true,
-            "imageIfSelected": "mainGun_true.png",
-            "imageIfNotSelected": "mainGun_false.png",
-            "valueIfSelected": "",
-            "valueIfNotSelected": {
-              "mainGun_disabled": {
-                "configFileName": "battleLabelsTemplates.xc",
-                "value": {
-                  "def": {
-                    "mainGun": { "enabled": false }
-                  }
-                }
+        "valueIfNotSelected": ""
+      },
+      "12avgDamage": {
+        "name": "average_damage_on_current_vehicle",
+        "description": "average_damage_on_current_vehicle",
+        "checked": true,
+        "imageIfSelected": "avgDamage_true.png",
+        "imageIfNotSelected": "avgDamage_false.png",
+        "valueIfSelected": "",
+        "valueIfNotSelected": {
+          "avgDamage_disabled": {
+            "configFileName": "battleLabelsTemplates.xc",
+            "value": {
+              "def": {
+                "avgDamage": { "enabled": false }
               }
             }
           }
         }
       },
-      "15postmortemTips": {
+      "13mainGun": {
+        "name": "damage_to_main_caliber",
+        "description": "damage_to_main_caliber",
+        "checked": true,
+        "imageIfSelected": "mainGun_true.png",
+        "imageIfNotSelected": "mainGun_false.png",
+        "valueIfSelected": "",
+        "valueIfNotSelected": {
+          "mainGun_disabled": {
+            "configFileName": "battleLabelsTemplates.xc",
+            "value": {
+              "def": {
+                "mainGun": { "enabled": false }
+              }
+            }
+          }
+        }
+      },
+      "17postmortemTips": {
         "name": "panel_after_death",
         "description": "panel_after_death",
         "checked": true,
@@ -1032,7 +1030,7 @@
           }
         }
       },
-      "16mirroredVehicleIcons": {
+      "18mirroredVehicleIcons": {
         "name": "mirror_vehicle_icons",
         "description": "mirror_vehicle_icons",
         "checked": true,
