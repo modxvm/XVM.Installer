@@ -971,26 +971,6 @@
                 }
               }
             }
-          },
-          "noCameraLimit": {
-            "name": "camera_rotation_limit",
-            "description": "camera_rotation_limit",
-            "checked": true,
-            "imageIfSelected": "",
-            "imageIfNotSelected": "",
-            "valueIfSelected": "",
-            "valueIfNotSelected": {
-              "ncl_enabled": {
-                "configFileName": "camera.xc",
-                "value": {
-                  "camera": {
-                    "sniper": {
-                      "noCameraLimit": { "enabled": true }
-                    }
-                  }
-                }
-              }
-            }
           }
         }
       },
