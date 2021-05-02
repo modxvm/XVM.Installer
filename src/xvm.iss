@@ -56,7 +56,7 @@ Source: "{app}\res_mods\configs\*"; DestDir: "{app}\xvm_backup\configs"; Tasks: 
 ;Source: "..\..\..\~output\readme*.*"; DestDir: "{app}"; Components: XVM
 
 ;installer libs
-Source: "dll\xvmextensions.x86_32.dll"; Flags: dontcopy;
+Source: "dll\xvmextensions.x86_32.dll"; DestName: xvmextensions.dll; Flags: dontcopy;
 Source: "dll\bass.dll"; Flags: dontcopy;
 Source: "dll\unmerg_f.dll"; Flags: dontcopy;
 
@@ -147,14 +147,24 @@ begin
     for Index := 0 to ClientsCount - 1 do
     begin
       WOT_GetClientVersionW(Buffer, 1024, Index);
-      Str:=Copy(Buffer, 0, Pos(#0, Buffer));
+      Str := Copy(Buffer, 0, Pos(#0, Buffer));
+
+      Insert(' [', Str, Pos(#0, Str));
+
+      case WOT_GetClientWgcFlavour(Index) of
+         1: Insert('WG/', Str, Pos(#0, Str));
+         2: Insert('360/', Str, Pos(#0, Str));
+         3: Insert('Steam/', Str, Pos(#0, Str));
+      end;
 
       case WOT_GetClientBranch(Index) of
-        1: Insert(' Release: ', Str, Pos(#0, Str));
-        2: Insert(' Common Test: ', Str, Pos(#0, Str));
-        3: Insert(' Super Test: ', Str, Pos(#0, Str));
-        4: Insert(' Sandbox: ', Str, Pos(#0, Str));
+         1: Insert('Release', Str, Pos(#0, Str));
+         2: Insert('CT', Str, Pos(#0, Str));
+         3: Insert('ST', Str, Pos(#0, Str));
+         4: Insert('SB', Str, Pos(#0, Str));
       end;
+
+      Insert('] - ', Str, Pos(#0, Str));
 
       WOT_GetClientPathW(Buffer, 1024, Index);
       Insert(Buffer, Str, Pos(#0, Str));
@@ -184,7 +194,7 @@ begin
     WotList.ItemIndex := Index;
   end else
   begin
-    MsgBox( ExpandConstant('{cm:wotNotFound}'), mbError, MB_OK);
+    MsgBox(ExpandConstant('{cm:wotNotFound}'), mbError, MB_OK);
     WotList.ItemIndex := -1;
   end;
 end;
@@ -224,6 +234,12 @@ begin
   WotList.Parent := WizardForm.DirEdit.Parent;
   WotList.Style := csDropDownList;
   WotList.OnChange := @WotList_OnChange;
+  WotList.SetBounds(
+    WizardForm.DirEdit.Left,
+    WizardForm.DirEdit.Top,
+    WizardForm.DirBrowseButton.Left + WizardForm.DirBrowseButton.Width,
+    WizardForm.DirEdit.Height
+  );
 
   WotList_Update();
 end;
@@ -236,12 +252,7 @@ begin
     begin
       WotList.ItemIndex := 0;
     end;
-      WotList.SetBounds(
-        WizardForm.DirEdit.Left,
-        WizardForm.DirEdit.Top,
-        WizardForm.DirBrowseButton.Left + WizardForm.DirBrowseButton.Width - WizardForm.DirEdit.Left,
-        WizardForm.DirEdit.Height
-      );
+
     WotList.OnChange(nil);
   end;
   if (CurPage = wpSelectComponents) then
