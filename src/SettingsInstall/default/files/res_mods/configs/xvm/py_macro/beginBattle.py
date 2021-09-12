@@ -9,8 +9,8 @@ from xvm_main.python.logger import *
 battleBegin = None
 
 
-@registerEvent(Vehicle, 'onEnterWorld')
-def Vehicle_onEnterWorld(self, prereqs):
+@registerEvent(Vehicle, '_Vehicle__onAppearanceReady')
+def _Vehicle__onAppearanceReady(self, appearance):
     global battleBegin
     if self.isPlayerVehicle:
         arenaPeriod = BigWorld.player().guiSessionProvider.shared.arenaPeriod

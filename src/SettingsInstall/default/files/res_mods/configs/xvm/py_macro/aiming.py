@@ -29,8 +29,8 @@ def AvatarInputHandler_onControlModeChanged(self, eMode, **args):
         as_event('ON_AIMING')
 
 
-@registerEvent(Vehicle, 'onEnterWorld')
-def aiming_onEnterWorld(self, prereqs):
+@registerEvent(Vehicle, '_Vehicle__onAppearanceReady')
+def _Vehicle__onAppearanceReady(self, appearance):
     if self.isPlayerVehicle and config.get('sight/enabled', True) and battle.isBattleTypeSupported:
         global timeAIM, visible
         visible = True

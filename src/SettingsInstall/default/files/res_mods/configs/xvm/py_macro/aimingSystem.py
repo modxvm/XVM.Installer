@@ -43,8 +43,6 @@ def AvatarInputHandler_onControlModeChanged(self, eMode, **args):
                 aimMode = STRATEGIC_MODE
             else:
                 aimMode = None
-        else:
-            aimMode = ARCADE_MODE
         if oldAimMMode != aimMode:
             as_event('ON_AIM_MODE')
 
@@ -60,7 +58,7 @@ def InterfaceScaleSetting_setSystemValue(self, value):
 @registerEvent(PlayerAvatar, 'onEnterWorld')
 def Vehicle_onEnterWorld(self, prereqs):
     global y, aimMode
-    if battle.isBattleTypeSupported:
+    if battle.isBattleTypeSupported and self.isVehicleAlive:
         y = - BigWorld.screenHeight() * SHIFT
         aimMode = ARCADE_MODE
         as_event('ON_AIM_MODE')

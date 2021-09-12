@@ -47,8 +47,8 @@ def PlayerAvatar_updateVehicleHealth(self, vehicleID, health, deathReasonID, isC
         as_event('ON_MARKER_POSITION')
 
 
-@registerEvent(Vehicle, 'onEnterWorld')
-def Vehicle_onEnterWorld(self, prereqs):
+@registerEvent(Vehicle, '_Vehicle__onAppearanceReady')
+def _Vehicle__onAppearanceReady(self, appearance):
     if self.isPlayerVehicle and config.get('sight/enabled', True) and battle.isBattleTypeSupported:
         global currentDistance, timeFlight, cameraHeight, visible
         currentDistance = None
