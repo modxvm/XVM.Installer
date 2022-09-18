@@ -73,6 +73,7 @@ color_scheme=Цветовая схема
 color_blindness=Цветовая слепота
 sounds=Звуки
 sixth_sense=Шестое чувство
+health_bar_slim=Тонкие полоски ХП
 
 ; В секции DescriptionLabel для переноса строк можно использовать экранированную последовательность \n
 [DescriptionLabel]
@@ -146,3 +147,4 @@ color_scheme=
 color_blindness=При выборе данного пункта, также рекомендуется включить в настройках игры опцию "Режим цветовой слепоты" на вкладке "Графика".
 sounds=
 sixth_sense=
+health_bar_slim=

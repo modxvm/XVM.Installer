@@ -73,6 +73,7 @@ color_scheme=Color scheme
 color_blindness=Color blindness
 sounds=Sounds
 sixth_sense=Sixth Sense
+health_bar_slim=Thin bars of health
 
 [DescriptionLabel]
 battle_interface=Battle interface
@@ -148,3 +149,4 @@ color_scheme=Color scheme
 color_blindness=Color blindness
 sounds=Sounds
 sixth_sense=Sixth Sense
+health_bar_slim=

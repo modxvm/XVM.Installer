@@ -1007,6 +1007,55 @@
               }
             },
             "valueIfNotSelected": ""
+          },
+          "health_bar_slim": {
+            "name": "health_bar_slim",
+            "description": "marker_stars",
+            "checked": false,
+            "imageIfSelected": "health_bar_slim_true.png",
+            "imageIfNotSelected": "health_bar_slim_false.png",
+            "valueIfSelected":  {
+              "marker_stars_true": {
+                "configFileName": "markersAliveNormal.xc",
+                "value": {
+                  "ally": {
+										"healthBar": {
+											"enabled": true,
+											"x": -36,
+											"y": -33,
+											"alpha": 200,
+											"color": null,
+											"lcolor": null,
+											"width": 70,
+											"height": 6,
+											"border": {"alpha": 16,	"color": "0x000000", "size": 1},
+											"fill": {"alpha": 50},
+											"damage": {"alpha": 100, "color": "{{c:dmg}}", "fade": 1}
+										}
+									},
+									"enemy": {
+										"healthBar": {
+											"enabled": true,
+											"x": -36,
+											"y": -33,
+											"alpha": 200,
+											"color": null,
+											"lcolor": null,
+											"width": 70,
+											"height": 6,
+											"border": {"alpha": 16,	"color": "0x000000", "size": 1},
+											"fill": {	"alpha": 50},
+											"damage": {"alpha": 100, "color": "{{c:dmg}}", "fade": 1}
+										}
+									},
+									"def": {
+										"rating" : {"textFormat" : {"size" : 11}},
+										"tankHp" : {"y" : -13}
+									}
+                }
+              }
+            },
+            "valueIfNotSelected": ""
           }
         }
       },

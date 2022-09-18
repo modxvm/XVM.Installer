@@ -2,7 +2,7 @@ import BigWorld
 from Account import PlayerAccount
 from Avatar import PlayerAvatar
 from gui.Scaleform.daapi.view.battle.shared.messages.fading_messages import FadingMessages
-from helpers.EdgeDetectColorController import g_instance
+from helpers.EdgeDetectColorController import g_instance, _OVERLAY_TARGET_INDEXES
 
 import xvm_main.python.config as config
 from xfw.events import registerEvent, overrideMethod
@@ -60,7 +60,14 @@ def __changeColor(base, diff):
                  enemy,
                  friend,
                  colors['flag'])
-    BigWorld.wgSetEdgeDetectColors(colorsSet)
+    i = 0
+    for c in colorsSet:
+        BigWorld.wgSetEdgeDetectEdgeColor(i, c)
+        i += 1
+
+    for target, idx in _OVERLAY_TARGET_INDEXES.iteritems():
+        BigWorld.wgSetEdgeDetectSolidColors(idx, *colors['overlaySolidColors'][target]['packed'])
+        BigWorld.wgSetEdgeDetectPatternColors(idx, *colors['overlayPatternColors'][target]['packed'])
 
 
 @registerEvent(PlayerAvatar, 'onEnterWorld')
