@@ -56,7 +56,6 @@ Source: "{app}\res_mods\configs\*"; DestDir: "{app}\xvm_backup\configs"; Tasks: 
 ;Source: "..\..\..\~output\readme*.*"; DestDir: "{app}"; Components: XVM
 
 ;installer libs
-Source: "dll\xvmextensions.x86_32.dll"; DestName: xvmextensions.dll; Flags: dontcopy;
 Source: "dll\bass.dll"; Flags: dontcopy;
 Source: "dll\unmerg_f.dll"; Flags: dontcopy;
 
@@ -151,10 +150,11 @@ begin
 
       Insert(' [', Str, Pos(#0, Str));
 
-      case WOT_GetClientWgcFlavour(Index) of
+      case WOT_GetClientLauncherFlavour(Index) of
          1: Insert('WG/', Str, Pos(#0, Str));
          2: Insert('360/', Str, Pos(#0, Str));
          3: Insert('Steam/', Str, Pos(#0, Str));
+         4: Insert('Lesta/', Str, Pos(#0, Str));
       end;
 
       case WOT_GetClientBranch(Index) of
