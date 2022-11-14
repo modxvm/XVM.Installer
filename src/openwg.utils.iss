@@ -11,16 +11,15 @@
 #define OPENWGUTILS_DIR_UNINST "."
 #endif
 
-
 [Files]
 Source: "{#OPENWGUTILS_DIR_SRC}\openwg.utils.x86_32.dll"; DestName: openwg.utils.dll; Flags: ignoreversion dontcopy noencryption;
 Source: "{#OPENWGUTILS_DIR_SRC}\openwg.utils.x86_32.dll"; DestDir: {app}\{#OPENWGUTILS_DIR_UNINST}; DestName: openwg.utils.dll; Flags: ignoreversion noencryption;
 
 [CustomMessages]
-en.openwg_browse=Browse
-ru.openwg_browse=Обзор
-en.openwg_client_not_found=Client was not found in a specified directory
-ru.openwg_client_not_found=Клиент не был найден в указанной директории
+en.openwg_browse=Browse...
+ru.openwg_browse=Обзор...
+en.openwg_client_not_found=The game client was not detected in the specified folder.
+ru.openwg_client_not_found=В указанной папке клиент игры не был обнаружен.
 en.openwg_unknown=Unknown
 ru.openwg_unknown=Неизвестно
 en.openwg_branch_release=Release
@@ -33,6 +32,24 @@ en.openwg_branch_sb=Sandbox
 ru.openwg_branch_sb=Песочница
 
 [Code]
+
+//
+// Typedefs
+//
+
+type
+  ClientRecord = Record
+    Index: Integer;
+    LauncherFlavour: Integer;
+    Branch: Integer;
+    Realm: String;
+    Version: String;
+    Path: String;
+    PathMods: String;
+    PathResmods: String;
+  end;
+
+
 
 //
 // DLL
@@ -119,7 +136,7 @@ begin
 end;
 
 
-// JSON/JSON_GetNamesAndValuesW
+// JSON/GetNamesAndValuesW
 procedure JSON_GetNamesAndValuesW_I(FileFullName: String; Path: String; BufNames: String; BufValues: String; BufferSize: Integer);
 external 'JSON_GetNamesAndValuesW@files:openwg.utils.dll cdecl setuponly';
 
@@ -135,7 +152,7 @@ begin
 end;
 
 
-// JSON/JSON_GetNamesAndValuesW
+// JSON/GetNamesAndValuesW_S
 procedure JSON_GetNamesAndValuesW_S_I(StrJSON: String; BufNames: String; BufValues: String; BufferSize: Integer);
 external 'JSON_GetNamesAndValuesW_S@files:openwg.utils.dll cdecl setuponly';
 
@@ -151,7 +168,7 @@ begin
 end;
 
 
-// JSON/JSON_GetNamesAndValuesW
+// JSON/GetArrayValueW_S_I
 procedure JSON_GetArrayValueW_S_I(StrJSON: String; BufValues: String; BufferSize: Integer);
 external 'JSON_GetArrayValueW_S@files:openwg.utils.dll cdecl setuponly';
 
@@ -305,9 +322,9 @@ external 'WOT_LauncherSetDefault@{app}\{#OPENWGUTILS_DIR_UNINST}\openwg.utils.dl
 function WOT_LauncherSetDefault(LauncherFlavour: Integer): Integer;
 begin
     if IsUninstaller() then
-        Result := WOT_LauncherGetPreferredClient_U(LauncherFlavour)
+        Result := WOT_LauncherSetDefault_U(LauncherFlavour)
     else
-        Result := WOT_LauncherGetPreferredClient_I(LauncherFlavour)
+        Result := WOT_LauncherSetDefault_I(LauncherFlavour)
 end;
 
 
@@ -324,6 +341,21 @@ begin
         Result := WOT_ClientIsStarted_U(ClientIndex)
     else
         Result := WOT_ClientIsStarted_I(ClientIndex)
+end;
+
+
+function WOT_ClientIsVersionMatch_I(ClientIndex: Integer; VersionPattern: String): Integer;
+external 'WOT_ClientIsVersionMatch@files:openwg.utils.dll cdecl setuponly';
+
+function WOT_ClientIsVersionMatch_U(ClientIndex: Integer; VersionPattern: String): Integer;
+external 'WOT_ClientIsVersionMatch@{app}\{#OPENWGUTILS_DIR_UNINST}\openwg.utils.dll cdecl uninstallonly';
+
+function WOT_ClientIsVersionMatch(ClientIndex: Integer; VersionPattern: String): Boolean;
+begin
+    if IsUninstaller() then
+        Result := WOT_ClientIsVersionMatch_U(ClientIndex, VersionPattern) = 1
+    else
+        Result := WOT_ClientIsVersionMatch_I(ClientIndex, VersionPattern) = 1
 end;
 
 
@@ -423,6 +455,38 @@ begin
 end;
 
 
+// WOT/GetClientPathModsW
+procedure WOT_GetClientPathModsW_I(Buffer: String; BufferSize: Integer; ClientIndex: Integer);
+external 'WOT_GetClientPathModsW@files:openwg.utils.dll cdecl setuponly';
+
+procedure WOT_GetClientPathModsW_U(Buffer: String; BufferSize: Integer; ClientIndex: Integer);
+external 'WOT_GetClientPathModsW@{app}\{#OPENWGUTILS_DIR_UNINST}\openwg.utils.dll cdecl uninstallonly';
+
+procedure WOT_GetClientPathModsW(Buffer: String; BufferSize: Integer; ClientIndex: Integer);
+begin
+    if IsUninstaller() then
+        WOT_GetClientPathModsW_U(Buffer, BufferSize, ClientIndex)
+    else
+        WOT_GetClientPathModsW_I(Buffer, BufferSize, ClientIndex)
+end;
+
+
+// WOT/GetClientPathResmodsW
+procedure WOT_GetClientPathResmodsW_I(Buffer: String; BufferSize: Integer; ClientIndex: Integer);
+external 'WOT_GetClientPathResmodsW@files:openwg.utils.dll cdecl setuponly';
+
+procedure WOT_GetClientPathResmodsW_U(Buffer: String; BufferSize: Integer; ClientIndex: Integer);
+external 'WOT_GetClientPathResmodsW@{app}\{#OPENWGUTILS_DIR_UNINST}\openwg.utils.dll cdecl uninstallonly';
+
+procedure WOT_GetClientPathResmodsW(Buffer: String; BufferSize: Integer; ClientIndex: Integer);
+begin
+    if IsUninstaller() then
+        WOT_GetClientPathResmodsW_U(Buffer, BufferSize, ClientIndex)
+    else
+        WOT_GetClientPathResmodsW_I(Buffer, BufferSize, ClientIndex)
+end;
+
+
 // WOT/GetClientRealmW
 procedure WOT_GetClientRealmW_I(Buffer: String; BufferSize: Integer; ClientIndex: Integer);
 external 'WOT_GetClientRealmW@files:openwg.utils.dll cdecl setuponly';
@@ -492,6 +556,67 @@ end;
 // HELPERS
 //
 
+function CLIENT_GetRecord(Index: Integer): ClientRecord;
+var
+  Buffer: String;
+
+begin
+  SetLength(Buffer, 1024);
+
+  Result.Index := Index;
+
+  Result.LauncherFlavour := WOT_GetClientLauncherFlavour(Index);
+
+  Result.Branch := WOT_GetClientBranch(Index);
+
+  WOT_GetClientRealmW(Buffer, 1024, Index);
+  Result.Realm := Copy(Buffer, 1, Pos(#0, Buffer)-1);
+
+  WOT_GetClientVersionW(Buffer, 1024, Index);
+  Result.Version := Copy(Buffer, 1, Pos(#0, Buffer)-1);
+
+  WOT_GetClientPathW(Buffer, 1024, Index);
+  Result.Path := Copy(Buffer, 1, Pos(#0, Buffer)-1);
+
+  WOT_GetClientPathModsW(Buffer, 1024, Index);
+  Result.PathMods := Copy(Buffer, 1, Pos(#0, Buffer)-1);
+
+  WOT_GetClientPathResmodsW(Buffer, 1024, Index);
+  Result.PathResmods := Copy(Buffer, 1, Pos(#0, Buffer)-1);
+end;
+
+
+function CLIENT_FormatString(Client: ClientRecord): String;
+begin
+  Result := Client.Version;
+  Result := Result + ' [';
+
+  case Client.LauncherFlavour of
+     0: Result := Result + ExpandConstant('{cm:openwg_unknown');
+     1: Result := Result + 'WG';
+     2: Result := Result + '360';
+     3: Result := Result + 'Steam';
+     4: Result := Result + 'Lesta';
+     5: Result := Result + 'Standalone';
+  end;
+
+  case Client.Branch of
+     0: Result := Result + ExpandConstant('/{cm:openwg_unknown}');
+     1: begin
+          if Client.LauncherFlavour = 1 then
+          begin
+            Result := Result + '/' + Client.Realm;
+          end;
+        end;
+     2: Result := Result + ExpandConstant('/{cm:openwg_branch_ct}');
+     3: Result := Result + ExpandConstant('/{cm:openwg_branch_st}');
+     4: Result := Result + ExpandConstant('/{cm:openwg_branch_sb}');
+  end;
+
+  Result := Result + '] - ' + Client.Path;
+end;
+
+
 function STRING_Split(const Value: string; Delimiter: Char): TStringList;
 var
     S: string;
@@ -530,6 +655,7 @@ var
   Buffer: String;
   ClientsCount, Index, ListIndex: Integer;
   Str: String;
+  Client: ClientRecord;
 begin
   SetLength(Buffer, 1024);
 
@@ -542,35 +668,8 @@ begin
   begin
     for Index := 0 to ClientsCount - 1 do
     begin
-      WOT_GetClientVersionW(Buffer, 1024, Index);
-      Str := Copy(Buffer, 0, Pos(#0, Buffer));
-
-      Insert(' [', Str, Pos(#0, Str));
-
-      case WOT_GetClientLauncherFlavour(Index) of
-         0: Insert(ExpandConstant('{cm:openwg_unknown'), Str, Pos(#0, Str));
-         1: Insert('WG', Str, Pos(#0, Str));
-         2: Insert('360', Str, Pos(#0, Str));
-         3: Insert('Steam', Str, Pos(#0, Str));
-         4: Insert('Lesta', Str, Pos(#0, Str));
-         5: Insert('Standalone', Str, Pos(#0, Str));  
-      end;
-
-      Insert('/', Str, Pos(#0, Str))
-
-      case WOT_GetClientBranch(Index) of
-         0: Insert(ExpandConstant('{cm:openwg_unknown}'), Str, Pos(#0, Str));
-         1: Insert(ExpandConstant('{cm:openwg_branch_release}'), Str, Pos(#0, Str));
-         2: Insert(ExpandConstant('{cm:openwg_branch_ct}'), Str, Pos(#0, Str));
-         3: Insert(ExpandConstant('{cm:openwg_branch_st}'), Str, Pos(#0, Str));
-         4: Insert(ExpandConstant('{cm:openwg_branch_sb}'), Str, Pos(#0, Str));
-      end;
-
-      Insert('] - ', Str, Pos(#0, Str));
-
-      WOT_GetClientPathW(Buffer, 1024, Index);
-      Insert(Buffer, Str, Pos(#0, Str));
-
+      Client := CLIENT_GetRecord(Index);
+      Str := CLIENT_FormatString(Client);
       List.Items.Add(Str);
     end;
   end;
@@ -598,7 +697,7 @@ begin
   end else
   begin
     MsgBox(ExpandConstant('{cm:openwg_client_not_found}'), mbError, MB_OK);
-    List.ItemIndex := -1;
+    List.ItemIndex := 0;
   end;
 end;
 
@@ -637,7 +736,13 @@ begin;
 end;
 
 
-function WotList_Selected_Lesta(List: TNewComboBox): Boolean;
+function WotList_Selected_Record(List: TNewComboBox): ClientRecord;
 begin;
-  Result := WOT_GetClientLauncherFlavour(List.ItemIndex) = 4;
+  Result := CLIENT_GetRecord(List.ItemIndex);
+end;
+
+
+function WotList_Selected_VersionMatch(List: TNewComboBox; VersionPattern: String): Boolean;
+begin;
+  Result := WOT_ClientIsVersionMatch(List.ItemIndex, VersionPattern);
 end;
