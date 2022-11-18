@@ -1,3 +1,6 @@
+#define APP_WEBSITE    "https://modxvm.com/"
+#define APP_DIR_UNINST "xvm_uninst"
+
 #include "openwg.utils.iss"
 #include "..\temp\defines\xvm_defines.iss"
 #include "..\temp\l10n_result\lang.iss"
@@ -6,13 +9,13 @@
 #include "configuration_settings.iss"
 
 [Setup]
-AppCopyright    = "2021 (c) XVM Team"
+AppCopyright    = "2022 (c) XVM Team"
 AppId           = {{2865cd27-6b8b-4413-8272-cd968f316050}
 AppName         = "XVM"
 AppPublisher    = "XVM Team"
-AppPublisherURL = "https://modxvm.com/"
-AppSupportURL   = "https://modxvm.com/"
-AppUpdatesURL   = "https://modxvm.com/"
+AppPublisherURL = {#APP_WEBSITE}
+AppSupportURL   = {#APP_WEBSITE}
+AppUpdatesURL   = {#APP_WEBSITE}
 AppVersion      = {#VersionXVM}
 
 WizardImageFile      = images\big_image.bmp
@@ -36,7 +39,7 @@ DisableDirPage=false
 OutputDir=..\output
 OutputBaseFilename=setup_xvm_v2
 
-UninstallFilesDir={app}\xvm_uninst
+UninstallFilesDir={app}\{#APP_DIR_UNINST}
 
 DefaultDirName=C:\
 
@@ -48,7 +51,7 @@ WizardStyle=modern
 Name: "xvmbackup"; Description: "{cm:backupXVM}"; Flags: unchecked;
 
 [Run]
-Filename: https://modxvm.com/; Description: "{cm:websiteXVM}"; Flags: postinstall nowait shellexec;
+Filename: {#APP_WEBSITE}; Description: "{cm:websiteXVM}"; Flags: postinstall nowait shellexec;
 
 [Components]
 ;Name: "XVM"; Description: "{cm:component_XVM}"; Types: full compact custom; Flags: fixed;
@@ -97,7 +100,7 @@ Type: dirifempty; Name: "{app}\res_mods\configs\xvm\py_macro\"
 Type: dirifempty; Name: "{app}\res_mods\configs\xvm\"
 Type: dirifempty; Name: "{app}\res_mods\configs\"
 
-Type: filesandordirs; Name: "{app}\xvm_uninst"
+Type: filesandordirs; Name: "{app}\{#APP_DIR_UNINST}"
 ;Type: files; Name: "{app}\readme-*.txt"
 
 [UninstallDelete]
@@ -130,7 +133,7 @@ Type: dirifempty; Name: "{app}\res_mods\configs\xvm\py_macro\"
 Type: dirifempty; Name: "{app}\res_mods\configs\xvm\"
 Type: dirifempty; Name: "{app}\res_mods\configs\"
 
-Type: filesandordirs; Name: "{app}\xvm_uninst"
+Type: filesandordirs; Name: "{app}\{#APP_DIR_UNINST}"
 Type: files; Name: "{app}\readme-*.txt"
 
 [Code]
@@ -178,7 +181,7 @@ end;
 
 procedure CurPageChanged_wpSelectDir();
 begin
-  if WotList.ItemIndex = -1 then
+  if (WotList.ItemIndex = -1) and (WotList.Items.Count > 1) then
   begin
     WotList.ItemIndex := 0;
   end;
@@ -189,14 +192,11 @@ end;
 
 procedure CurPageChanged(CurPage: Integer);
 begin
-  if (CurPage = wpSelectDir) then
-  begin
-    CurPageChanged_wpSelectDir();
-  end;
-  if (CurPage = wpSelectComponents) then
-    AddButtonSelectComponent();
-  if (CurPage = wpFinished) then
-    ApplySettings();
+  case CurPage of
+    wpSelectDir:        CurPageChanged_wpSelectDir();
+    wpSelectComponents: AddButtonSelectComponent();
+    wpFinished:         ApplySettings();
+  end
 end;
 
 
@@ -220,8 +220,7 @@ function NextButtonClick(CurPage: Integer): Boolean;
 begin
   Result := True;
 
-  if (CurPage = wpSelectDir) then
-  begin
-    Result := NextButtonClick_wpSelectDir();
+  case CurPage of
+    wpSelectDir: Result := NextButtonClick_wpSelectDir();
   end;
 end;
