@@ -20,13 +20,13 @@ def toHTMLColor(color):
 def _populate(self):
     ally_dead = toHTMLColor(config.get('colors/system/ally_dead', None))
     enemy_dead = toHTMLColor(config.get('colors/system/enemy_dead', None))
-    for k, v in self._messages.iteritems():
+    for k, v in self._FadingMessages__messages.iteritems():
         if k[:6] == 'DEATH_':
             message, colors = v
             if ('red' in colors) and (ally_dead is not None):
-                self._messages[k] = "<font color='{}'>{}</font>".format(enemy_dead, message), colors
+                self._FadingMessages__messages[k] = "<font color='{}'>{}</font>".format(enemy_dead, message), colors
             elif ('green' in colors) and (enemy_dead is not None):
-                self._messages[k] = "<font color='{}'>{}</font>".format(ally_dead, message), colors
+                self._FadingMessages__messages[k] = "<font color='{}'>{}</font>".format(ally_dead, message), colors
 
 
 def colorVector(color, default):
