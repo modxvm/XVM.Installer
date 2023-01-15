@@ -136,6 +136,10 @@ Type: dirifempty; Name: "{app}\res_mods\configs\"
 Type: filesandordirs; Name: "{app}\{#APP_DIR_UNINST}"
 Type: files; Name: "{app}\readme-*.txt"
 
+[CustomMessages]
+en.client_started=The selected client is running.%n%nDo you want to terminate the selected client?
+ru.client_started=Выбранный клиент запущен.%n%nЖелаете ли вы закрыть выбранный клиент?
+
 [Code]
 
 //
@@ -302,12 +306,12 @@ begin
   Result := True;
 
   // check for version
-//   if not WotList_Selected_VersionMatch(WotList, '{#WOT_VERSION_PATTERN}') then
-//   begin
-//     MsgBox(ExpandConstant('{cm:version_not_match}'), mbError, MB_OK);
-//     Result := False;
-//     Exit;
-//   end;
+//    if not WotList_Selected_VersionMatch(WotList, '{#WOT_VERSION_PATTERN}') then
+//    begin
+//      MsgBox(ExpandConstant('{cm:version_not_match}'), mbError, MB_OK);
+//      Result := False;
+//      Exit;
+//    end;
 
   // check for running client
   if WotList_Selected_IsStarted(WotList) then
