@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: MIT
+// Copyright (c) 2017-2023 XVM Contributors
+
 #define APP_WEBSITE    "https://modxvm.com/"
 #define APP_DIR_UNINST "xvm_uninst"
 
@@ -61,15 +64,19 @@ Filename: {#APP_WEBSITE}; Description: "{cm:websiteXVM}"; Flags: postinstall now
 Source: "{app}\res_mods\configs\*"; DestDir: "{app}\xvm_backup\configs"; Tasks: xvmbackup; Flags: external skipifsourcedoesntexist createallsubdirs recursesubdirs uninsneveruninstall;
 ;Source: "{app}\res_mods\mods\shared_resources\xvm\res\*"; DestDir: "{app}\xvm_backup\mods\shared_resources\xvm\res"; Tasks: xvmbackup; Flags: external skipifsourcedoesntexist createallsubdirs recursesubdirs uninsneveruninstall;
 
-;xvm
-;Source: "..\..\..\~output\mods\*"; DestDir: "{app}\mods"; Flags: createallsubdirs recursesubdirs; Components: XVM
-;Source: "..\..\..\~output\res_mods\*"; DestDir: "{app}\res_mods"; Flags: createallsubdirs recursesubdirs; Components: XVM
-;Source: "..\..\..\~output\readme*.*"; DestDir: "{app}"; Components: XVM
+;xvm/WG
+;Source: "xvm\wg\mods\*"    ; DestDir: "{app}\mods"    ; Check: not CHECK_IsLesta; Flags: createallsubdirs recursesubdirs;
+;Source: "xvm\wg\res_mods\*"; DestDir: "{app}\res_mods"; Check: not CHECK_IsLesta; Flags: createallsubdirs recursesubdirs; 
+;Source: "xvm\wg\readme*.*" ; DestDir: "{app}"         ; Check: not CHECK_IsLesta;                                     
+
+;xvm/Lesta
+;Source: "xvm\lesta\mods\*"    ; DestDir: "{app}\mods"    ; Check: CHECK_IsLesta; Flags: createallsubdirs recursesubdirs;
+;Source: "xvm\lesta\res_mods\*"; DestDir: "{app}\res_mods"; Check: CHECK_IsLesta; Flags: createallsubdirs recursesubdirs; 
+;Source: "xvm\lesta\readme*.*" ; DestDir: "{app}"         ; Check: CHECK_IsLesta;                                     
 
 ;installer libs
 Source: "dll\bass.dll"; Flags: dontcopy;
 Source: "dll\unmerg_f.dll"; Flags: dontcopy;
-
 
 [InstallDelete]
 ;mods\ver\com.modxvm.xfw\*.wotmod
@@ -79,10 +86,6 @@ Type: dirifempty; Name: "{app}\mods\{#VersionWOT}\com.modxvm.xfw\"
 ;mods\ver\temp
 ;Type: filesandordirs; Name: "{app}\mods\temp\com.modxvm.*"
 Type: dirifempty; Name: "{app}\mods\temp\"
-
-;res_mods\mods\shared_resources
-;Type: filesandordirs; Name: "{app}\res_mods\mods\shared_resources\xvm"
-Type: dirifempty; Name: "{app}\res_mods\mods\shared_resources\"
 
 ;res_mods\mods\packages
 ;Type: filesandordirs; Name: "{app}\res_mods\mods\xfw_packages\xvm_*"
@@ -218,10 +221,8 @@ begin
   WotList.OnChange(WotList);
 
   WizardForm.DirEdit.Visible := False;
-  WizardForm.DirEdit.Text := '';
   WizardForm.DirBrowseButton.Visible := False;
 end;
-
 
 
 //
@@ -260,7 +261,7 @@ begin
     wpSelectComponents:
 		        begin
 		       	  AddButtonSelectComponent();
-			  CurPageChanged_wpSelectComponents();
+                          CurPageChanged_wpSelectComponents();
 		        end;
     wpFinished:         ApplySettings();
   end

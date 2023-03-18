@@ -83,7 +83,7 @@ var
   tmp, app, FileName, Buffer: String;
 begin
   SetLength(Buffer, SizeBuf);
-  JSON_GetArrayValueW_S(AdditionalFiles, Buffer, SizeBuf);
+  JSON_OLD_GetArrayValueW_S(AdditionalFiles, Buffer, SizeBuf);
   FileNames := TStringList.Create;
   try
     FileNames.Text := Copy(Buffer, 0, Pos(#0, Buffer));
@@ -118,7 +118,7 @@ begin
   begin
     if (arraySettings[i].NameFile <> '') and (arraySettings[i].Value <> '') then
     begin
-      JSON_SetValueObjW(ExpandConstant('{app}\res_mods\configs\xvm\') + SelectPreset + '\' + arraySettings[i].NameFile, arraySettings[i].Value, arraySettings[i].IsAdd);
+      JSON_OLD_SetValueObjW(ExpandConstant('{app}\res_mods\configs\xvm\') + SelectPreset + '\' + arraySettings[i].NameFile, arraySettings[i].Value, arraySettings[i].IsAdd);
       //SaveStringToFile(ExpandConstant('{src}\log.txt'), inttostr(i) + ' = ' + arraySettings[i].Value + #13, True);
     end;
     if arraySettings[i].AdditionalFiles <> '' then
@@ -209,7 +209,7 @@ begin
     //MsgBox('FileName = ' + FileName, mbInformation, MB_OK);
     SetLength(BufNames, SizeBuf);
     SetLength(BufValues, SizeBuf);
-    JSON_GetNamesAndValuesW(FileName, Path, BufNames, BufValues, SizeBuf);
+    JSON_OLD_GetNamesAndValuesW(FileName, Path, BufNames, BufValues, SizeBuf);
     RootList := TStringList.Create;
     try
       RootList.Text := Copy(BufNames, 0, Pos(#0, BufNames));
@@ -220,7 +220,7 @@ begin
         NamesList := TStringList.Create;
         ValuesList := TStringList.Create;
         try
-          JSON_GetNamesAndValuesW(FileName, Path + RootList[i], BufNames, BufValues, SizeBuf);
+          JSON_OLD_GetNamesAndValuesW(FileName, Path + RootList[i], BufNames, BufValues, SizeBuf);
           NamesList.Text := AnsiLowercase(Copy(BufNames, 0, Pos(#0, BufNames)));
           ValuesList.Text := Copy(BufValues, 0, Pos(#0, BufValues));
           AddItem(Path + RootList[i], NamesList, ValuesList, ALevel, TypeItem);
@@ -245,7 +245,7 @@ var
 begin
   SetLength(BufNames, SizeBuf);
   SetLength(BufValues, SizeBuf);
-  JSON_GetNamesAndValuesW_S(Value, BufNames, BufValues, SizeBuf);
+  JSON_OLD_GetNamesAndValuesW_S(Value, BufNames, BufValues, SizeBuf);
   RootList := TStringList.Create;
   try
     RootList.Text := Copy(BufValues, 0, Pos(#0, BufValues));
@@ -255,7 +255,7 @@ begin
       NamesList := TStringList.Create;
       ValuesList := TStringList.Create;
       try
-        JSON_GetNamesAndValuesW_S(RootList[i], BufNames, BufValues, SizeBuf);
+        JSON_OLD_GetNamesAndValuesW_S(RootList[i], BufNames, BufValues, SizeBuf);
         NamesList.Text := AnsiLowercase(Copy(BufNames, 0, Pos(#0, BufNames)));
         ValuesList.Text := Copy(BufValues, 0, Pos(#0, BufValues));
         if NamesList.Find('configfilename', Index) then
