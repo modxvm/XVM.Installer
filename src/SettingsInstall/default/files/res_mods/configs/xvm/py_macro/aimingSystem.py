@@ -30,6 +30,8 @@ netType = {ARCADE_MODE: 0, SNIPER_MODE: 0}
 def AvatarInputHandler_onControlModeChanged(self, eMode, **args):
     global y, aimMode
     if battle.isBattleTypeSupported:
+        if not self._AvatarInputHandler__isArenaStarted and not self._AvatarInputHandler__isModeSwitchInPrebattlePossible(eMode):
+            return
         oldAimMMode = aimMode
         if eMode == CTRL_MODE_NAME.ARCADE:
             y = - BigWorld.screenHeight() * SHIFT

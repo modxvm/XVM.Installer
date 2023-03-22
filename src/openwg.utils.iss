@@ -80,34 +80,34 @@ end;
 
 
 // JSON/FileOpen
-function JSON_FileOpenW_I(Path: String; AllowCreation: Boolean): Integer;
-external 'JSON_FileOpenW@files:openwg.utils.dll cdecl setuponly';
+function JSON_OpenFileW_I(Path: String; AllowCreation: Boolean): Integer;
+external 'JSON_OpenFileW@files:openwg.utils.dll cdecl setuponly';
 
-function JSON_FileOpenW_U(Path: String; AllowCreation: Boolean): Integer;
-external 'JSON_FileOpenW@{app}\{#OPENWGUTILS_DIR_UNINST}\openwg.utils.dll cdecl uninstallonly';
+function JSON_OpenFileW_U(Path: String; AllowCreation: Boolean): Integer;
+external 'JSON_OpenFileW@{app}\{#OPENWGUTILS_DIR_UNINST}\openwg.utils.dll cdecl uninstallonly';
 
-function JSON_FileOpen(Path: String; AllowCreation: Boolean): Integer;
+function JSON_OpenFile(Path: String; AllowCreation: Boolean): Integer;
 begin
     if IsUninstaller() then
-        Result := JSON_FileOpenW_U(Path, AllowCreation)
+        Result := JSON_OpenFileW_U(Path, AllowCreation)
     else
-        Result := JSON_FileOpenW_I(Path, AllowCreation)
+        Result := JSON_OpenFileW_I(Path, AllowCreation)
 end;
 
 
 // Json/FileClose
-function JSON_FileClose_I(Handle: Integer): Boolean;
-external 'JSON_FileClose@files:openwg.utils.dll cdecl setuponly';
+function JSON_Close_I(Handle: Integer): Boolean;
+external 'JSON_Close@files:openwg.utils.dll cdecl setuponly';
 
-function JSON_FileClose_U(Handle: Integer): Boolean;
-external 'JSON_FileClose@{app}\{#OPENWGUTILS_DIR_UNINST}\openwg.utils.dll cdecl uninstallonly';
+function JSON_Close_U(Handle: Integer): Boolean;
+external 'JSON_Close@{app}\{#OPENWGUTILS_DIR_UNINST}\openwg.utils.dll cdecl uninstallonly';
 
-function JSON_FileClose(Handle: Integer): Boolean;
+function JSON_Close(Handle: Integer): Boolean;
 begin
     if IsUninstaller() then
-        Result := JSON_FileClose_U(Handle)
+        Result := JSON_Close_U(Handle)
     else
-        Result := JSON_FileClose_I(Handle)
+        Result := JSON_Close_I(Handle)
 end;
 
 
@@ -124,6 +124,54 @@ begin
         Result := JSON_SetBoolW_U(Handle, Path, Value)
     else
         Result := JSON_SetBoolW_I(Handle, Path, Value)
+end;
+
+
+// Json/SetDouble
+function JSON_SetDoubleW_I(Handle: Integer; Path: String; Value: Double): Boolean;
+external 'JSON_SetDoubleW@files:openwg.utils.dll cdecl setuponly';
+
+function JSON_SetDoubleW_U(Handle: Integer; Path: String; Value: Double): Boolean;
+external 'JSON_SetDoubleW@{app}\{#OPENWGUTILS_DIR_UNINST}\openwg.utils.dll cdecl uninstallonly';
+
+function JSON_SetDouble(Handle: Integer; Path: String; Value: Double): Boolean;
+begin
+    if IsUninstaller() then
+        Result := JSON_SetDoubleW_U(Handle, Path, Value)
+    else
+        Result := JSON_SetDoubleW_I(Handle, Path, Value)
+end;
+
+
+// Json/SetInteger
+function JSON_SetIntegerW_I(Handle: Integer; Path: String; Value: Integer): Boolean;
+external 'JSON_SetIntegerW@files:openwg.utils.dll cdecl setuponly';
+
+function JSON_SetIntegerW_U(Handle: Integer; Path: String; Value: Integer): Boolean;
+external 'JSON_SetIntegerW@{app}\{#OPENWGUTILS_DIR_UNINST}\openwg.utils.dll cdecl uninstallonly';
+
+function JSON_SetInteger(Handle: Integer; Path: String; Value: Integer): Boolean;
+begin
+    if IsUninstaller() then
+        Result := JSON_SetIntegerW_U(Handle, Path, Value)
+    else
+        Result := JSON_SetIntegerW_I(Handle, Path, Value)
+end;
+
+
+// Json/SetString
+function JSON_SetStringW_I(Handle: Integer; Path: String; Value: String): Boolean;
+external 'JSON_SetStringW@files:openwg.utils.dll cdecl setuponly';
+
+function JSON_SetStringW_U(Handle: Integer; Path: String; Value: String): Boolean;
+external 'JSON_SetStringW@{app}\{#OPENWGUTILS_DIR_UNINST}\openwg.utils.dll cdecl uninstallonly';
+
+function JSON_SetString(Handle: Integer; Path: String; Value: String): Boolean;
+begin
+    if IsUninstaller() then
+        Result := JSON_SetStringW_U(Handle, Path, Value)
+    else
+        Result := JSON_SetStringW_I(Handle, Path, Value)
 end;
 
 
